@@ -1,0 +1,22 @@
+citHeader("To cite ScottKnott in publications use:")
+
+citEntry(entry  = "Manual",
+         title  = "The ScottKnott Clustering Algoritm.",
+         author = "Enio Jelihovschi,
+                   Jose Claudio Faria,
+                   Sergio Oliveira",
+         organization = "Universidade Estadual de Santa Cruz - UESC",
+         address      = "Ilheus, Bahia, Brasil",
+         year         = version$year,
+
+         textVersion =
+         paste("Jelihovschi, E; Faria, J.C and Oliveira, S. (", version$year, ").",
+               "The ScottKnott Clustering Algoritm.",
+               "UESC, Ilheus, Brasil.",
+               sep="")
+         )
+
+citFooter("Lots of time and effort were invested in creating ScottKnott package.",
+          "Please, cite it when using it together with R.",
+          "See also", sQuote("citation()"),
+          "for citing R.")
