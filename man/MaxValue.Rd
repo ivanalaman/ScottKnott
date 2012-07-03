@@ -2,17 +2,23 @@
 \alias{MaxValue}
 
 \title{
-  Algorithm for Pre-order Path in Binary Decision Tree
-}
+  Algorithm for Pre-order Path in Binary Decision Tree}
 
 \description{
-  Builds groups of means, according to the method of Scott & Knott.
-}
+  Builds groups of means, according to the method of Scott & Knott.}
 
 \usage{
-  MaxValue(g, means, mMSE, dfr, sig.level, k, group, ngroup, markg, g1=g,
-    sqsum=rep(0, g1))
-}
+  MaxValue(g,
+           means,
+           mMSE,
+           dfr, 
+           sig.level,
+           k,
+           group,
+           ngroup,
+           markg,
+           g1=g,
+           sqsum=rep(0, g1))}
 
 \arguments{
   \item{g}{A vector of length 1 giving the upper limit of the possible groups.}
@@ -25,8 +31,7 @@
   \item{ngroup}{A vector of length 1 giving the number of groups generated.}
   \item{markg}{A vector of the same length as \code{means} marking the upper limit of the last group generated before the process goes on recursively.}
   \item{g1}{A vector of length 1 which keeps, during the whole process, the value of the initial \code{g}.}
-  \item{sqsum}{A vector of length 1 giving the sum of the square between groups.}
-}
+  \item{sqsum}{A vector of length 1 giving the sum of the square between groups.}}
 
 \details{
   The function MaxValue builds groups of means, according to the method of
@@ -47,30 +52,25 @@
   the highest (or the least) mean. In case that the highest (or the least)
   mean becomes itself a group of one element, the algorithm continues to
   the former group. In the end, each node without children represents a group
-  of means.
-}
+  of means.}
 
 \value{
-  An \emph{vector} with the groups of means.
-}
+  An \emph{vector} with the groups of means.}
 
 \note{
-	This function is mainly for internal use in the ScottKnott package.
-}
+	This function is mainly for internal use in the ScottKnott package.}
 
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
   Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Sergio Oliveira (\email{solive@uesc.br})\cr
-}
+  Sergio Oliveira (\email{solive@uesc.br})\cr}
 
 \references{
   Ramalho M.A.P., Ferreira D.F., Oliveira A.C. 2000. \emph{Experimentacao em Genetica
   e Melhoramento de Plantas}. Editora UFLA.
 
   Scott R.J., Knott M. 1974. A cluster analysis method for grouping mans in the
-  analysis of variance. \emph{Biometrics}, \bold{30}, 507-512.
-}
+  analysis of variance. \emph{Biometrics}, \bold{30}, 507-512.}
 
 \seealso{\code{\link{SK}}}
 
@@ -81,8 +81,11 @@
 
   data(CRD1)
 
-  av      <- with(CRD1, aov(y ~ x, data=dfm)) # Doing an ANOVA
-  mm      <- model.tables(av, "means")        # summary tables for model fits
+  av      <- with(CRD1,
+                  aov(y ~ x,
+                      data=dfm)) # Doing an ANOVA
+  mm      <- model.tables(av,
+                          "means")        # summary tables for model fits
   tabs    <- mm$tables[-1]                    # all model means
   which   <- names(av$model)[2]
   tabs    <- tabs[which]                      # specified group means
@@ -93,14 +96,22 @@
   mnumber <- length(means)                    # number of means
   nms     <- names(tab)
   r       <- nn[[which]]                      # groups and its number of replicates
-  ord     <- order(means, decreasing=TRUE)
+  ord     <- order(means,
+                   decreasing=TRUE)
   mMSE    <- MSE/r
   dfr     <- av$df.residual                   # residual degrees of freedom
   means   <- means[ord]                       # decreasing ordered means
   g       <- mnumber
 
   ## Grouping the means: sig.level=.05
-  groups  <- MaxValue(g, means, mMSE, dfr, sig.level=.05, 1, rep(0, g), 0,
+  groups  <- MaxValue(g,
+                      means,
+                      mMSE,
+                      dfr,
+                      sig.level=.05,
+                      1,
+                      rep(0, g),
+                      0,
                       rep(0, g))
 
   ## The result: sig.level=.05
@@ -108,8 +119,15 @@
 
 
   ## Grouping the means: sig.level=.10
-  groups  <- MaxValue(g, means, mMSE, dfr, sig.level=.10, 1, rep(0, g), 0,
-	                    rep(0, g))
+  groups  <- MaxValue(g,
+                      means,
+                      mMSE,
+                      dfr,
+                      sig.level=.10,
+                      1,
+                      rep(0, g),
+                      0,
+	              rep(0, g))
 
   ## The result: sig.level=.10
   groups

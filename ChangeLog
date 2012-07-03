@@ -1,11 +1,14 @@
 2012-04-02 vs. 1.1-3 - Jose Claudio Faria  <joseclaudio.faria@gmail.com>
+	* Overall improvements in documentation and demos
+
+2012-04-02 vs. 1.1-3 - Jose Claudio Faria  <joseclaudio.faria@gmail.com>
+	* Cosmetic changes to meet the requirements of CRAN
 	* Cosmetic changes to meet the requirements of CRAN
 
 2011-05-11 vs. 1.1-2 - Jose Claudio Faria  <joseclaudio.faria@gmail.com>
 	* New data file: sorghum
 	* The notation of factorial models now agrees with Wilkinson and Rogers (1973)
-	* The methods SK.nest.aov and SK.nest.aovlist were a bit enhanced to adapt to
-	the new notation above
+	* The methods SK.nest.aov and SK.nest.aovlist were a bit enhanced to adapt to the new notation above
 	* The demos were a bit enhanced
 
 2010-06-13 vs. 1.1-1 - Jose Claudio Faria  <joseclaudio.faria@gmail.com>

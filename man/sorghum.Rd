@@ -1,17 +1,16 @@
 \name{sorghum}
 \alias{sorghum}
 
-\title{Completely Randomized Design (CRD)}
+\title{
+  Completely Randomized Design (CRD)}
 
 \description{
   The experiment consists of 16 treatments (cultivars) of sorghum conducted in a 
-  balanced squared lattice design and the yield by plot (kg/plot). 
-}
+  balanced squared lattice design and the yield by plot (kg/plot).}
 
 \usage{
   data(sorghum)
-  sorghum
-}
+  sorghum}
 
 \format{
   An incomplete balanced block design with 4 blocks, 16 treatments, 
@@ -21,28 +20,32 @@
   describing the design matrix. Its columns are \code{x}, \code{bl} (blocks) and \code{r} 
   repetitions. The third \code{y} is a numeric vector the yields. The fourth \code{dfm} 
   is a data frame with four columns. The first tree columns are the design matrix
-  and the fourth is \code{y}.
-}
+  and the fourth is \code{y}.}
 
 \details{
   The experiment was conducted at EMBRAPA Milho e Sorgo 
-  (The Brazilian Agricultural Research Corporation, Corn and Sorghum section). 
-}
+  (The Brazilian Agricultural Research Corporation, Corn and Sorghum section).}
 
 \source{
 Ramalho, M.A.P. and Ferreira, D.F. and Oliveira, A.C. (2000).
 Experiment. em Gen. e Melhoramento de Plantas. Editora UFLA, Lavras, 
-Brazil, page 167.
-}
+Brazil, page 167.}
 
 \keyword{datasets}
 
 \examples{
   library(ScottKnott)
+
   data(sorghum) 
-  av <- aov(y ~ r/bl + x, data=sorghum$dfm)
+
+  av <- aov(y ~ r/bl + x,
+            data=sorghum$dfm)
+
   sk <- SK(av,
-           which= 'x', sig.level=0.05) 
+           which= 'x',
+           sig.level=0.05) 
+
   summary(sk)
+
   plot(sk)
 }  

@@ -4,8 +4,7 @@
 \docType{package}
 
 \title{
-  The ScottKnott Clustering Algoritm
-}
+  The ScottKnott Clustering Algoritm}
 
 \description{
   The Scott & Knott clustering algoritm is a very useful clustering algorithm
@@ -46,24 +45,12 @@
   In a few words, the test of Scott & Knott is a clustering algoritm used as an
   one of the alternatives where multiple comparizon procedures are applied with
   a very important and almost unique characteristic: it does not present
-  overlapping in the results.
-}
-
-\details{
-  \tabular{ll}{
-    Package: \tab ScottKnott\cr
-    Type: \tab Package\cr
-    Version: \tab 1.1-2\cr
-    Date: \tab 2011-05-11\cr
-    License: \tab GPL (>= 2)\cr
-  }
-}
+  overlapping in the results.}
 
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
   Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Sergio Oliveira (\email{solive@uesc.br})\cr  
-}
+  Sergio Oliveira (\email{solive@uesc.br})\cr}
 
 \references{
   Bony S., Pichon N., Ravel C., Durix A., Balfourier F., Guillaumin J.J. 2001. The
@@ -103,8 +90,7 @@
     e Melhoramento de Plantas}. Editora UFLA.
 
   Scott R.J., Knott M. 1974. A cluster analysis method for grouping mans in the
-  analysis of variance. \emph{Biometrics}, \bold{30}, 507-512.
-}
+  analysis of variance. \emph{Biometrics}, \bold{30}, 507-512.}
 
 \keyword{package}
 \keyword{htest}
@@ -113,210 +99,325 @@
 \keyword{design}
 
 \examples{
-  ##
-  ## Examples: Completely Randomized Design (CRD)
-  ## More details: demo(package='ScottKnott')
-  ##
+##
+## Examples: Completely Randomized Design (CRD)
+## More details: demo(package='ScottKnott')
+##
 
-  ## The parameters can be: vectors, design matrix and the response variable,
-  ## data.frame or aov
-  data(CRD2)
+## The parameters can be: vectors, design matrix and the response variable,
+## data.frame or aov
+data(CRD2)
 
-  ## From: design matrix (dm) and response variable (y)
-  sk1 <- with(CRD2, SK(x=dm, y=y, model='y ~ x',
-                       which='x', sig.level=0.005,
-  id.trim=5))
-  summary(sk1)
-  plot(sk1, col=rainbow(max(sk1$groups)), mm.lty=3, id.las=2, rl=FALSE,
-  title='Factor levels (sig.level=0.005)', )
+## From: design matrix (dm) and response variable (y)
+sk1 <- with(CRD2,
+            SK(x=dm,
+               y=y,
+               model='y ~ x',
+               which='x',
+               sig.level=0.005,
+               id.trim=5))
+summary(sk1)
+plot(sk1,
+     col=rainbow(max(sk1$groups)),
+     mm.lty=3, 
+     id.las=2,
+     rl=FALSE,
+     title='Factor levels (sig.level=0.005)')
 
-  ## From: data.frame (dfm)
-  sk2 <- with(CRD2, SK(x=dfm, model='y ~ x',
-                       which='x', id.trim=5))
-  summary(sk2)
-  plot(sk2, col=rainbow(max(sk2$groups)), id.las=2, rl=FALSE)
+## From: data.frame (dfm)
+sk2 <- with(CRD2, 
+            SK(x=dfm,
+               model='y ~ x',
+               which='x',
+               id.trim=5))
+summary(sk2)
+plot(sk2,
+     col=rainbow(max(sk2$groups)),
+     id.las=2,
+     rl=FALSE)
 
-  ## From: aov
-  av <- with(CRD2, aov(y ~ x , data = dfm))
-  summary(av)
+## From: aov
+av <- with(CRD2,
+           aov(y ~ x,
+               data=dfm))
+summary(av)
 
-  sk3 <- with(CRD2, SK(x=av,
-                       which='x', id.trim=5))
-  summary(sk3)
-  plot(sk3, col=rainbow(max(sk3$groups)), rl=FALSE, id.las=2, title=NULL)
+sk3 <- with(CRD2,
+            SK(x=av,
+               which='x',
+               id.trim=5))
+summary(sk3)
+plot(sk3,
+     col=rainbow(max(sk3$groups)),
+     rl=FALSE,
+     id.las=2,
+     title=NULL)
 
-  ##
-  ## Example: Randomized Complete Block Design (RCBD)
-  ## More details: demo(package='ScottKnott')
-  ##
+##
+## Example: Randomized Complete Block Design (RCBD)
+## More details: demo(package='ScottKnott')
+##
 
-  ## The parameters can be: design matrix and the response variable,
-  ## data.frame or aov
+## The parameters can be: design matrix and the response variable,
+## data.frame or aov
 
-  data(RCBD)
+data(RCBD)
 
-  ## Design matrix (dm) and response variable (y)
-  sk1 <- with(RCBD, SK(x=dm, y=y, model='y ~ blk + tra',
-                       which = 'tra'))
-  summary(sk1)
-  plot(sk1)
+## Design matrix (dm) and response variable (y)
+sk1 <- with(RCBD,
+            SK(x=dm,
+               y=y,
+               model='y ~ blk + tra',
+               which='tra'))
+summary(sk1)
+plot(sk1)
 
-  ## From: data.frame (dfm), which='tra'
-  sk2 <- with(RCBD, SK(x=dfm, model='y ~ blk + tra',
-                       which='tra'))
-  summary(sk2)
-  plot(sk2, mm.lty=3, title='Factor levels')
+## From: data.frame (dfm), which='tra'
+sk2 <- with(RCBD,
+            SK(x=dfm,
+               model='y ~ blk + tra',
+               which='tra'))
+summary(sk2)
+plot(sk2,
+     mm.lty=3,
+     title='Factor levels')
 
-  ##
-  ## Example: Latin Squares Design (LSD)
-  ## More details: demo(package='ScottKnott')
-  ##
+##
+## Example: Latin Squares Design (LSD)
+## More details: demo(package='ScottKnott')
+##
 
-  ## The parameters can be: design matrix and the response variable,
-  ## data.frame or aov
+## The parameters can be: design matrix and the response variable,
+## data.frame or aov
 
-  data(LSD)
+data(LSD)
 
-  ## From: design matrix (dm) and response variable (y)
-  sk1 <- with(LSD, SK(x=dm, y=y, model='y ~ rows + cols + tra',
-                      which='tra'))
-  summary(sk1)
-  plot(sk1)
+## From: design matrix (dm) and response variable (y)
+sk1 <- with(LSD,
+            SK(x=dm,
+               y=y,
+               model='y ~ rows + cols + tra',
+               which='tra'))
+summary(sk1)
+plot(sk1)
 
-  ## From: data.frame
-  sk2 <- with(LSD, SK(x=dfm, model='y ~ rows + cols + tra',
-                      which='tra'))
-  summary(sk2)
-  plot(sk2, title='Factor levels')
+## From: data.frame
+sk2 <- with(LSD,
+            SK(x=dfm,
+               model='y ~ rows + cols + tra',
+               which='tra'))
+summary(sk2)
+plot(sk2,
+     title='Factor levels')
 
-  ## From: aov
-  av <- with(LSD, aov(y ~ rows + cols + tra, data=dfm))
-  summary(av)
+## From: aov
+av <- with(LSD,
+           aov(y ~ rows + cols + tra,
+               data=dfm))
+summary(av)
 
-  sk3 <- SK(av,
-            which='tra')
-  summary(sk3)
-  plot(sk3, title='Factor levels')
+sk3 <- SK(av,
+          which='tra')
+summary(sk3)
+plot(sk3,
+     title='Factor levels')
 
-  ##
-  ## Example: Factorial Experiment (FE)
-  ## More details: demo(package='ScottKnott')
-  ##
+##
+## Example: Factorial Experiment (FE)
+## More details: demo(package='ScottKnott')
+##
 
-  ## The parameters can be: design matrix and the response variable,
-  ## data.frame or aov
+## The parameters can be: design matrix and the response variable,
+## data.frame or aov
 
-  ## Note: The factors are in uppercase and its levels in lowercase!
-  
-  data(FE)
+## Note: The factors are in uppercase and its levels in lowercase!
 
-  ## From: design matrix (dm) and response variable (y)
-  ## Main factor: N
-  sk1 <- with(FE, SK(x=dm, y=y, model='y ~ blk + N*P*K',
-                     which='N'))
-  summary(sk1)
-  plot(sk1, title='Main effect: N')
+data(FE)
 
-  ## Nested: p1/N
-  nsk1 <- with(FE, SK.nest(x=dm, y=y, model='y ~ blk + N*P*K',
-                           which='N:P', fl2=1))
-  summary(nsk1)
-  plot(nsk1, title='Effect: p1/N')
+## From: design matrix (dm) and response variable (y)
+## Main factor: N
+sk1 <- with(FE,
+            SK(x=dm,
+               y=y,
+               model='y ~ blk + N*P*K',
+               which='N'))
+summary(sk1)
+plot(sk1,
+     title='Main effect: N')
 
-  ## Nested: k1/P
-  nsk2 <- with(FE, SK.nest(x=dm, y=y, model='y ~ blk + N*P*K',
-                           which='P:K', fl2=1))
-  summary(nsk2)
-  plot(nsk2, title='Effect: k1/P')
+## Nested: p1/N
+nsk1 <- with(FE,
+             SK.nest(x=dm,
+                     y=y,
+                     model='y ~ blk + N*P*K',
+                     which='N:P',
+                     fl2=1))
+summary(nsk1)
+plot(nsk1,
+     title='Effect: p1/N')
 
-  ## Nested: k2/p2/N
-  nsk3 <- with(FE, SK.nest(x=dm, y=y, model='y ~ blk + N*P*K',
-                           which='N:P:K', fl2=2, fl3=2))
-  summary(nsk3)
-  plot(nsk3, title='Effect: k2/p2/N')
+## Nested: k1/P
+nsk2 <- with(FE,
+             SK.nest(x=dm,
+                     y=y,
+                     model='y ~ blk + N*P*K',
+                     which='P:K',
+                     fl2=1))
+summary(nsk2)
+plot(nsk2,
+     title='Effect: k1/P')
 
-  ## Nested: k1/n1/P
-  nsk4 <- with(FE, SK.nest(x=dm, y=y, model='y ~ blk + P*N*K',
-                           which='P:N:K', fl2=1, fl3=1))
-  summary(nsk4)
-  plot(nsk4, title='Effect: k1/n1/P')
+## Nested: k2/p2/N
+nsk3 <- with(FE,
+             SK.nest(x=dm,
+                     y=y,
+                     model='y ~ blk + N*P*K',
+                     which='N:P:K',
+                     fl2=2,
+                     fl3=2))
+summary(nsk3)
+plot(nsk3,
+     title='Effect: k2/p2/N')
 
-  ## Nested: p1/n1/K
-  nsk5 <- with(FE, SK.nest(x=dm, y=y, model='y ~ blk + K*N*P',
-                           which='K:N:P', fl2=1, fl3=1))
-  summary(nsk5)
-  plot(nsk5, title='Effect: p1/n1/K')
+## Nested: k1/n1/P
+nsk4 <- with(FE, 
+             SK.nest(x=dm,
+                     y=y,
+                     model='y ~ blk + P*N*K',
+                     which='P:N:K',
+                     fl2=1,
+                     fl3=1))
+summary(nsk4)
+plot(nsk4,
+     title='Effect: k1/n1/P')
 
-  ##
-  ## Example: Split-plot Experiment (SPE)
-  ## More details: demo(package='ScottKnott')
-  ##
+## Nested: p1/n1/K
+nsk5 <- with(FE,
+             SK.nest(x=dm,
+                     y=y,
+                     model='y ~ blk + K*N*P',
+                     which='K:N:P',
+                     fl2=1,
+                     fl3=1))
+summary(nsk5)
+plot(nsk5, title='Effect: p1/n1/K')
 
-  ## Note: The factors are in uppercase and its levels in lowercase!
-  
-  data(SPE)
+##
+## Example: Split-plot Experiment (SPE)
+## More details: demo(package='ScottKnott')
+##
 
-  ## The parameters can be: design matrix and the response variable,
-  ## data.frame or aov
+## Note: The factors are in uppercase and its levels in lowercase!
 
-  ## From: design matrix (dm) and response variable (y)
-  ## Main factor: P
-  sk1 <- with(SPE, SK(x=dm, y=y, model='y ~ blk + SP*P + Error(blk/P)',
-                      which='P', error ='blk:P'))
-  summary(sk1)
-  plot(sk1)
+data(SPE)
 
-  ## Main factor: SP
-  sk2 <- with(SPE, SK(x=dm, y=y, model='y ~ blk + SP*P + Error(blk/P)',
-                      which='SP', error ='Within', sig.level=0.025 ))
-  summary(sk2)
-  plot(sk2, xlab='Groups', ylab='Main effect: sp',
-  title='Main effect: SP (sig.level=0.025)')
+## The parameters can be: design matrix and the response variable,
+## data.frame or aov
 
-  ## Nested: p1/SP
-  skn1 <- with(SPE, SK.nest(x=dm, y=y, model='y ~ blk + SP*P + Error(blk/P)',
-                            which='SP:P', error ='Within', fl2=1 ))
-  summary(skn1)
-  plot(skn1, title='Effect: p1/SP')
+## From: design matrix (dm) and response variable (y)
+## Main factor: P
+sk1 <- with(SPE, 
+            SK(x=dm, 
+               y=y, 
+               model='y ~ blk + SP*P + Error(blk/P)',
+               which='P',
+               error ='blk:P'))
+summary(sk1)
+plot(sk1)
 
-  ##
-  ## Example: Split-split-plot Experiment (SSPE)
-  ## More details: demo(package='ScottKnott')
-  ##
+## Main factor: SP
+sk2 <- with(SPE,
+            SK(x=dm,
+               y=y,
+               model='y ~ blk + SP*P + Error(blk/P)',
+               which='SP', 
+               error ='Within',
+               sig.level=0.025 ))
+summary(sk2)
+plot(sk2,
+     xlab='Groups',
+     ylab='Main effect: sp',
+     title='Main effect: SP (sig.level=0.025)')
 
-  ## Note: The factors are in uppercase and its levels in lowercase!
+## Nested: p1/SP
+skn1 <- with(SPE,
+             SK.nest(x=dm,
+                     y=y,
+                     model='y ~ blk + SP*P + Error(blk/P)',
+                     which='SP:P',
+                     error ='Within',
+                     fl2=1 ))
+summary(skn1)
+plot(skn1,
+     title='Effect: p1/SP')
 
-  data(SSPE)
+##
+## Example: Split-split-plot Experiment (SSPE)
+## More details: demo(package='ScottKnott')
+##
 
-  ## From: design matrix (dm) and response variable (y)
-  ## Main factor: P
-  sk1 <- with(SSPE, SK(dm, y, model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                       which='P', error='blk:P'))
-  summary(sk1)
+## Note: The factors are in uppercase and its levels in lowercase!
 
-  # Main factor: SP
-  sk2 <- with(SSPE, SK(dm, y, model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                       which='SP', error='blk:P:SP', sig.level=0.025))
-  summary(sk2)
+data(SSPE)
 
-  # Main factor: SSP
-  sk3 <- with(SSPE, SK(dm, y, model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                       which='SSP', error='Within', sig.level=0.1))
-  summary(sk3)
+## From: design matrix (dm) and response variable (y)
+## Main factor: P
+sk1 <- with(SSPE,
+            SK(dm,
+               y,
+               model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+               which='P',
+               error='blk:P'))
+summary(sk1)
 
-  ## Nested: p1/SP
-  skn1 <- with(SSPE, SK.nest(dm, y, model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                             which='SP:P', error='blk:P:SP', fl2=1))
-  summary(skn1)
+# Main factor: SP
+sk2 <- with(SSPE,
+            SK(dm,
+               y,
+               model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+               which='SP',
+               error='blk:P:SP',
+               sig.level=0.025))
+summary(sk2)
 
-  ## From: aovlist
-  av <- with(SSPE, aov(y ~  blk + SSP*SP*P + Error(blk/P/SP), data=dfm))
-  summary(av)   
+# Main factor: SSP
+sk3 <- with(SSPE, 
+            SK(dm,
+               y,
+               model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+               which='SSP',
+               error='Within',
+               sig.level=0.1))
+summary(sk3)
 
-  ## Nested: p/sp/SSP (at various levels of sp and p) 
-  skn6 <- SK.nest(av, which='SSP:SP:P', error='Within', fl2=1, fl3=1)
-  summary(skn6)
+## Nested: p1/SP
+skn1 <- with(SSPE, 
+             SK.nest(dm,
+                     y,
+                     model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+                     which='SP:P',
+                     error='blk:P:SP',
+                     fl2=1))
+summary(skn1)
 
-  skn7 <- SK.nest(av, which='SSP:SP:P', error='Within', fl2=2, fl3=1)
-  summary(skn7)
+## From: aovlist
+av <- with(SSPE,
+           aov(y ~  blk + SSP*SP*P + Error(blk/P/SP),
+               data=dfm))
+summary(av)   
+
+## Nested: p/sp/SSP (at various levels of sp and p) 
+skn6 <- SK.nest(av,
+                which='SSP:SP:P',
+                error='Within',
+                fl2=1,
+                fl3=1)
+summary(skn6)
+
+skn7 <- SK.nest(av,
+                which='SSP:SP:P',
+                error='Within',
+                fl2=2,
+                fl3=1)
+summary(skn7)
 }
