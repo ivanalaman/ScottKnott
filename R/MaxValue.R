@@ -45,7 +45,7 @@ MaxValue <- function(g,
   # if true it returns one node to the right if false it goes forward one node to the left
   if((lam < valchisq) |
      (ord1 == k)){
-    gg=G   # In the case of a single average left (maximum)
+    # In the case of a single average left (maximum)
     if(lam > valchisq){
       # it marks the group to the left consisting of a single mean
       ngroup <- ngroup+1
@@ -60,10 +60,10 @@ MaxValue <- function(g,
       # it forms a group of means
       group[k:g] <- ngroup
       # if this group is the last one
-        if (prod(group) > 0)
-      # If the upper limit of the latter group formed is equal to the total
-      # number of treatments than  the grouping algorithm is ended
-      return (group)
+      if (prod(group) > 0)
+        # If the upper limit of the latter group formed is equal to the total
+        # number of treatments than  the grouping algorithm is ended
+        return (group)
       # it marks the lower limit of the group of means to be used in the
       # calculation of the maximum sqsum on returning one node to the right
       k <- g+1
@@ -76,14 +76,14 @@ MaxValue <- function(g,
       ngroup   <- ngroup + 1
       group[g] <- ngroup
 
-    if(prod(group) > 0)
-      # If the upper limit of the latter group formed is equal to the total
-      # number of treatments than  the grouping algorithm is ended
-      return(group)
+      if(prod(group) > 0)
+        # If the upper limit of the latter group formed is equal to the total
+        # number of treatments than  the grouping algorithm is ended
+        return(group)
 
-    # the group of just one mean group had already been formed, a further
-    # jump to the right and another check whether there was just one mean
-    #left to the right
+      # the group of just one mean group had already been formed, a further
+      # jump to the right and another check whether there was just one mean
+      #left to the right
       k <- g + 1
       g <- markg[g]
     }
