@@ -50,7 +50,7 @@
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
   Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Sergio Oliveira (\email{solive@uesc.br})\cr}
+  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr}
 
 \references{
   Bony S., Pichon N., Ravel C., Durix A., Balfourier F., Guillaumin J.J. 2001. The
@@ -113,23 +113,20 @@ sk1 <- with(CRD2,
             SK(x=dm,
                y=y,
                model='y ~ x',
-               which='x',
-               sig.level=0.005,
-               id.trim=5))
+               which='x'))
 summary(sk1)
 plot(sk1,
      col=rainbow(max(sk1$groups)),
      mm.lty=3, 
      id.las=2,
      rl=FALSE,
-     title='Factor levels (sig.level=0.005)')
+     title='Factor levels')
 
 ## From: data.frame (dfm)
 sk2 <- with(CRD2, 
             SK(x=dfm,
                model='y ~ x',
-               which='x',
-               id.trim=5))
+               which='x'))
 summary(sk2)
 plot(sk2,
      col=rainbow(max(sk2$groups)),
@@ -144,8 +141,7 @@ summary(av)
 
 sk3 <- with(CRD2,
             SK(x=av,
-               which='x',
-               id.trim=5))
+               which='x'))
 summary(sk3)
 plot(sk3,
      col=rainbow(max(sk3$groups)),
@@ -246,12 +242,13 @@ plot(sk1,
      title='Main effect: N')
 
 ## Nested: p1/N
+## Studing N inside of level one of P
 nsk1 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='N:P',
-                     fl2=1))
+                     which='P:N',
+                     fl1=1))
 summary(nsk1)
 plot(nsk1,
      title='Effect: p1/N')
@@ -261,8 +258,8 @@ nsk2 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='P:K',
-                     fl2=1))
+                     which='K:P',
+                     fl1=1))
 summary(nsk2)
 plot(nsk2,
      title='Effect: k1/P')
@@ -272,21 +269,22 @@ nsk3 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='N:P:K',
-                     fl2=2,
-                     fl3=2))
+                     which='K:P:N',
+                     fl1=2,
+                     fl2=2))
 summary(nsk3)
 plot(nsk3,
      title='Effect: k2/p2/N')
 
 ## Nested: k1/n1/P
+## Studing P inside of level one of K and level one of N
 nsk4 <- with(FE, 
              SK.nest(x=dm,
                      y=y,
-                     model='y ~ blk + P*N*K',
-                     which='P:N:K',
-                     fl2=1,
-                     fl3=1))
+                     model='y ~ blk + N*P*K',
+                     which='K:N:P',
+                     fl1=1,
+                     fl2=1))
 summary(nsk4)
 plot(nsk4,
      title='Effect: k1/n1/P')
@@ -295,10 +293,10 @@ plot(nsk4,
 nsk5 <- with(FE,
              SK.nest(x=dm,
                      y=y,
-                     model='y ~ blk + K*N*P',
-                     which='K:N:P',
-                     fl2=1,
-                     fl3=1))
+                     model='y ~ blk + N*P*K',
+                     which='P:N:K',
+                     fl1=1,
+                     fl2=1))
 summary(nsk5)
 plot(nsk5, title='Effect: p1/n1/K')
 
@@ -319,9 +317,9 @@ data(SPE)
 sk1 <- with(SPE, 
             SK(x=dm, 
                y=y, 
-               model='y ~ blk + SP*P + Error(blk/P)',
+               model='y ~ blk + P*SP + Error(blk/P)',
                which='P',
-               error ='blk:P'))
+               error='blk:P'))
 summary(sk1)
 plot(sk1)
 
@@ -329,24 +327,23 @@ plot(sk1)
 sk2 <- with(SPE,
             SK(x=dm,
                y=y,
-               model='y ~ blk + SP*P + Error(blk/P)',
+               model='y ~ blk + P*SP + Error(blk/P)',
                which='SP', 
-               error ='Within',
-               sig.level=0.025 ))
+               error='Within'))
 summary(sk2)
 plot(sk2,
      xlab='Groups',
      ylab='Main effect: sp',
-     title='Main effect: SP (sig.level=0.025)')
+     title='Main effect: SP')
 
 ## Nested: p1/SP
 skn1 <- with(SPE,
              SK.nest(x=dm,
                      y=y,
-                     model='y ~ blk + SP*P + Error(blk/P)',
-                     which='SP:P',
-                     error ='Within',
-                     fl2=1 ))
+                     model='y ~ blk + P*SP + Error(blk/P)',
+                     which='P:SP',
+                     error='Within',
+                     fl1=1 ))
 summary(skn1)
 plot(skn1,
      title='Effect: p1/SP')
@@ -365,7 +362,7 @@ data(SSPE)
 sk1 <- with(SSPE,
             SK(dm,
                y,
-               model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+               model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                which='P',
                error='blk:P'))
 summary(sk1)
@@ -374,50 +371,48 @@ summary(sk1)
 sk2 <- with(SSPE,
             SK(dm,
                y,
-               model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+               model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                which='SP',
-               error='blk:P:SP',
-               sig.level=0.025))
+               error='blk:P:SP'))
 summary(sk2)
 
 # Main factor: SSP
 sk3 <- with(SSPE, 
             SK(dm,
                y,
-               model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+               model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                which='SSP',
-               error='Within',
-               sig.level=0.1))
+               error='Within'))
 summary(sk3)
 
 ## Nested: p1/SP
 skn1 <- with(SSPE, 
              SK.nest(dm,
                      y,
-                     model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                     which='SP:P',
+                     model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
+                     which='P:SP',
                      error='blk:P:SP',
-                     fl2=1))
+                     fl1=1))
 summary(skn1)
 
 ## From: aovlist
 av <- with(SSPE,
-           aov(y ~  blk + SSP*SP*P + Error(blk/P/SP),
+           aov(y ~  blk + P*SP*SSP + Error(blk/P/SP),
                data=dfm))
 summary(av)   
 
 ## Nested: p/sp/SSP (at various levels of sp and p) 
 skn6 <- SK.nest(av,
-                which='SSP:SP:P',
+                which='P:SP:SSP',
                 error='Within',
-                fl2=1,
-                fl3=1)
+                fl1=1,
+                fl2=1)
 summary(skn6)
 
 skn7 <- SK.nest(av,
-                which='SSP:SP:P',
+                which='P:SP:SSP',
                 error='Within',
-                fl2=2,
-                fl3=1)
+                fl1=2,
+                fl2=1)
 summary(skn7)
 }

@@ -42,12 +42,13 @@ plot(sk3,
      title='Main effect: K')
 
 ## Nested: p1/N
+## Studing N inside of the level one of P
 nsk1 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='N:P', 
-                     fl2=1))
+                     which='P:N', 
+                     fl1=1))
 summary(nsk1)
 plot(nsk1,
      title='Effect: p1/N')
@@ -57,8 +58,8 @@ nsk2 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='N:P',
-                     fl2=2))
+                     which='P:N',
+                     fl1=2))
 summary(nsk2)
 plot(nsk2,
      title='Effect: p2/N')
@@ -68,8 +69,8 @@ nsk3 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='N:K',
-                     fl2=1))
+                     which='K:N',
+                     fl1=1))
 summary(nsk3)
 plot(nsk3,
      title='Effect: k1/N')
@@ -79,8 +80,8 @@ nsk4 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='N:K',
-                     fl2=2))
+                     which='K:N',
+                     fl1=2))
 summary(nsk4)
 plot(nsk4,
      title='Effect: k2/N')
@@ -90,8 +91,8 @@ nsk5 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='P:K',
-                     fl2=1))
+                     which='K:P',
+                     fl1=1))
 summary(nsk5)
 plot(nsk5,
      title='Effect: k1/P')
@@ -101,20 +102,21 @@ nsk6 <- with(FE,
              SK.nest(x=dm, 
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='P:K',
-                     fl2=2))
+                     which='K:P',
+                     fl1=2))
 summary(nsk6)
 plot(nsk6,
      title='Effect: k2/P')
 
-## Nested: k1/p1/N
+## Nested: k1/p1/N 
+## Studing N inside of the level one of K and level one of P
 nsk7 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='N:P:K',
-                     fl2=1,
-                     fl3=1))
+                     which='K:P:N',
+                     fl1=1,
+                     fl2=1))
 summary(nsk7)
 plot(nsk7,
      title='Effect: k1/p1/N')
@@ -124,9 +126,9 @@ nsk8 <- with(FE,
              SK.nest(x=dm,
                      y=y,
                      model='y ~ blk + N*P*K',
-                     which='N:P:K',
-                     fl2=2,
-                     fl3=2))
+                     which='K:P:N',
+                     fl1=2,
+                     fl2=2))
 summary(nsk8)
 plot(nsk8,
      title='Effect: k2/p2/N')
@@ -135,10 +137,10 @@ plot(nsk8,
 nsk9 <- with(FE,
              SK.nest(x=dm,
                      y=y,
-                     model='y ~ blk + P*N*K',
-                     which='P:N:K',
-                     fl2=1,
-                     fl3=1))
+                     model='y ~ blk + N*N*K',
+                     which='K:N:P',
+                     fl1=1,
+                     fl2=1))
 summary(nsk9)
 plot(nsk9,
      title='Effect: k1/n1/P')
@@ -147,10 +149,10 @@ plot(nsk9,
 nsk8 <- with(FE,
              SK.nest(x=dm,
                      y=y,
-                     model='y ~ blk + P*N*K',
-                     which='P:N:K',
-                     fl2=2,
-                     fl3=2))
+                     model='y ~ blk + N*P*K',
+                     which='K:N:P',
+                     fl1=2,
+                     fl2=2))
 summary(nsk8)
 plot(nsk8,
      title='Effect: k2/n2/P')
@@ -159,10 +161,10 @@ plot(nsk8,
 nsk10 <- with(FE,
               SK.nest(x=dm,
                       y=y,
-                      model='y ~ blk + K*N*P',
-                      which='K:N:P',
-                      fl2=1,
-                      fl3=1))
+                      model='y ~ blk + N*P*K',
+                      which='P:N:K',
+                      fl1=1,
+                      fl2=1))
 summary(nsk10)
 plot(nsk10, 
      title='Effect: p1/n1/K')
@@ -171,10 +173,10 @@ plot(nsk10,
 nsk11 <- with(FE,
               SK.nest(x=dm,
                       y=y,
-                      model='y ~ blk + K*N*P',
-                      which='K:N:P',
-                      fl2=2,
-                      fl3=2))
+                      model='y ~ blk + N*P*K',
+                      which='P:N:K',
+                      fl1=2,
+                      fl2=2))
 summary(nsk11)
 plot(nsk11,
      title='Effect: p2/n2/K')
@@ -186,9 +188,9 @@ nsk12 <- with(FE,
               SK.nest(x=dm,
                       y=y, 
                       model='y ~ blk + N*P*K',
-                      which='N:P:K',
-                      fl2=1,
-                      fl3=2))
+                      which='K:P:N',
+                      fl1=2,
+                      fl2=1))
 summary(nsk12)
 plot(nsk12,
      title='Effect: k2/p1/N')
@@ -198,9 +200,9 @@ nsk13 <- with(FE,
               SK.nest(x=dm,
                       y=y,
                       model='y ~ blk + N*P*K',
-                      which='N:P:K',
-                      fl2=2,
-                      fl3=1))
+                      which='K:P:N',
+                      fl1=1,
+                      fl2=2))
 summary(nsk13)
 plot(nsk13,
      title='Effect: k1/p2/N')
@@ -221,31 +223,17 @@ plot(nsk14,
 
 ## Nested: k1/P
 nsk15 <- SK.nest(nav1,
-                 which='P:K',
-                 fl2=1)
+                 which='K:P',
+                 fl1=1)
 summary(nsk15)
 plot(nsk15, title='Effect: k1/P')
 
 ## Nested: k2/p1/N
 nsk16 <- SK.nest(nav1,
-                 which='N:P:K',
-                 fl2=1,
-                 fl3=2)
+                 which='K:P:N',
+                 fl1=2,
+                 fl2=1)
 summary(nsk16)
 plot(nsk16,
      title='Effect: k2/p1/N')
 
-# Changing the order of factors
-nav2 <- with(FE,
-             aov(y ~ blk + K*N*P,
-                 data=dfm))
-summary(nav2)
-
-## Nested: p1/n1/K
-nsk17 <- SK.nest(nav2,
-                 which='K:N:P',
-                 fl2=1,
-                 fl3=1)
-summary(nsk17)
-plot(nsk17,
-     title='Effect: p1/n1/K')

@@ -15,7 +15,7 @@
 \format{
   An incomplete balanced block design with 4 blocks, 16 treatments, 
   and 5 repetitions, that is, the yield of each treatment is measured 5 times.
-  \code{sorghum} is a list with 4 elements. The first \code{x} is a factor of lenght 80
+  \code{sorghum} is a list with 4 elements. The first \code{tr} is a factor of lenght 80
   with 16 levels describing the treatments. The second \code{dm} is data.frame 
   describing the design matrix. Its columns are \code{x}, \code{bl} (blocks) and \code{r} 
   repetitions. The third \code{y} is a numeric vector the yields. The fourth \code{dfm} 
@@ -27,25 +27,25 @@
   (The Brazilian Agricultural Research Corporation, Corn and Sorghum section).}
 
 \source{
-Ramalho, M.A.P. and Ferreira, D.F. and Oliveira, A.C. (2000).
-Experiment. em Gen. e Melhoramento de Plantas. Editora UFLA, Lavras, 
-Brazil, page 167.}
+  Ramalho, M.A.P. and Ferreira, D.F. and Oliveira, A.C. (2000).
+  Experiment. em Gen. e Melhoramento de Plantas. Editora UFLA, Lavras, 
+  Brazil, page 167.}
 
 \keyword{datasets}
 
 \examples{
-  library(ScottKnott)
+library(ScottKnott)
 
-  data(sorghum) 
+data(sorghum) 
 
-  av <- aov(y ~ r/bl + x,
-            data=sorghum$dfm)
+av <- aov(y ~ r/bl + x,
+          data=sorghum$dfm)
 
-  sk <- SK(av,
-           which= 'x',
-           sig.level=0.05) 
+sk <- SK(av,
+         which='x',
+         sig.level=0.05) 
 
-  summary(sk)
+summary(sk)
 
-  plot(sk)
+plot(sk)
 }  

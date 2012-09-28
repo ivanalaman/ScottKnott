@@ -1,6 +1,6 @@
 ##
 ## Examples: Completely Randomized Design (CRD)
-## sorghum
+##
 
 ## The parameters can be: vectors, design matrix and the response variable,
 ## data.frame or aov
@@ -14,8 +14,7 @@ sk1 <- with(CRD1,
             SK(x=x,
                y=y,
                model='y ~ x',
-               which='x',
-               id.trim=4))
+               which='x'))
 summary(sk1)
 plot(sk1)
 
@@ -24,8 +23,7 @@ sk2 <- with(CRD1,
             SK(x=dm,
                y=y,
                model='y ~ x',
-               which='x',
-               id.trim=4))
+               which='x'))
 summary(sk2)
 plot(sk2,
      pch=15,
@@ -38,8 +36,7 @@ plot(sk2,
 sk3 <- with(CRD1,
             SK(x=dfm,
                model='y ~ x',
-               which='x',
-               id.trim=4))
+               which='x'))
 summary(sk3)
 plot(sk3,
      mm.lty=3,
@@ -53,8 +50,7 @@ av1 <- with(CRD1,
 summary(av1)
 
 sk4 <- SK(x=av1,
-          which='x',
-          id.trim=4)
+          which='x')
 summary(sk4)
 plot(sk4, title=NULL)
 
@@ -68,8 +64,7 @@ sk5 <- with(CRD2,
             SK(x=x,
                y=y,
                model='y ~ x',
-               which='x',
-               id.trim=5))
+               which='x'))
 summary(sk5)
 plot(sk5,
      id.las=2,
@@ -81,11 +76,10 @@ sk6 <- with(CRD2,
                y=y,
                model='y ~ x',
                which='x',
-               sig.level=0.005,
-               id.trim=5))
+               sig.level=0.005))
 summary(sk6)
 plot(sk6,
-     col=heat.colors(max(sk6$groups)),
+     col=rainbow(max(sk6$groups)),
      mm.lty=3,
      id.las=2,
      rl=FALSE,
@@ -95,8 +89,7 @@ plot(sk6,
 sk7 <- with(CRD2,
             SK(x=dfm,
                model='y ~ x',
-               which='x',
-               id.trim=5))
+               which='x'))
 summary(sk7)
 plot(sk7,
      col=rainbow(max(sk7$groups)),
@@ -112,8 +105,7 @@ summary(av2)
 
 sk8 <- with(CRD2,
             SK(x=av2,
-               which='x',
-               id.trim=5))
+               which='x'))
 summary(sk8)
 plot(sk8,
      col=rainbow(max(sk8$groups)),
@@ -121,3 +113,4 @@ plot(sk8,
      id.las=2,
      id.col=FALSE,
      title=NULL)
+

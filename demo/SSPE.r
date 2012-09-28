@@ -24,11 +24,10 @@ sk2 <- with(SSPE,
                y,
                model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                which='SP',
-               error='blk:P:SP',
-               sig.level=0.025))
+               error='blk:P:SP'))
 summary(sk2)
 plot(sk2,
-     title='Main effect: SP (sig.level=0.025)')
+     title='Main effect: SP')
 
 # Main factor: SSP
 sk3 <- with(SSPE,
@@ -36,22 +35,20 @@ sk3 <- with(SSPE,
                y,
                model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                which='SSP', 
-               error='Within',
-               sig.level=0.1,
-               id.trim=4))
+               error='Within'))
 summary(sk3)
 plot(sk3,
      col=heat.colors(max(sk3$groups)),
-     title='Main effect: SSP (sig.level=0.1)')
+     title='Main effect: SSP')
 
 ## Nested: p1/SP
 skn1 <- with(SSPE,
              SK.nest(dm,
                      y,
-                     model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                     which='SP:P',
+                     model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
+                     which='P:SP',
                      error='blk:P:SP',
-                     fl2=1))
+                     fl1=1))
 summary(skn1)
 plot(skn1, 
      col='darkgray',
@@ -72,31 +69,29 @@ plot(sk4,
 ## Nested: p2/SP
 skn2 <- with(SSPE,
              SK.nest(dfm,
-                     model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                     which='SP:P',
+                     model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
+                     which='P:SP',
                      error='blk:P:SP',
-                     fl2=2,
-                     sig.level=0.01))
+                     fl1=2))
 summary(skn2)
 plot(skn2,
-     title='Effect: p2/SP (sig.level=0.01)')
+     title='Effect: p2/SP')
 
 ## Nested: p2/SP
 skn3 <- with(SSPE,
              SK.nest(dfm,
-                     model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                     which='SP:P',
+                     model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
+                     which='P:SP',
                      error='Within',
-                     fl2=2,
-                     sig.level=0.005))
+                     fl1=2))
 summary(skn3)
 plot(skn3,
-     title='Effect: p2/SP (sig.level=0.005)')
+     title='Effect: p2/SP')
 
 
 ## From: aovlist
 av <- with(SSPE,
-           aov(y ~  blk + SSP*SP*P + Error(blk/P/SP), 
+           aov(y ~  blk + P*SP*SSP + Error(blk/P/SP), 
                data=dfm))
 summary(av)
 
@@ -111,67 +106,65 @@ plot(sk5,
 ## Main factor: SSP
 sk6 <- SK(av,
           which='SSP',
-          error='Within',
-          sig.level=0.025,
-          id.trim=4)
+          error='Within')
 summary(sk6)
 plot(sk6, 
      col=c('black', 'darkgray', 'gray'),
-     title='Main effect = SSP (sig.level=0.025)')
+     title='Main effect = SSP')
 
 ## Nested: p1/SP
 skn4 <- SK.nest(av,
-                which='SP:P',
+                which='P:SP',
                 error='blk:P:SP',
-                fl2=1)
+                fl1=1)
 summary(skn4)
 plot(skn4, 
      title='Effect: p1/SP')
 
 ## Nested: p2/SP
 skn5 <- SK.nest(av,
-                which='SP:P',
+                which='P:SP',
                 error='blk:P:SP',
-                fl2=2)
+                fl1=2)
 summary(skn5)
 plot(skn5, title='Effect: p2/SP')
 
 ## Nested: P/SP/SSP (at various levels of SP and P)
 skn6 <- SK.nest(av,
-                which='SSP:SP:P',
+                which='P:SP:SSP',
                 error='Within',
-                fl2=1,
-                fl3=1)
+                fl1=1,
+                fl2=1)
 summary(skn6)
 plot(skn6, 
-     col=rainbow(5),
+     col=c('red', 'darkgreen'),
      title='Effect: p1/sp1/SSP')
 
 skn7 <- SK.nest(av,
-                which='SSP:SP:P', 
+                which='P:SP:SSP', 
                 error='Within',
-                fl2=2,
-                fl3=1)
+                fl1=1,
+                fl2=2)
 summary(skn7)
 plot(skn7, 
      col='darkgreen', 
      title='Effect: p1/sp2/SSP')
 
 skn8 <- SK.nest(av,
-                which='SSP:SP:P', 
+                which='P:SP:SSP', 
                 error='Within', 
-                fl2=3, 
-                fl3=3)
+                fl1=3, 
+                fl2=3)
 summary(skn8)
 plot(skn8, 
      col='darkgreen',
      title='Effect: p3/sp3/SSP')
 
 skn9 <- SK.nest(av,
-                which='SSP:SP:P',
+                which='P:SP:SSP',
                 error='Within',
-                fl2=2, 
-                fl3=3)
+                fl1=3, 
+                fl2=2)
 summary(skn9)
 plot(skn9,
      id.lab=paste('test', 

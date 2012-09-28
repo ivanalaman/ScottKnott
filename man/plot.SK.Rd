@@ -53,7 +53,7 @@
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
   Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Sergio Oliveira (\email{solive@uesc.br})\cr}
+  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr}
 
 \references{
   Murrell, P. 2005. R Graphics. Chapman & Hall/CRC Press.}
@@ -61,74 +61,67 @@
 \seealso{\code{\link{plot}}}
 
 \examples{
-  ##
-  ## Examples: Completely Randomized Design (CRD)
-  ## More details: demo(package='ScottKnott')
-  ##
+##
+## Examples: Completely Randomized Design (CRD)
+## More details: demo(package='ScottKnott')
+##
 
-  library(ScottKnott)
-  data(CRD2)
+library(ScottKnott)
+data(CRD2)
 
-  ## From: vectors x and y
-  sk1 <- with(CRD2,
-              SK(x=x,
-                 y=y,
-                 model='y ~ x',
-                 which='x',
-                 id.trim=5))
+## From: vectors x and y
+sk1 <- with(CRD2,
+            SK(x=x,
+               y=y,
+               model='y ~ x',
+               which='x'))
 
-  plot(sk1,
-       id.las=2,
-       rl=FALSE, 
-       title='Factor levels',
-       sig.level=.05)
+plot(sk1,
+     id.las=2,
+     rl=FALSE, 
+     title='Factor levels')
 
-  ## From: design matrix (dm) and response variable (y)
-  sk2 <- with(CRD2,
-              SK(x=dm,
-                 y=y,
-                 model='y ~ x',
-                 which='x',
-                 sig.level=0.005,
-                 id.trim=5))
-  plot(sk2,
-       col=rainbow(max(sk2$groups)),
-       mm.lty=3,
-       id.las=2,
-       rl=FALSE,
-       title='Factor levels',
-       sig.level=0.005)
+## From: design matrix (dm) and response variable (y)
+sk2 <- with(CRD2,
+            SK(x=dm,
+               y=y,
+               model='y ~ x',
+               which='x'))
+plot(sk2,
+     col=rainbow(max(sk2$groups)),
+     mm.lty=3,
+     id.las=2,
+     rl=FALSE,
+     title='Factor levels')
 
-  ## From: data.frame (dfm)
-  sk3 <- with(CRD2,
-              SK(x=dfm,
-                 model='y ~ x',
-                 which='x',
-                 id.trim=5))
+## From: data.frame (dfm)
+sk3 <- with(CRD2,
+            SK(x=dfm,
+               model='y ~ x',
+               which='x'))
 
-  plot(sk3,
-       col=rainbow(max(sk3$groups)),
-       id.las=2,
-       id.col=FALSE,
-       rl=FALSE)
+plot(sk3,
+     col=rainbow(max(sk3$groups)),
+     id.las=2,
+     id.col=FALSE,
+     rl=FALSE)
 
-  ## From: aov
-  av <- with(CRD2,
-             aov(y ~ x,
-             data=dfm))
-  summary(av)
+## From: aov
+av <- with(CRD2,
+           aov(y ~ x,
+               data=dfm))
+summary(av)
 
-  sk4 <- with(CRD2,
-              SK(x=av,
-                 which='x',
-                 id.trim=5))
+sk4 <- with(CRD2,
+            SK(x=av,
+               which='x'))
 
-  plot(sk4,
-       col=rainbow(max(sk4$groups)),
-       rl=FALSE,
-       id.las=2,
-       id.col=FALSE,
-       title=NULL)
+plot(sk4,
+     col=rainbow(max(sk4$groups)),
+     rl=FALSE,
+     id.las=2,
+     id.col=FALSE,
+     title=NULL)
 }
 
 \keyword{package}

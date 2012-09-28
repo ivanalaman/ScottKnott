@@ -8,8 +8,8 @@ SK.nest.default <- function(x,
                             which,
                             id.trim=3,
                             error,
-                            fl2,
-                            fl3=0,
+                            fl1,
+                            fl2=0,
                             sig.level=.05, ...)
 { 
   if (is.data.frame(y))
@@ -29,16 +29,16 @@ SK.nest.default <- function(x,
     res <- SK.nest.aov(x=av,
                        which=which,
                        id.trim=id.trim,
+                       fl1=fl1,
                        fl2=fl2,
-                       fl3=fl3,
                        sig.level=sig.level)
   else
     res <- SK.nest.aovlist(x=av,
                            which=which,
                            id.trim=id.trim,
                            error=error,
+                           fl1=fl1,
                            fl2=fl2,
-                           fl3=fl3,
                            sig.level=sig.level)
   invisible(res)
 }

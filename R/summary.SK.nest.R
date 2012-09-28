@@ -27,7 +27,7 @@ summary.SK.nest <- function(object, ...)
                         '%)',
                         sep=''))
   if(class(object$av)[1]=='aovlist'){
-    if(object$fl3 == 0){
+    if(object$fl2 == 0){
       cat('Nested:',
           paste(names(dimnames(object$tab)[1]),
                 '/',
@@ -45,7 +45,7 @@ summary.SK.nest <- function(object, ...)
           '\n')
     }
   } else {
-    if(object$fl3 == 0){
+    if(object$fl2 == 0){
       cat('Nested:',
           paste(names(dimnames(object$tab)[1]),
                 '/',

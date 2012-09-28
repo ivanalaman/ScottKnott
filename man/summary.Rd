@@ -19,7 +19,7 @@
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
   Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Sergio Oliveira (\email{solive@uesc.br})\cr}
+  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr}
 
 \references{
   Chambers, J. M. and Hastie, T. J. 1992. Statistical Models in S.
@@ -42,9 +42,7 @@
               SK(x=dm,
                  y=y,
                  model='y ~ x',
-                 which='x',
-                 sig.level=0.005, 
-                 id.trim=5))
+                 which='x'))
   summary(sk1)
 
   ##
@@ -109,8 +107,8 @@
                SK.nest(x=dm,
                        y=y,
                        model='y ~ blk + N*P*K',
-                       which='N:P',
-                       fl2=1))
+                       which='P:N',
+                       fl1=1))
   summary(nsk1)
 
   ## Nested: k2/p2/N
@@ -118,9 +116,9 @@
                SK.nest(x=dm,
                        y=y,
                        model='y ~ blk + N*P*K',
-                       which='N:P:K',
-                       fl2=2,
-                       fl3=2))
+                       which='K:P:N',
+                       fl1=2,
+                       fl2=2))
   summary(nsk2)
 
   ## Nested: k1/n1/P
@@ -128,9 +126,9 @@
                SK.nest(x=dm,
                        y=y,
                        model='y ~ blk + P*N*K',
-                       which='P:N:K',
-                       fl2=1,
-                       fl3=1))
+                       which='K:N:P',
+                       fl1=1,
+                       fl2=1))
   summary(nsk3)
 
   ## Nested: p1/n1/K
@@ -138,9 +136,9 @@
                SK.nest(x=dm,
                        y=y,
                        model='y ~ blk + K*N*P',
-                       which='K:N:P',
-                       fl2=1, 
-                       fl3=1))
+                       which='P:N:K',
+                       fl1=1, 
+                       fl2=1))
   summary(nsk4)
 
   ##
@@ -170,9 +168,9 @@
                SK.nest(x=dm,
                        y=y,
                        model='y ~ blk + SP*P + Error(blk/P)',
-                       which='SP:P',
+                       which='P:SP',
                        error='Within',
-                       fl2=1))
+                       fl1=1))
   summary(skn1)
 
   data(SSPE)
@@ -182,7 +180,7 @@
   sk1 <- with(SSPE,
               SK(dm,
                  y,
-                 model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+                 model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='P',
                  error='blk:P'))
   summary(sk1)
@@ -191,51 +189,49 @@
   sk2 <- with(SSPE,
               SK(dm,
                  y,
-                 model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+                 model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='SP',
-                 error='blk:P:SP',
-                 sig.level=0.025))
+                 error='blk:P:SP'))
   summary(sk2)
   
   # Main factor: SSP
   sk3 <- with(SSPE,
               SK(dm,
                  y,
-                 model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+                 model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                 which='SSP',
-                error='Within',
-                sig.level=0.1))
+                error='Within'))
   summary(sk3)
   
   ## Nested: p1/sp
   skn1 <- with(SSPE,
                SK.nest(dm,
                        y,
-                       model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                       which='SP:P',
+                       model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
+                       which='P:SP',
                        error='blk:P:SP',
-                       fl2=1))
+                       fl1=1))
   summary(skn1)
 
   ## From: aovlist
   av <- with(SSPE,
-             aov(y ~  blk + SSP*SP*P + Error(blk/P/SP),
+             aov(y ~  blk + P*SP*SSP + Error(blk/P/SP),
                  data=dfm))
   summary(av)   
 
   ## Nested: p/sp/SSP (at various levels of SP and P) 
   skn2 <- SK.nest(av,
-                  which='SSP:SP:P',
+                  which='P:SP:SSP',
                   error='Within',
-                  fl2=1,
-                  fl3=1)
+                  fl1=1,
+                  fl2=1)
   summary(skn2)
 
   skn3 <- SK.nest(av,
-                  which='SSP:SP:P',
+                  which='P:SP:SSP',
                   error='Within', 
-                  fl2=2,
-                  fl3=1)
+                  fl1=1,
+                  fl2=2)
   summary(skn3)
 }
 

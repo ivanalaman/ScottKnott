@@ -14,21 +14,21 @@
 
 \usage{
   \method{SK}{default}(x,
-    y=NULL,
-    model,
-    which,
-    id.trim=3,
-    error,
-    sig.level=.05, \dots)
+   y=NULL,
+   model,
+   which,
+   id.trim=3,
+   error,
+   sig.level=.05, \dots)
   \method{SK}{aov}(x,
-    which=NULL, 
-    id.trim=3,
-    sig.level=.05, \dots)
+   which=NULL, 
+   id.trim=3,
+   sig.level=.05, \dots)
   \method{SK}{aovlist}(x,
-    which, 
-    id.trim=3,
-    error,
-    sig.level=.05, \dots)}
+   which, 
+   id.trim=3,
+   error,
+   sig.level=.05, \dots)}
 
 \arguments{
   \item{x}{A design matrix, \code{data.frame} or an \code{aov} object.}
@@ -64,7 +64,7 @@
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
   Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Sergio Oliveira (\email{solive@uesc.br})\cr}
+  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr}
 
 \references{
   Ramalho M.A.P., Ferreira D.F., Oliveira A.C. 2000. \emph{Experimentacao em Genetica
@@ -88,23 +88,20 @@
               SK(x=dm,
                  y=y,
                  model='y ~ x',
-                 which='x',
-                 sig.level=0.005,
-                 id.trim=5))
+                 which='x'))
   summary(sk1)
   plot(sk1,
        col=rainbow(max(sk1$groups)),
        mm.lty=3,
        id.las=2,
        rl=FALSE,
-       title='factor levels, sig.level=0.005')
+       title='factor levels')
   
   ## From: data.frame (dfm)
   sk2 <- with(CRD2,
               SK(x=dfm,
                  model='y ~ x',
-                 which='x',
-                 id.trim=5))
+                 which='x'))
   summary(sk2)
   plot(sk2,
        col=rainbow(max(sk2$groups)),
@@ -119,8 +116,7 @@
   
   sk3 <- with(CRD2,
               SK(x=av,
-              which='x',
-              id.trim=5))
+              which='x'))
   summary(sk3)
   plot(sk3,
        col=rainbow(max(sk3$groups)),
@@ -223,8 +219,8 @@
                SK.nest(x=dm,
                        y=y,
                        model='y ~ blk + N*P*K',
-                       which='N:P',
-                       fl2=1))
+                       which='P:N',
+                       fl1=1))
   summary(nsk1)
   plot(nsk1,
        title='Effect: p1/N')

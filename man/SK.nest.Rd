@@ -15,27 +15,27 @@
 
 \usage{
   \method{SK.nest}{default}(x,
-    y=NULL,
-    model,
-    which,
-    id.trim=3,
-    error,
-    fl2,
-    fl3=0,
-    sig.level=.05, \dots)
+        y=NULL,
+        model,
+        which,
+        id.trim=3,
+        error,
+        fl1,
+        fl2=0,
+        sig.level=.05, \dots)
   \method{SK.nest}{aov}(x,
-    which,
-    id.trim=3,
-    fl2,
-    fl3=0,
-    sig.level=.05, \dots)
+        which,
+        id.trim=3,
+        fl1,
+        fl2=0,
+        sig.level=.05, \dots)
   \method{SK.nest}{aovlist}(x,
-    which,
-    id.trim=3,
-    error,
-    fl2,
-    fl3=0,
-    sig.level=.05, \dots)}
+        which,
+        id.trim=3,
+        error,
+        fl1,
+        fl2=0,
+        sig.level=.05, \dots)}
 
 \arguments{
   \item{x}{A design matrix, \code{data.frame} or an \code{aov} object.}
@@ -46,8 +46,8 @@
   \item{model}{If x is a \code{data.frame} object, the model to be used in the
     aov must be specified.}
   \item{id.trim}{The number of character to trim the id label.}
+  \item{fl1}{A vector of length 1 giving the level of the first factor in nesting order tested.}
   \item{fl2}{A vector of length 1 giving the level of the second factor in nesting order tested.}
-  \item{fl3}{A vector of length 1 giving the level of the third factor in nesting order tested.}
   \item{error}{The error to be considered, only in case of split-plots experiments.}
   \item{sig.level}{Level of Significance used in the SK algorithm to create
     the groups of means. The default value is 0.05.}
@@ -72,13 +72,13 @@
   \item{r}{A vector of length 1 giving the number of replicates.}
   \item{which}{The name of the factor whose levels were tested.}
   \item{tab}{An array keeping the names of the factors and factor levels and also the mean value of the repetitions for every combination of factor levels.} 
-  \item{fl2}{A vector of length 1 giving the level of the second factor in nesting order tested.}
-  \item{fl3}{A vector of length 1 giving the level of the third factor in nesting order tested.}}
+  \item{fl1}{A vector of length 1 giving the level of the first factor in nesting order tested.}
+  \item{fl2}{A vector of length 1 giving the level of the second factor in nesting order tested.}}
 
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
   Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Sergio Oliveira (\email{solive@uesc.br})\cr}
+  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr}
 
 \references{
   Ramalho M.A.P., Ferreira D.F., Oliveira A.C. 2000. \emph{Experimentacao em Genetica
@@ -101,7 +101,7 @@
   sk1 <- with(SSPE,
               SK(dm,
                  y,
-                 model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+                 model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='P',
                  error='blk:P'))
   summary(sk1)
@@ -110,51 +110,51 @@
   sk2 <- with(SSPE,
               SK(dm,
                  y,
-                 model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+                 model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='SP',
-                 error='blk:P:SP',
-                 sig.level=0.025))
+                 error='blk:P:SP'))
   summary(sk2)
   
   # Main factor: SSP
   sk3 <- with(SSPE,
               SK(dm,
                  y,
-                 model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
+                 model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='SSP',
-                 error='Within',
-                 sig.level=0.1))
+                 error='Within'))
   summary(sk3)
   
   ## Nested: p1/SP
   skn1 <- with(SSPE,
                SK.nest(dm,
                        y,
-                       model='y ~ blk + SSP*SP*P + Error(blk/P/SP)',
-                       which='SP:P',
+                       model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
+                       which='P:SP',
                        error='blk:P:SP',
-                       fl2=1))
+                       fl1=1))
   summary(skn1)
 
   ## From: aovlist
   av <- with(SSPE,
-             aov(y ~  blk + SSP*SP*P + Error(blk/P/SP),
+             aov(y ~  blk + P*SP*SSP + Error(blk/P/SP),
                  data=dfm))
   summary(av)   
 
-  ## Nested: p/sp/SSP (at various levels of SP and P) 
+  ## Nested: p/sp/SSP
+  ## Studing SSP inside of level one of P and level one of SP
   skn2 <- SK.nest(av,
-                  which='SSP:SP:P',
+                  which='P:SP:SSP',
                   error='Within',
-                  fl2=1,
-                  fl3=1)
+                  fl1=1,
+                  fl2=1)
   summary(skn2)
 
+  ## Studing SSP inside of level one of P and level two of SP
   skn3 <- SK.nest(av,
-                  which='SSP:SP:P',
+                  which='P:SP:SSP',
                   error='Within',
-                  fl2=2,
-                  fl3=1)
+                  fl1=1,
+                  fl2=2)
   summary(skn3)
 }
 

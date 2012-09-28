@@ -13,7 +13,7 @@ sk1 <- with(RCBD,
             SK(x=dm,
                y=y,
                model='y ~ blk + tra',
-               which = 'tra'))
+               which='tra'))
 summary(sk1)
 plot(sk1)
 
@@ -71,3 +71,4 @@ summary(sk6)
 plot(sk6,
      xlab='',
      title='Factor levels')
+

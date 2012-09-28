@@ -38,10 +38,3 @@ summary(sk3)
 plot(sk3,
      title='Factor levels')
 
-## From: aov, sig.level=8%
-sk4 <- SK(av1,
-          which='tra',
-          sig.level=.08)
-summary(sk4)
-plot(sk4,
-     title='Factor levels (sig.level=0.08)')
