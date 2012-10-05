@@ -31,7 +31,7 @@
   \item{col}{A vector of colors for the means representation.}
   \item{xlab}{A label for the x axis.}
   \item{ylab}{A label for the y axis.}
-  \item{xlim}{The x limits of the plot}.
+  \item{xlim}{The x limits of the plot.}
   \item{ylim}{The y limits of the plot.}
   \item{id.lab}{Factor level names at x-axis.}
   \item{id.las}{Factor level names written either horizontally or vertically.}
