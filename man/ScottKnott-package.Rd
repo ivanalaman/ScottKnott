@@ -4,10 +4,10 @@
 \docType{package}
 
 \title{
-  The ScottKnott Clustering Algoritm}
+  The ScottKnott Clustering Algorithm}
 
 \description{
-  The Scott & Knott clustering algoritm is a very useful clustering algorithm
+  The Scott & Knott clustering algorithm is a very useful clustering algorithm
   widely used as a multiple comparison method in the Analysis of Variance
   context, as for example Gates and Bilbro (1978), Bony et al. (2001),
   Dilson et al. (2002) and Jyotsna et al. (2003).
@@ -23,7 +23,7 @@
   have this problem, what is often cited as a very good quality of this
   procedure.
 
-  The Scott & Knott method make use of a clever algoritm of cluster analysis,
+  The Scott & Knott method make use of a clever algorithm of cluster analysis,
   where, starting from the the whole group of observed mean effects, it divides,
   and keep dividing the sub-groups in such a way that the intersection of any
   two groups formed in that manner is empty.
@@ -36,13 +36,13 @@
   Many studies, using the method of Monte Carlo, suggest that the Scott Knott
   method performs very well compared to other methods due to fact that it has
   high power and type I error rate almost always in accordance with the nominal
-  levels. The ScottKnott package performs this algoritm starting either from
+  levels. The ScottKnott package performs this algorithm starting either from
   \code{vectors}, \code{matrices} or \code{data.frames} joined as
   \code{default}, a \code{aov} or \code{aovlist} resulting object of previous
   analysis of variance. The results are given in the usual way as well as in
   graphical way using thermometers with diferent group colors.
 
-  In a few words, the test of Scott & Knott is a clustering algoritm used as an
+  In a few words, the test of Scott & Knott is a clustering algorithm used as an
   one of the alternatives where multiple comparizon procedures are applied with
   a very important and almost unique characteristic: it does not present
   overlapping in the results.}
