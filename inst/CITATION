@@ -3,7 +3,7 @@ citHeader("To cite ScottKnott in publications use:")
 citEntry(entry  = "Manual",
          title  = "The ScottKnott Clustering Algoritm.",
          author = "Enio G. Jelihovschi,
-                   Jose Claudio Faria,
+                   José Cláudio Faria,
                    Ivan Bezerra Allaman",
          organization = "Universidade Estadual de Santa Cruz - UESC",
          address      = "Ilheus, Bahia, Brasil",

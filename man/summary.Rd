@@ -3,29 +3,37 @@
 \alias{summary.SK.nest}
 
 \title{
-  Summary Method for SK and SK.nest Objects}
+  Summary Method for SK and SK.nest Objects
+}
 
 \description{
-  Returns (and prints) a summary list for \code{SK} and \code{SK.nest} objects.}
+  Returns (and prints) a summary list for \code{SK} and \code{SK.nest} objects.
+}
 
 \usage{
   \method{summary}{SK}(object, \dots)
-  \method{summary}{SK.nest}(object, \dots)}
+  \method{summary}{SK.nest}(object, \dots)
+}
 
 \arguments{
   \item{object}{A given object of the class \code{SK} or \code{SK.nest}.}
-  \item{\dots}{Potential further arguments (require by generic).}}
+  \item{\dots}{Potential further arguments (require by generic).}
+}
 
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
-  Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr}
+  José Cláudio Faria (\email{joseclaudio.faria@gmail.com})\cr
+  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr
+}
 
 \references{
   Chambers, J. M. and Hastie, T. J. 1992. Statistical Models in S.
-  Wadsworth & Brooks/Cole.}
+  Wadsworth & Brooks/Cole.
+}
 
-\seealso{\code{\link{ScottKnott}}}
+\seealso{
+  \code{\link{ScottKnott}}
+}
 
 \examples{
   ##

@@ -5,12 +5,14 @@
 \alias{SK.aovlist}
 
 \title{
-  The ScottKnott Clustering Algoritm for Single Experiments}
+  The ScottKnott Clustering Algoritm for Single Experiments
+}
 
 \description{
   These are methods for objects of class \code{vector}, \code{matrix} or
   \code{data.frame} joined as default, \code{aov} and \code{aovlist} for
-  single experiments.}
+  single experiments.
+}
 
 \usage{
   \method{SK}{default}(x,
@@ -28,12 +30,13 @@
    which, 
    id.trim=3,
    error,
-   sig.level=.05, \dots)}
+   sig.level=.05, \dots)
+}
 
 \arguments{
   \item{x}{A design matrix, \code{data.frame} or an \code{aov} object.}
   \item{y}{A vector of response variable. It is necessary to inform this
-    parameter only if \code{x} represent the design matrix.}
+    parameter only if \samp{x} represent the design matrix.}
   \item{which}{The name of the treatment to be used in the comparison.
     The name must be inside quoting marks.}
   \item{model}{If x is a \code{data.frame} object, the model to be used in the
@@ -42,7 +45,8 @@
   \item{error}{The error to be considered.}
   \item{sig.level}{Level of Significance used in the SK algorithm to create
     the groups of means. The default value is 0.05.}
-  \item{\dots}{Potential further arguments (require by generic).}}
+  \item{\dots}{Potential further arguments (require by generic).}
+}
 
 \details{
   The function \code{SK} returns an object of class \code{SK} 
@@ -50,7 +54,8 @@
   necessary variables for summary and plot.
   
   The generic functions \code{summary} and \code{plot} are used to obtain and
-  print a summary and a plot of the results.}
+  print a summary and a plot of the results.
+}
 
 \value{
   The function \code{SK} returns a list of the class \code{SK} with the slots:
@@ -59,19 +64,22 @@
   \item{nms}{A vector of the labels of the factor levels.}
   \item{ord}{A vector which keeps the position of the means of the factor levels in decreasing order.}
   \item{m.inf}{A matrix which keeps the means, minimum and maximum of the factor levels in decreasing order.}
-  \item{sig.level}{A vector of length 1 giving the level of significance of the test.}}
+  \item{sig.level}{A vector of length 1 giving the level of significance of the test.}
+}
 
 \author{
   Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
-  Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr}
+  José Cláudio Faria (\email{joseclaudio.faria@gmail.com})\cr
+  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr
+}
 
 \references{
-  Ramalho M.A.P., Ferreira D.F., Oliveira A.C. 2000. \emph{Experimentacao em Genetica
+  Ramalho M.A.P., Ferreira D.F., Oliveira A.C. 2000. \emph{Experimentação em Genética
   e Melhoramento de Plantas}. Editora UFLA.
 
   Scott R.J., Knott M. 1974. A cluster analysis method for grouping mans in the
-  analysis of variance. \emph{Biometrics}, \bold{30}, 507-512.}
+  analysis of variance. \emph{Biometrics}, \bold{30}, 507-512.
+}
 
 \examples{
   ##
