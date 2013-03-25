@@ -7,7 +7,7 @@
 
 \description{
   A \code{list} illustrating  the resources of \code{ScottKnott} package
-  related to Factorial Experiment (FE).
+  related to Factorial Experiment (\samp{FE}).
 }
 
 \usage{
@@ -16,7 +16,7 @@
 }
 
 \details{
-  A simulated data to model a Factorial Experiment (FE) with 3 factors, 
+  A simulated data to model a Factorial Experiment (\samp{FE}) with 3 factors, 
   2 levels per factor and 4 blocks.
 }
 

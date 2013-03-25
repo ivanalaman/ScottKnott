@@ -7,7 +7,7 @@
 
 \description{
   A \code{list} to ilustrate the resources of \code{ScottKnott} package
-  related to Split-plot Experiment (SPE).
+  related to Split-plot Experiment (\samp{SPE}).
 }
 
 \usage{
@@ -16,7 +16,7 @@
 }
 
 \details{
-  A simulated data to model a Split-plot Experiment (SPE) with 3 plots, each
+  A simulated data to model a Split-plot Experiment (\samp{SPE}) with 3 plots, each
   one split 4 times and 6 repetitions per split.
 }
 

@@ -7,7 +7,7 @@
 
 \description{
   A \code{list} illustrating the resources of \code{ScottKnott} package
-  related to Completely Randomized Design (CRD).
+  related to Completely Randomized Design (\samp{CRD}).
 }
 
 \usage{
@@ -16,7 +16,7 @@
 }
 
 \details{
-  A simulated data to model a Completely Randomized Design (CRD) of 4 
+  A simulated data to model a Completely Randomized Design (\samp{CRD}) of 4 
   factor levels and 6 repetitions.
 }
 

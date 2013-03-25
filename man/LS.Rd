@@ -7,7 +7,7 @@
 
 \description{
   A \code{list} illustrating  the resources of \code{ScottKnott} package
-  related to Latin Squares Design (LSD).
+  related to Latin Squares Design (\samp{LSD}).
 }
 
 \usage{
@@ -16,7 +16,7 @@
 }
 
 \details{
-  A simulated data to model a Latin Squares Design (LSD) with  5
+  A simulated data to model a Latin Squares Design (\samp{LSD}) with  5
   factor levels 5 rows and 5 columns.
 }
 

@@ -7,7 +7,7 @@
 
 \description{
   The experiment consists of 8 treatments (7 leguminous cover crops and maize) in a 
-  Randomized Complete Block Design (RCBD) and the yield by plot (kg/plot).
+  Randomized Complete Block Design (\samp{RCBD}) and the yield by plot (kg/plot).
 }
 
 \usage{

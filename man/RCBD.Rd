@@ -7,7 +7,7 @@
 
 \description{
   A \code{list} illustrating  the resources of \code{ScottKnott} package
-  related to Randomized Complete Block Design (RCBD).
+  related to Randomized Complete Block Design (\samp{RCBD}).
 }
 
 \usage{
@@ -16,7 +16,7 @@
 }
 
 \details{
-  A simulated data to model a Randomized Complete Block Design (RCBD) of 5 
+  A simulated data to model a Randomized Complete Block Design (\samp{RCBD}) of 5 
   factor levels, 4 blocks and 4 factor levels repetitions one in each block.
 }
 
