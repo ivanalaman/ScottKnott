@@ -32,18 +32,18 @@
   \item{x}{A \code{SK} object.}
   \item{pch}{A vector of plotting symbols or characters.}
   \item{col}{A vector of colors for the means representation.}
-  \item{xlab}{A label for the x axis.}
-  \item{ylab}{A label for the y axis.}
-  \item{xlim}{The x limits of the plot.}
-  \item{ylim}{The y limits of the plot.}
+  \item{xlab}{A label for the \samp{x} axis.}
+  \item{ylab}{A label for the \samp{y} axis.}
+  \item{xlim}{The \samp{x} limits of the plot.}
+  \item{ylim}{The \samp{y} limits of the plot.}
   \item{id.lab}{Factor level names at x-axis.}
   \item{id.las}{Factor level names written either horizontally or vertically.}
-  \item{id.col}{A logical value. If TRUE (the default), the \code{col} parameter will be used for the x axis.}
+  \item{id.col}{A logical value. If \code{TRUE} (the default), the \code{col} parameter will be used for the \samp{x} axis.}
   \item{rl}{Horizontal line connecting the circle to the y-axis.}
-  \item{rl.lty}{Line type of rl.}
-  \item{rl.col}{Line color of rl.}
+  \item{rl.lty}{Line type of \samp{rl}.}
+  \item{rl.col}{Line color of \samp{rl}.}
   \item{mm}{Vertical line through the circle (mean value) linking the minimum to the maximum of the factor level values corresponding to that mean value.}
-  \item{mm.lty}{Line type of mm.}
+  \item{mm.lty}{Line type of \samp{mm}.}
   \item{title}{A title for the plot.}
   \item{\dots}{Optional plotting parameters.}
 } 

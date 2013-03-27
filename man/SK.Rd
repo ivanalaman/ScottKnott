@@ -39,7 +39,7 @@
     parameter only if \samp{x} represent the design matrix.}
   \item{which}{The name of the treatment to be used in the comparison.
     The name must be inside quoting marks.}
-  \item{model}{If x is a \code{data.frame} object, the model to be used in the
+  \item{model}{If \code{x} is a \code{data.frame} object, the model to be used in the
     aov must be specified.}
   \item{id.trim}{The number of character to trim the id label.}
   \item{error}{The error to be considered.}

@@ -37,7 +37,7 @@
   Many studies, using the method of Monte Carlo, suggest that the Scott Knott
   method performs very well compared to other methods due to fact that it has
   high power and type I error rate almost always in accordance with the nominal
-  levels. The ScottKnott package performs this algorithm starting either from
+  levels. The \pkg{ScottKnott} package performs this algorithm starting either from
   \code{vectors}, \code{matrices} or \code{data.frames} joined as
   \code{default}, a \code{aov} or \code{aovlist} resulting object of previous
   analysis of variance. The results are given in the usual way as well as in

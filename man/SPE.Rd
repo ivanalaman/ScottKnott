@@ -6,7 +6,7 @@
 }
 
 \description{
-  A \code{list} to ilustrate the resources of \code{ScottKnott} package
+  A \code{list} to ilustrate the resources of \pkg{ScottKnott} package
   related to Split-plot Experiment (\samp{SPE}).
 }
 

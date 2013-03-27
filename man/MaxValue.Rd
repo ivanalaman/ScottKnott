@@ -64,7 +64,7 @@
 }
 
 \note{
-  This function is mainly for internal use in the ScottKnott package.
+  This function is mainly for internal use in the \pkg{ScottKnott} package.
 }
 
 \author{

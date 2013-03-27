@@ -6,7 +6,7 @@
 }
 
 \description{
-  A \code{list} illustrating  the resources of \code{ScottKnott} package
+  A \code{list} illustrating  the resources of \pkg{ScottKnott} package
   related to Factorial Experiment (\samp{FE}).
 }
 
