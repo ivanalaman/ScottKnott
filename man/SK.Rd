@@ -39,12 +39,12 @@
     parameter only if \samp{x} represent the design matrix.}
   \item{which}{The name of the treatment to be used in the comparison.
     The name must be inside quoting marks.}
-  \item{model}{If \code{x} is a \code{data.frame} object, the model to be used in the
+  \item{model}{If \samp{x} is a \code{data.frame} object, the model to be used in the
     aov must be specified.}
   \item{id.trim}{The number of character to trim the id label.}
   \item{error}{The error to be considered.}
-  \item{sig.level}{Level of Significance used in the SK algorithm to create
-    the groups of means. The default value is 0.05.}
+  \item{sig.level}{Level of Significance used in the \code{SK} algorithm to create the groups of means.
+    The default value is 0.05.}
   \item{\dots}{Potential further arguments (require by generic).}
 }
 
@@ -58,13 +58,13 @@
 }
 
 \value{
-  The function \code{SK} returns a list of the class \code{SK} with the slots:
+  The function \code{SK} returns a \code{list} of the class \code{SK} with the slots:
   \item{av}{A \code{list} storing the result of \code{aov}.}
-  \item{groups}{A vector of length equal the number of factor levels marking the groups generated.}
-  \item{nms}{A vector of the labels of the factor levels.}
-  \item{ord}{A vector which keeps the position of the means of the factor levels in decreasing order.}
-  \item{m.inf}{A matrix which keeps the means, minimum and maximum of the factor levels in decreasing order.}
-  \item{sig.level}{A vector of length 1 giving the level of significance of the test.}
+  \item{groups}{A \code{vector} of length equal the number of factor levels marking the groups generated.}
+  \item{nms}{A \code{vector} of the labels of the factor levels.}
+  \item{ord}{A \code{vector} which keeps the position of the means of the factor levels in decreasing order.}
+  \item{m.inf}{A \code{matrix} which keeps the means, minimum and maximum of the factor levels in decreasing order.}
+  \item{sig.level}{A \code{vector} of length 1 giving the level of significance of the test.}
 }
 
 \author{
