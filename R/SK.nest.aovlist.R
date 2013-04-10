@@ -41,22 +41,22 @@ SK.nest.aovlist <- function(x,
                                   by=list(ta[[which2]],
                                           group=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=min(x),
-                                                max=max(x)))[,2:3]
+                                                m.min=min(x),
+                                                m.max=max(x)))[,2:3]
              }, se = {
                m.inf <- aggregate(ta[,1],
                                   by=list(ta[[which2]],
                                           group=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - sd(x),
-                                                max=mean(x) + sd(x)))[,2:3]
+                                                se.min=mean(x) - sd(x),
+                                                se.max=mean(x) + sd(x)))[,2:3]
              }, sem= {
                m.inf <- aggregate(ta[,1],
                                   by=list(ta[[which2]],
                                           group=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+                                                sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
              })
 
       f1 <- levels(ta[,which2]) # correspondem aos fatores que se quer comparar!
@@ -84,22 +84,22 @@ SK.nest.aovlist <- function(x,
                                   by=list(ta[[which2]],
                                           group=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=min(x),
-                                                max=max(x)))[,2:3]
+                                                m.min=min(x),
+                                                m.max=max(x)))[,2:3]
              }, se = {
                m.inf <- aggregate(ta[,1],
                                   by=list(ta[[which2]],
                                           group=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - sd(x),
-                                                max=mean(x) + sd(x)))[,2:3]
+                                                se.min=mean(x) - sd(x),
+                                                se.max=mean(x) + sd(x)))[,2:3]
              }, sem= {
                m.inf <- aggregate(ta[,1],
                                   by=list(ta[[which2]],
                                           group=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+                                                sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
              })
 
       f1 <- levels(ta[,which2]) # correspondem aos fatores que se quer comparar!
@@ -131,22 +131,22 @@ SK.nest.aovlist <- function(x,
                                     by=list(ta[[which2]],
                                             group=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:3]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:3]
                }, se = {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which2]],
                                             group=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:3]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:3]
                }, sem= {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which2]],
                                             group=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
                })
 
         f1 <- levels(ta[,which2])
@@ -177,22 +177,22 @@ SK.nest.aovlist <- function(x,
                                     by=list(ta[[which2]],
                                             group=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:3]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:3]
                }, se = {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which2]],
                                             group=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:3]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:3]
                }, sem= {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which2]],
                                             group=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
                })
 
         f1 <- levels(ta[,which2])
@@ -226,24 +226,24 @@ SK.nest.aovlist <- function(x,
                                           group=ta[[which2]],
                                           group2=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=min(x),
-                                                max=max(x)))[,2:4]
+                                                m.min=min(x),
+                                                m.max=max(x)))[,2:4]
              }, se = {
                m.inf <- aggregate(ta[,1],
                                   by=list(ta[[which3]],
                                           group=ta[[which2]],
                                           group2=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - sd(x),
-                                                max=mean(x) + sd(x)))[,2:4]
+                                                se.min=mean(x) - sd(x),
+                                                se.max=mean(x) + sd(x)))[,2:4]
              }, sem= {
                m.inf <- aggregate(ta[,1],
                                   by=list(ta[[which3]],
                                           group=ta[[which2]],
                                           group2=ta[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
              })
 
       f1 <- levels(ta[,which3])
@@ -277,24 +277,24 @@ SK.nest.aovlist <- function(x,
                                             group=ta[[which3]],
                                             group2=ta[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which1]],
                                             group=ta[[which3]],
                                             group2=ta[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which1]],
                                             group=ta[[which3]],
                                             group2=ta[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1 <- levels(ta[,which1])
@@ -326,24 +326,24 @@ SK.nest.aovlist <- function(x,
                                             group=ta[[which1]],
                                             group2=ta[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which3]],
                                             group=ta[[which1]],
                                             group2=ta[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which3]],
                                             group=ta[[which1]],
                                             group2=ta[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1 <- levels(ta[,which3])
@@ -376,24 +376,24 @@ SK.nest.aovlist <- function(x,
                                             group=ta[[which3]],
                                             group2=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which2]],
                                             group=ta[[which3]],
                                             group2=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which2]],
                                             group=ta[[which3]],
                                             group2=ta[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1   <- levels(ta[,which2])
@@ -426,24 +426,24 @@ SK.nest.aovlist <- function(x,
                                             group=ta[[which2]],
                                             group2=ta[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which1]],
                                             group=ta[[which2]],
                                             group2=ta[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which1]],
                                             group=ta[[which2]],
                                             group2=ta[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1  <- levels(ta[,which1])
@@ -476,24 +476,24 @@ SK.nest.aovlist <- function(x,
                                             group=ta[[which1]],
                                             group2=ta[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which2]],
                                             group=ta[[which1]],
                                             group2=ta[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(ta[,1],
                                     by=list(ta[[which2]],
                                             group=ta[[which1]],
                                             group2=ta[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1 <- levels(ta[,which2])

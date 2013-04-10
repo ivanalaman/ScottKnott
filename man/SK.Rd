@@ -48,7 +48,7 @@
   \item{error}{The error to be considered.}
   \item{sig.level}{Level of Significance used in the \code{SK} algorithm to create the groups of means.
     The default value is 0.05.}
-  \item{dispersion}{The dispersion to be considered to the mean.
+  \item{dispersion}{The dispersion to be considered to the means.
     The possible vaues are: \samp{'mm'} = \samp{minimum and maximum},
     \samp{'se'} = \samp{standart deviation},
     \samp{'sem'} = \samp{standart deviation of the mean}.}
@@ -116,7 +116,8 @@
   sk2 <- with(CRD2,
               SK(x=dfm,
                  model='y ~ x',
-                 which='x'))
+                 which='x',
+                 dispersion='se'))
   summary(sk2)
   plot(sk2,
        col=rainbow(max(sk2$groups)),
@@ -131,7 +132,8 @@
   
   sk3 <- with(CRD2,
               SK(x=av,
-              which='x'))
+                 which='x',
+                 dispersion='sem'))
   summary(sk3)
   plot(sk3,
        col=rainbow(max(sk3$groups)),

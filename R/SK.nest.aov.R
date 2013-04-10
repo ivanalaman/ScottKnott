@@ -38,22 +38,22 @@ SK.nest.aov <- function(x,
                                   by=list(x$model[[which2]],
                                           group=x$model[[which1]]),      
                                   function(x) c(mean=mean(x),
-                                                min=min(x),
-                                                max=max(x)))[,2:3]
+                                                m.min=min(x),
+                                                m.max=max(x)))[,2:3]
              }, se = {
                m.inf <- aggregate(x$model[,1],
                                   by=list(x$model[[which2]],
                                           group=x$model[[which1]]),      
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - sd(x),
-                                                max=mean(x) + sd(x)))[,2:3]
+                                                se.min=mean(x) - sd(x),
+                                                se.max=mean(x) + sd(x)))[,2:3]
              }, sem= {
                m.inf <- aggregate(x$model[,1],
                                   by=list(x$model[[which2]],
                                           group=x$model[[which1]]),      
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+                                                sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
              })
 
       f1 <- levels(x$model[,which2]) # correspondem aos fatores que se quer comparar!
@@ -81,22 +81,22 @@ SK.nest.aov <- function(x,
                                   by=list(x$model[[which2]],
                                           group=x$model[[which1]]),      
                                   function(x) c(mean=mean(x),
-                                                min=min(x),
-                                                max=max(x)))[,2:3]
+                                                m.min=min(x),
+                                                m.max=max(x)))[,2:3]
              }, se = {
                m.inf <- aggregate(x$model[,1],
                                   by=list(x$model[[which2]],
                                           group=x$model[[which1]]),      
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - sd(x),
-                                                max=mean(x) + sd(x)))[,2:3]
+                                                se.min=mean(x) - sd(x),
+                                                se.max=mean(x) + sd(x)))[,2:3]
              }, sem= {
                m.inf <- aggregate(x$model[,1],
                                   by=list(x$model[[which2]],
                                           group=x$model[[which1]]),      
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+                                                sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
              })
 
       f1 <- levels(x$model[,which2]) # correspondem aos fatores que se quer comparar!
@@ -128,22 +128,22 @@ SK.nest.aov <- function(x,
                                     by=list(x$model[[which2]],
                                             group=x$model[[which1]]),      
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:3]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:3]
                }, se = {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which2]],
                                             group=x$model[[which1]]),      
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:3]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:3]
                }, sem= {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which2]],
                                             group=x$model[[which1]]),      
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
                })
 
         f1 <- levels(x$model[,which2])
@@ -174,22 +174,22 @@ SK.nest.aov <- function(x,
                                     by=list(x$model[[which2]],
                                             group=x$model[[which1]]),      
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:3]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:3]
                }, se = {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which2]],
                                             group=x$model[[which1]]),      
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:3]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:3]
                }, sem= {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which2]],
                                             group=x$model[[which1]]),      
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
                })
 
         f1 <- levels(x$model[,which2])
@@ -223,24 +223,24 @@ SK.nest.aov <- function(x,
                                           group=x$model[[which2]],
                                           group2=x$model[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=min(x),
-                                                max=max(x)))[,2:4]
+                                                m.min=min(x),
+                                                m.max=max(x)))[,2:4]
              }, se = {
                m.inf <- aggregate(x$model[,1],
                                   by=list(x$model[[which3]],
                                           group=x$model[[which2]],
                                           group2=x$model[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - sd(x),
-                                                max=mean(x) + sd(x)))[,2:4]
+                                                se.min=mean(x) - sd(x),
+                                                se.max=mean(x) + sd(x)))[,2:4]
              }, sem= {
                m.inf <- aggregate(x$model[,1],
                                   by=list(x$model[[which3]],
                                           group=x$model[[which2]],
                                           group2=x$model[[which1]]),
                                   function(x) c(mean=mean(x),
-                                                min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
              })
 
       f1 <- levels(x$model[,which3])
@@ -273,24 +273,24 @@ SK.nest.aov <- function(x,
                                             group=x$model[[which3]],
                                             group2=x$model[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which1]],
                                             group=x$model[[which3]],
                                             group2=x$model[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which1]],
                                             group=x$model[[which3]],
                                             group2=x$model[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1 <- levels(x$model[,which1])
@@ -321,24 +321,24 @@ SK.nest.aov <- function(x,
                                             group=x$model[[which1]],
                                             group2=x$model[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which3]],
                                             group=x$model[[which1]],
                                             group2=x$model[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which3]],
                                             group=x$model[[which1]],
                                             group2=x$model[[which2]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1 <- levels(x$model[,which3])
@@ -370,24 +370,24 @@ SK.nest.aov <- function(x,
                                             group=x$model[[which2]],
                                             group2=x$model[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which3]],
                                             group=x$model[[which2]],
                                             group2=x$model[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which3]],
                                             group=x$model[[which2]],
                                             group2=x$model[[which1]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1 <- levels(x$model[,which2])
@@ -419,24 +419,24 @@ SK.nest.aov <- function(x,
                                             group=x$model[[which2]],
                                             group2=x$model[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which1]],
                                             group=x$model[[which2]],
                                             group2=x$model[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which1]],
                                             group=x$model[[which2]],
                                             group2=x$model[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1 <- levels(x$model[,which1])
@@ -468,24 +468,24 @@ SK.nest.aov <- function(x,
                                             group=x$model[[which1]],
                                             group2=x$model[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2:4]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2:4]
                }, se = {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which2]],
                                             group=x$model[[which1]],
                                             group2=x$model[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2:4]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2:4]
                }, sem= {
                  m.inf <- aggregate(x$model[,1],
                                     by=list(x$model[[which2]],
                                             group=x$model[[which1]],
                                             group2=x$model[[which3]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
                })
 
         f1 <- levels(x$model[,which2])

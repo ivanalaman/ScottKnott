@@ -57,7 +57,7 @@
   \item{error}{The error to be considered, only in case of split-plots experiments.}
   \item{sig.level}{Level of Significance used in the SK algorithm to create
     the groups of means. The default value is 0.05.}
-  \item{dispersion}{The dispersion to be considered to the mean.
+  \item{dispersion}{The dispersion to be considered to the means.
     The possible vaues are: \samp{'mm'} = \samp{minimum and maximum},
     \samp{'se'} = \samp{standart deviation},
     \samp{'sem'} = \samp{standart deviation of the mean}.}
@@ -127,7 +127,8 @@
                  y,
                  model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='SP',
-                 error='blk:P:SP'))
+                 error='blk:P:SP',
+                 dispersion='se'))
   summary(sk2)
   
   # Main factor: SSP
@@ -136,7 +137,8 @@
                  y,
                  model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='SSP',
-                 error='Within'))
+                 error='Within',
+                 dispersion='sem'))
   summary(sk3)
   
   ## Nested: p1/SP

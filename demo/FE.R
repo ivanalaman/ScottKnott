@@ -26,7 +26,8 @@ sk2 <- with(FE,
             SK(x=dm,
                y=y,
                model='y ~ blk + N*P*K',
-               which='P'))
+               which='P',
+               dispersion='se'))
 summary(sk2)
 plot(sk2,
      title='Main effect: P')
@@ -36,7 +37,8 @@ sk3 <- with(FE,
             SK(x=dm,
                y=y,
                model='y ~ blk + N*P*K',
-               which='K'))
+               which='K',
+               dispersion='sem'))
 summary(sk3)
 plot(sk3, 
      title='Main effect: K')

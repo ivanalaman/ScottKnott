@@ -21,7 +21,8 @@ plot(sk1)
 sk2 <- with(LSD,
             SK(x=dfm,
                model='y ~ rows + cols + tra',
-               which='tra'))
+               which='tra',
+               dispersion='se'))
 summary(sk2)
 plot(sk2,
      title='Factor levels')
@@ -33,7 +34,8 @@ av1 <- with(LSD,
 summary(av1)
 
 sk3 <- SK(av1,
-          which='tra')
+          which='tra',
+          dispersion='sem')
 summary(sk3)
 plot(sk3,
      title='Factor levels')

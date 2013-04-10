@@ -27,7 +27,8 @@ sk2 <- with(SPE,
                y=y,
                model='y ~ blk + P*SP + Error(blk/P)',
                which='SP',
-               error='Within'))
+               error='Within',
+               dispersion='se'))
 summary(sk2)
 plot(sk2,
      title='Main effect: SP')
@@ -40,7 +41,8 @@ skn1 <- with(SPE,
                      model='y ~ blk + P*SP + Error(blk/P)',
                      which='P:SP',
                      error='Within',
-                     fl1=1))
+                     fl1=1,
+                     dispersion='sem'))
 summary(skn1)
 plot(skn1,
      title='Effect: p1/SP')

@@ -24,7 +24,8 @@ sk2 <- with(SSPE,
                y,
                model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                which='SP',
-               error='blk:P:SP'))
+               error='blk:P:SP',
+               dispersion='se'))
 summary(sk2)
 plot(sk2,
      title='Main effect: SP')
@@ -35,7 +36,8 @@ sk3 <- with(SSPE,
                y,
                model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                which='SSP', 
-               error='Within'))
+               error='Within',
+               dispersion='sem'))
 summary(sk3)
 plot(sk3,
      col=heat.colors(max(sk3$groups)),

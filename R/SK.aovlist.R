@@ -23,20 +23,20 @@ SK.aovlist <- function(x,
                  m.inf <- aggregate(model.frame.aovlist(x)[,1],
                                     by=list(model.frame.aovlist(x)[[which]]),
                                     function(x) c(mean=mean(x),
-                                                  min=min(x),
-                                                  max=max(x)))[,2]
+                                                  m.min=min(x),
+                                                  m.max=max(x)))[,2]
                }, se = {
                  m.inf <- aggregate(model.frame.aovlist(x)[,1],
                                     by=list(model.frame.aovlist(x)[[which]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - sd(x),
-                                                  max=mean(x) + sd(x)))[,2]
+                                                  se.min=mean(x) - sd(x),
+                                                  se.max=mean(x) + sd(x)))[,2]
                }, sem= {
                  m.inf <- aggregate(model.frame.aovlist(x)[,1],
                                     by=list(model.frame.aovlist(x)[[which]]),
                                     function(x) c(mean=mean(x),
-                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
-                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2]
+                                                  sem.min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  sem.max=mean(x) + (sd(x) / sqrt(length(x)))))[,2]
                })
 
         rownames(m.inf) <- nms
