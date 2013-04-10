@@ -24,20 +24,23 @@
         error,
         fl1,
         fl2=0,
-        sig.level=.05, \dots)
+        sig.level=.05,
+        dispersion=c('mm', 'se', 'sem'), \dots)
   \method{SK.nest}{aov}(x,
         which,
         id.trim=3,
         fl1,
         fl2=0,
-        sig.level=.05, \dots)
+        sig.level=.05,
+        dispersion=c('mm', 'se', 'sem'), \dots)
   \method{SK.nest}{aovlist}(x,
         which,
         id.trim=3,
         error,
         fl1,
         fl2=0,
-        sig.level=.05, \dots)
+        sig.level=.05,
+        dispersion=c('mm', 'se', 'sem'), \dots)
 }
 
 \arguments{
@@ -54,6 +57,10 @@
   \item{error}{The error to be considered, only in case of split-plots experiments.}
   \item{sig.level}{Level of Significance used in the SK algorithm to create
     the groups of means. The default value is 0.05.}
+  \item{dispersion}{The dispersion to be considered to the mean.
+    The possible vaues are: \samp{'mm'} = \samp{minimum and maximum},
+    \samp{'se'} = \samp{standart deviation},
+    \samp{'sem'} = \samp{standart deviation of the mean}.}
   \item{\dots}{Potential further arguments (require by generic).}
 }
 
@@ -72,7 +79,7 @@
   \item{groups}{A vector of length equal the number of factor levels marking the groups generated.}
   \item{nms}{A vector of the labels of the factor levels.}
   \item{ord}{A vector which keeps the position of the means of the factor levels in decreasing order.}
-  \item{m.inf}{A matrix which keeps the means, minimum and maximum of the factor levels in decreasing order.}
+  \item{m.inf}{A matrix which keeps the means and the dispersion of the factor levels in decreasing order.}
   \item{sig.level}{A vector of length 1 giving the level of significance of the test.}
   \item{r}{A vector of length 1 giving the number of replicates.}
   \item{which}{The name of the factor whose levels were tested.}

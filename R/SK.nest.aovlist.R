@@ -8,7 +8,8 @@ SK.nest.aovlist <- function(x,
                             error,
                             fl1,
                             fl2=0,
-                            sig.level=.05, ...)
+                            sig.level=.05,
+                            dispersion=c('mm', 'se', 'sem'), ...)
 {
   mt <- model.tables(x,
                      "means")         # summary tables for model fits
@@ -28,19 +29,38 @@ SK.nest.aovlist <- function(x,
     #$$$$$$$$$$           MODELO SOMENTE COM DOIS FATORES            $$$$$$$$$$$$#
     if(length(nfa[grep('[[:punct:]]',nfa)]) == 1 && #condição necessária para certificar-se que no modelo há somente uma interação!
        which != nfa[grep('[[:punct:]]',nfa)]){
-      whichn <- paste(nf2,nf1,sep=':')#necessário pois no modelo original estamos em uma ordem inversa!
+      whichn <- paste(nf2,nf1,sep=':') # necessário pois no modelo original estamos em uma ordem inversa!
       r      <- mt$n[names(mt$tables)][[whichn]] # groups and its number of replicates
-      m      <- as.vector(mt$tables[whichn][[whichn]][,fl1])#pegando as médias de interesse
-      which1 <- names(dimnames(mt$tables[whichn][[whichn]]))[2]#corresponde ao primeiro fator do seu 'which'
-      which2 <- names(dimnames(mt$tables[whichn][[whichn]]))[1]#corresponde ao segundo fator do seu 'which'
-      m.inf  <- aggregate(ta[,1],
-                          by=list(ta[[which2]],
-                                  group=ta[[which1]]),
-                          function(x) c(mean(x),
-                                        min(x),
-                                        max(x)))[,2:3]
-      f1 <- levels(ta[,which2])#correspondem aos fatores que se quer comparar!
-      f2 <- levels(ta[,which1])[fl1]#corresponde ao fator onde se está fazendo o desdobramento!
+      m      <- as.vector(mt$tables[whichn][[whichn]][,fl1]) # pegando as médias de interesse
+      which1 <- names(dimnames(mt$tables[whichn][[whichn]]))[2] # corresponde ao primeiro fator do seu 'which'
+      which2 <- names(dimnames(mt$tables[whichn][[whichn]]))[1] # corresponde ao segundo fator do seu 'which'
+
+      switch(match.arg(dispersion),
+             mm = {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which2]],
+                                          group=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=min(x),
+                                                max=max(x)))[,2:3]
+             }, se = {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which2]],
+                                          group=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - sd(x),
+                                                max=mean(x) + sd(x)))[,2:3]
+             }, sem= {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which2]],
+                                          group=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+             })
+
+      f1 <- levels(ta[,which2]) # correspondem aos fatores que se quer comparar!
+      f2 <- levels(ta[,which1])[fl1] # corresponde ao fator onde se está fazendo o desdobramento!
       m.inf <- subset(m.inf, 
                       group == f2)[,2]
       rownames(m.inf) <- paste(f2,
@@ -54,17 +74,36 @@ SK.nest.aovlist <- function(x,
     } else if(length(nfa[grep('[[:punct:]]',nfa)]) == 1 &&
               which == nfa[grep('[[:punct:]]',nfa)]){
       r      <- mt$n[names(mt$tables)][[which]] # groups and its number of replicates
-      m      <- as.vector(mt$tables[which][[which]][fl1,])#pegando as médias de interesse
-      which1 <- names(dimnames(mt$tables[which][[which]]))[1]#corresponde ao primeiro fator do seu 'which'
-      which2 <- names(dimnames(mt$tables[which][[which]]))[2]#corresponde ao segundo fator do seu 'which'
-      m.inf  <- aggregate(ta[,1],
-                          by=list(ta[[which2]],
-                                  group=ta[[which1]]),
-                          function(x) c(mean(x),
-                                        min(x),
-                                        max(x)))[,2:3]
-      f1 <- levels(ta[,which2])#correspondem aos fatores que se quer comparar!
-      f2 <- levels(ta[,which1])[fl1]#corresponde ao fator onde se está fazendo o desdobramento!
+      m      <- as.vector(mt$tables[which][[which]][fl1,]) # pegando as médias de interesse
+      which1 <- names(dimnames(mt$tables[which][[which]]))[1] # corresponde ao primeiro fator do seu 'which'
+      which2 <- names(dimnames(mt$tables[which][[which]]))[2] # corresponde ao segundo fator do seu 'which'
+
+      switch(match.arg(dispersion),
+             mm = {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which2]],
+                                          group=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=min(x),
+                                                max=max(x)))[,2:3]
+             }, se = {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which2]],
+                                          group=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - sd(x),
+                                                max=mean(x) + sd(x)))[,2:3]
+             }, sem= {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which2]],
+                                          group=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+             })
+
+      f1 <- levels(ta[,which2]) # correspondem aos fatores que se quer comparar!
+      f2 <- levels(ta[,which1])[fl1] # corresponde ao fator onde se está fazendo o desdobramento!
       m.inf <- subset(m.inf, 
                       group == f2)[,2]
       rownames(m.inf) <- paste(f2,
@@ -85,12 +124,31 @@ SK.nest.aovlist <- function(x,
         m      <- as.vector(mt$tables[which][[which]][fl1,])
         which1 <- names(dimnames(mt$tables[which][[which]]))[1]
         which2 <- names(dimnames(mt$tables[which][[which]]))[2]
-        m.inf  <- aggregate(ta[,1],
-                            by=list(ta[[which2]],
-                                    group=ta[[which1]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:3]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:3]
+               }, se = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:3]
+               }, sem= {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+               })
+
         f1 <- levels(ta[,which2])
         f2 <- levels(ta[,which1])[fl1] 
         m.inf <- subset(m.inf, 
@@ -112,12 +170,31 @@ SK.nest.aovlist <- function(x,
         m      <- as.vector(mt$tables[whichn][[whichn]][,fl1])
         which1 <- names(dimnames(mt$tables[whichn][[whichn]]))[2] 
         which2 <- names(dimnames(mt$tables[whichn][[whichn]]))[1]
-        m.inf  <- aggregate(ta[,1],
-                            by=list(ta[[which2]],
-                                    group=ta[[which1]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:3]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:3]
+               }, se = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:3]
+               }, sem= {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+               })
+
         f1 <- levels(ta[,which2])
         f2 <- levels(ta[,which1])[fl1] 
         m.inf <- subset(m.inf, 
@@ -141,14 +218,34 @@ SK.nest.aovlist <- function(x,
       which1 <- names(dimnames(mt$tables[which][[which]]))[1]
       which2 <- names(dimnames(mt$tables[which][[which]]))[2]
       which3 <- names(dimnames(mt$tables[which][[which]]))[3]
-      m.inf  <- aggregate(ta[,1],
-                          by=list(ta[[which3]],
-                                  group=ta[[which2]],
-                                  group2=ta[[which1]]),
-                          function(x)
-                            c(mean(x),
-                              min(x),
-                              max(x)))[,2:4]
+
+      switch(match.arg(dispersion),
+             mm = {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which3]],
+                                          group=ta[[which2]],
+                                          group2=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=min(x),
+                                                max=max(x)))[,2:4]
+             }, se = {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which3]],
+                                          group=ta[[which2]],
+                                          group2=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - sd(x),
+                                                max=mean(x) + sd(x)))[,2:4]
+             }, sem= {
+               m.inf <- aggregate(ta[,1],
+                                  by=list(ta[[which3]],
+                                          group=ta[[which2]],
+                                          group2=ta[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+             })
+
       f1 <- levels(ta[,which3])
       f2 <- levels(ta[,which2])[fl2] 
       f3 <- levels(ta[,which1])[fl1]
@@ -167,19 +264,39 @@ SK.nest.aovlist <- function(x,
       tab <- mt$tables[which][[which]]  
     } else if(which != natri){
       if(nf1 == nt2 && nf2 == nt3){
-        r   <- mt$n[names(mt$tables)][[natri]]# groups and its number of replicates
+        r   <- mt$n[names(mt$tables)][[natri]] # groups and its number of replicates
         m   <- as.vector(mt$tables[natri][[natri]][,fl1,fl2])
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(ta[,1],
-                            by=list(ta[[which1]],
-                                    group=ta[[which3]],
-                                    group2=ta[[which2]]),
-                            function(x)
-                              c(mean(x),
-                                min(x),
-                                max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which1]],
+                                            group=ta[[which3]],
+                                            group2=ta[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which1]],
+                                            group=ta[[which3]],
+                                            group2=ta[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which1]],
+                                            group=ta[[which3]],
+                                            group2=ta[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1 <- levels(ta[,which1])
         f2 <- levels(ta[,which3])[fl2] 
         f3 <- levels(ta[,which2])[fl1] 
@@ -197,18 +314,38 @@ SK.nest.aovlist <- function(x,
                        m.inf[,3][ord]) 
         tab <- mt$tables[natri][[natri]]     
       } else if(nf1 == nt2 && nf2 == nt1){
-        r   <- mt$n[names(mt$tables)][[natri]]# groups and its number of replicates
+        r   <- mt$n[names(mt$tables)][[natri]] # groups and its number of replicates
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(ta[,1],
-                            by=list(ta[[which3]],
-                                    group=ta[[which1]],
-                                    group2=ta[[which2]]),
-                            function(x)
-                              c(mean(x),
-                                min(x),
-                                max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which3]],
+                                            group=ta[[which1]],
+                                            group2=ta[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which3]],
+                                            group=ta[[which1]],
+                                            group2=ta[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which3]],
+                                            group=ta[[which1]],
+                                            group2=ta[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1 <- levels(ta[,which3])
         f2 <- levels(ta[,which1])[fl2] 
         f3 <- levels(ta[,which2])[fl1] 
@@ -231,14 +368,34 @@ SK.nest.aovlist <- function(x,
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(ta[,1],
-                            by=list(ta[[which2]],
-                                    group=ta[[which3]],
-                                    group2=ta[[which1]]),
-                            function(x)
-                              c(mean(x),
-                                min(x),
-                                max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which3]],
+                                            group2=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which3]],
+                                            group2=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which3]],
+                                            group2=ta[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1   <- levels(ta[,which2])
         f2   <- levels(ta[,which3])[fl2] 
         f3   <- levels(ta[,which1])[fl1] 
@@ -256,19 +413,39 @@ SK.nest.aovlist <- function(x,
                       m.inf[,3][ord]) 
         tab <- mt$tables[natri][[natri]]  
       } else if(nf1 == nt3 && nf2 == nt2){
-        r <- mt$n[names(mt$tables)][[natri]]# groups and its number of replicates
+        r <- mt$n[names(mt$tables)][[natri]] # groups and its number of replicates
         m <- as.vector(mt$tables[natri][[natri]][,fl2,fl1])        
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(ta[,1],
-                            by=list(ta[[which1]],
-                                    group=ta[[which2]],
-                                    group2=ta[[which3]]),
-                            function(x)
-                              c(mean(x),
-                                min(x),
-                                max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which1]],
+                                            group=ta[[which2]],
+                                            group2=ta[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which1]],
+                                            group=ta[[which2]],
+                                            group2=ta[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which1]],
+                                            group=ta[[which2]],
+                                            group2=ta[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1  <- levels(ta[,which1])
         f2  <- levels(ta[,which2])[fl2] 
         f3  <- levels(ta[,which3])[fl1] 
@@ -286,19 +463,39 @@ SK.nest.aovlist <- function(x,
                        m.inf[,3][ord]) 
         tab <- mt$tables[natri][[natri]]  
       } else {
-        r <- mt$n[names(mt$tables)][[natri]]# groups and its number of replicates
+        r <- mt$n[names(mt$tables)][[natri]] # groups and its number of replicates
         m <- as.vector(mt$tables[natri][[natri]][fl2,,fl1])
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(ta[,1],
-                            by=list(ta[[which2]],
-                                    group=ta[[which1]],
-                                    group2=ta[[which3]]),
-                            function(x)
-                              c(mean(x),
-                                min(x),
-                                max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]],
+                                            group2=ta[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]],
+                                            group2=ta[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(ta[,1],
+                                    by=list(ta[[which2]],
+                                            group=ta[[which1]],
+                                            group2=ta[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1 <- levels(ta[,which2])
         f2 <- levels(ta[,which1])[fl2] 
         f3 <- levels(ta[,which3])[fl1] 
@@ -320,7 +517,7 @@ SK.nest.aovlist <- function(x,
   }
   colnames(m.inf) <- c('mean', 'min', 'max')
   mMSE   <- MSE/r           
-  dfr    <- x[[error]]$df.residual             # residual degrees of freedom
+  dfr    <- x[[error]]$df.residual # residual degrees of freedom
   g      <- nrow(m.inf)
   groups <- MaxValue(g,
                      m.inf[,1],

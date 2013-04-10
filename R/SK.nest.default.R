@@ -10,7 +10,8 @@ SK.nest.default <- function(x,
                             error,
                             fl1,
                             fl2=0,
-                            sig.level=.05, ...)
+                            sig.level=.05,
+                            dispersion=c('mm', 'se', 'sem'), ...)
 { 
   if (is.data.frame(y))
     y <- as.matrix(y[, 1])  # manova is not contemplated
@@ -31,7 +32,8 @@ SK.nest.default <- function(x,
                        id.trim=id.trim,
                        fl1=fl1,
                        fl2=fl2,
-                       sig.level=sig.level)
+                       sig.level=sig.level,
+                       dispersion=dispersion)
   else
     res <- SK.nest.aovlist(x=av,
                            which=which,
@@ -39,6 +41,7 @@ SK.nest.default <- function(x,
                            error=error,
                            fl1=fl1,
                            fl2=fl2,
-                           sig.level=sig.level)
+                           sig.level=sig.level,
+                           dispersion=dispersion)
   invisible(res)
 }

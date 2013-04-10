@@ -130,7 +130,8 @@ plot(sk1,
 sk2 <- with(CRD2, 
             SK(x=dfm,
                model='y ~ x',
-               which='x'))
+               which='x',
+               dispersion='sem'))
 summary(sk2)
 plot(sk2,
      col=rainbow(max(sk2$groups)),

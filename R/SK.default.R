@@ -8,7 +8,8 @@ SK.default <- function(x,
                        which, 
                        id.trim=3,
                        error,
-                       sig.level=.05, ...)
+                       sig.level=.05,
+                       dispersion=c('mm', 'se', 'sem'), ...)   
 {
   if (is.data.frame(y)) 
     y <- as.matrix(y[, 1])  # manova is not contemplated
@@ -26,12 +27,14 @@ SK.default <- function(x,
     res <- SK.aov(x=av,
                   which=which,
                   id.trim=id.trim, 
-                  sig.level=sig.level)
+                  sig.level=sig.level,
+                  dispersion=dispersion)
   else
     res <- SK.aovlist(x=av,
                       which=which,
                       id.trim=id.trim, 
                       error=error,
-                      sig.level=sig.level)
+                      sig.level=sig.level,
+                      dispersion=dispersion)
   invisible(res)
 }

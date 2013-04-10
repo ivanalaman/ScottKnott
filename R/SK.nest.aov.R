@@ -7,7 +7,8 @@ SK.nest.aov <- function(x,
                         id.trim=3,
                         fl1, 
                         fl2=0,
-                        sig.level=.05, ...)
+                        sig.level=.05,
+                        dispersion=c('mm', 'se', 'sem'), ...)
 {
   mt <- model.tables(x,
                      "means")  # summary tables for model fits
@@ -23,21 +24,40 @@ SK.nest.aov <- function(x,
 
   if(fl2 == 0){
     #$$$$$$$$$$           MODELO SOMENTE COM DOIS FATORES            $$$$$$$$$$$$#
-    if(length(nfa[grep('[[:punct:]]',nfa)]) == 1 && #condição necessária para certificar-se que no modelo há somente uma interação!
+    if(length(nfa[grep('[[:punct:]]',nfa)]) == 1 && # condição necessária para certificar-se que no modelo há somente uma interação!
        which != nfa[grep('[[:punct:]]',nfa)]){
-      whichn <- paste(nf2,nf1,sep=':')#necessário pois no modelo original estamos em uma ordem inversa!
+      whichn <- paste(nf2,nf1,sep=':') # necessário pois no modelo original estamos em uma ordem inversa!
       r      <- mt$n[names(mt$tables)][[whichn]] # groups and its number of replicates
-      m      <- as.vector(mt$tables[whichn][[whichn]][,fl1])#pegando as médias de interesse
-      which1 <- names(dimnames(mt$tables[whichn][[whichn]]))[2]#corresponde ao primeiro fator do seu 'which'
-      which2 <- names(dimnames(mt$tables[whichn][[whichn]]))[1]#corresponde ao segundo fator do seu 'which'
-      m.inf  <- aggregate(x$model[,1],
-                          by=list(x$model[[which2]],
-                                  group=x$model[[which1]]),
-                          function(x) c(mean(x),
-                                        min(x),
-                                        max(x)))[,2:3]
-      f1 <- levels(x$model[,which2])#correspondem aos fatores que se quer comparar!
-      f2 <- levels(x$model[,which1])[fl1]#corresponde ao fator onde se está fazendo o desdobramento!
+      m      <- as.vector(mt$tables[whichn][[whichn]][,fl1]) # pegando as médias de interesse
+      which1 <- names(dimnames(mt$tables[whichn][[whichn]]))[2] # corresponde ao primeiro fator do seu 'which'
+      which2 <- names(dimnames(mt$tables[whichn][[whichn]]))[1] # corresponde ao segundo fator do seu 'which'
+
+      switch(match.arg(dispersion),
+             mm = {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which2]],
+                                          group=x$model[[which1]]),      
+                                  function(x) c(mean=mean(x),
+                                                min=min(x),
+                                                max=max(x)))[,2:3]
+             }, se = {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which2]],
+                                          group=x$model[[which1]]),      
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - sd(x),
+                                                max=mean(x) + sd(x)))[,2:3]
+             }, sem= {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which2]],
+                                          group=x$model[[which1]]),      
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+             })
+
+      f1 <- levels(x$model[,which2]) # correspondem aos fatores que se quer comparar!
+      f2 <- levels(x$model[,which1])[fl1] # corresponde ao fator onde se está fazendo o desdobramento!
       m.inf <- subset(m.inf, 
                       group == f2)[,2]
       rownames(m.inf) <- paste(f2,
@@ -51,17 +71,36 @@ SK.nest.aov <- function(x,
     } else if(length(nfa[grep('[:punct:]',nfa)]) == 1 &&
               which == nfa[grep('[:punct:]',nfa)]){ 
       r      <- mt$n[names(mt$tables)][[which]] # groups and its number of replicates
-      m      <- as.vector(mt$tables[which][[which]][fl1,])#pegando as médias de interesse
-      which1 <- names(dimnames(mt$tables[which][[which]]))[1]#corresponde ao primeiro fator do seu 'which'
-      which2 <- names(dimnames(mt$tables[which][[which]]))[2]#corresponde ao segundo fator do seu 'which'
-      m.inf  <- aggregate(x$model[,1],
-                          by=list(x$model[[which2]],
-                                  group=x$model[[which1]]),
-                          function(x) c(mean(x),
-                                        min(x),
-                                        max(x)))[,2:3]
-      f1 <- levels(x$model[,which2])#correspondem aos fatores que se quer comparar!
-      f2 <- levels(x$model[,which1])[fl1]#corresponde ao fator onde se está fazendo o desdobramento!
+      m      <- as.vector(mt$tables[which][[which]][fl1,]) # pegando as médias de interesse
+      which1 <- names(dimnames(mt$tables[which][[which]]))[1] # corresponde ao primeiro fator do seu 'which'
+      which2 <- names(dimnames(mt$tables[which][[which]]))[2] # corresponde ao segundo fator do seu 'which'
+
+      switch(match.arg(dispersion),
+             mm = {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which2]],
+                                          group=x$model[[which1]]),      
+                                  function(x) c(mean=mean(x),
+                                                min=min(x),
+                                                max=max(x)))[,2:3]
+             }, se = {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which2]],
+                                          group=x$model[[which1]]),      
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - sd(x),
+                                                max=mean(x) + sd(x)))[,2:3]
+             }, sem= {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which2]],
+                                          group=x$model[[which1]]),      
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+             })
+
+      f1 <- levels(x$model[,which2]) # correspondem aos fatores que se quer comparar!
+      f2 <- levels(x$model[,which1])[fl1] # corresponde ao fator onde se está fazendo o desdobramento!
       m.inf <- subset(m.inf, 
                       group == f2)[,2]
       rownames(m.inf) <- paste(f2,
@@ -82,12 +121,31 @@ SK.nest.aov <- function(x,
         m      <- as.vector(mt$tables[which][[which]][fl1,])
         which1 <- names(dimnames(mt$tables[which][[which]]))[1] 
         which2 <- names(dimnames(mt$tables[which][[which]]))[2]
-        m.inf  <- aggregate(x$model[,1],
-                            by=list(x$model[[which2]],
-                                    group=x$model[[which1]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:3]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]]),      
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:3]
+               }, se = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]]),      
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:3]
+               }, sem= {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]]),      
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+               })
+
         f1 <- levels(x$model[,which2])
         f2 <- levels(x$model[,which1])[fl1] 
         m.inf <- subset(m.inf, 
@@ -109,12 +167,31 @@ SK.nest.aov <- function(x,
         m      <- as.vector(mt$tables[whichn][[whichn]][,fl1])
         which1 <- names(dimnames(mt$tables[whichn][[whichn]]))[2] 
         which2 <- names(dimnames(mt$tables[whichn][[whichn]]))[1]
-        m.inf  <- aggregate(x$model[,1],
-                            by=list(x$model[[which2]],
-                                    group=x$model[[which1]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:3]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]]),      
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:3]
+               }, se = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]]),      
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:3]
+               }, sem= {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]]),      
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:3]
+               })
+
         f1 <- levels(x$model[,which2])
         f2 <- levels(x$model[,which1])[fl1] 
         m.inf <- subset(m.inf, 
@@ -138,13 +215,34 @@ SK.nest.aov <- function(x,
       which1 <- names(dimnames(mt$tables[which][[which]]))[1]
       which2 <- names(dimnames(mt$tables[which][[which]]))[2]
       which3 <- names(dimnames(mt$tables[which][[which]]))[3]
-      m.inf  <- aggregate(x$model[,1],
-                          by=list(x$model[[which3]],
-                                  group=x$model[[which2]],
-                                  gorup2=x$model[[which1]]),
-                          function(x) c(mean(x),
-                                        min(x),
-                                        max(x)))[,2:4]
+
+      switch(match.arg(dispersion),
+             mm = {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which3]],
+                                          group=x$model[[which2]],
+                                          group2=x$model[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=min(x),
+                                                max=max(x)))[,2:4]
+             }, se = {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which3]],
+                                          group=x$model[[which2]],
+                                          group2=x$model[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - sd(x),
+                                                max=mean(x) + sd(x)))[,2:4]
+             }, sem= {
+               m.inf <- aggregate(x$model[,1],
+                                  by=list(x$model[[which3]],
+                                          group=x$model[[which2]],
+                                          group2=x$model[[which1]]),
+                                  function(x) c(mean=mean(x),
+                                                min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+             })
+
       f1 <- levels(x$model[,which3])
       f2 <- levels(x$model[,which2])[fl2] 
       f3 <- levels(x$model[,which1])[fl1]
@@ -167,13 +265,34 @@ SK.nest.aov <- function(x,
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(x$model[,1],
-                            by=list(x$model[[which1]],
-                                    group=x$model[[which3]],
-                                    group2=x$model[[which2]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which1]],
+                                            group=x$model[[which3]],
+                                            group2=x$model[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which1]],
+                                            group=x$model[[which3]],
+                                            group2=x$model[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which1]],
+                                            group=x$model[[which3]],
+                                            group2=x$model[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1 <- levels(x$model[,which1])
         f2 <- levels(x$model[,which3])[fl2] 
         f3 <- levels(x$model[,which2])[fl1] 
@@ -194,13 +313,34 @@ SK.nest.aov <- function(x,
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(x$model[,1],
-                            by=list(x$model[[which3]],
-                                    group=x$model[[which1]],
-                                    group2=x$model[[which2]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which3]],
+                                            group=x$model[[which1]],
+                                            group2=x$model[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which3]],
+                                            group=x$model[[which1]],
+                                            group2=x$model[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which3]],
+                                            group=x$model[[which1]],
+                                            group2=x$model[[which2]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1 <- levels(x$model[,which3])
         f2 <- levels(x$model[,which1])[fl2] 
         f3 <- levels(x$model[,which2])[fl1] 
@@ -222,13 +362,34 @@ SK.nest.aov <- function(x,
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(x$model[,1],
-                            by=list(x$model[[which2]],
-                                    group=x$model[[which3]],
-                                    group2=x$model[[which1]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which3]],
+                                            group=x$model[[which2]],
+                                            group2=x$model[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which3]],
+                                            group=x$model[[which2]],
+                                            group2=x$model[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which3]],
+                                            group=x$model[[which2]],
+                                            group2=x$model[[which1]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1 <- levels(x$model[,which2])
         f2 <- levels(x$model[,which3])[fl2] 
         f3 <- levels(x$model[,which1])[fl1] 
@@ -250,13 +411,34 @@ SK.nest.aov <- function(x,
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(x$model[,1],
-                            by=list(x$model[[which1]],
-                                    group=x$model[[which2]],
-                                    group2=x$model[[which3]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which1]],
+                                            group=x$model[[which2]],
+                                            group2=x$model[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which1]],
+                                            group=x$model[[which2]],
+                                            group2=x$model[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which1]],
+                                            group=x$model[[which2]],
+                                            group2=x$model[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1 <- levels(x$model[,which1])
         f2 <- levels(x$model[,which2])[fl2] 
         f3 <- levels(x$model[,which3])[fl1] 
@@ -278,13 +460,34 @@ SK.nest.aov <- function(x,
         which1 <- names(dimnames(mt$tables[natri][[natri]]))[1] 
         which2 <- names(dimnames(mt$tables[natri][[natri]]))[2]
         which3 <- names(dimnames(mt$tables[natri][[natri]]))[3]
-        m.inf  <- aggregate(x$model[,1],
-                            by=list(x$model[[which2]],
-                                    group=x$model[[which1]],
-                                    group2=x$model[[which3]]),
-                            function(x) c(mean(x),
-                                          min(x),
-                                          max(x)))[,2:4]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]],
+                                            group2=x$model[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2:4]
+               }, se = {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]],
+                                            group2=x$model[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2:4]
+               }, sem= {
+                 m.inf <- aggregate(x$model[,1],
+                                    by=list(x$model[[which2]],
+                                            group=x$model[[which1]],
+                                            group2=x$model[[which3]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2:4]
+               })
+
         f1 <- levels(x$model[,which2])
         f2 <- levels(x$model[,which1])[fl2] 
         f3 <- levels(x$model[,which3])[fl1] 
@@ -305,7 +508,7 @@ SK.nest.aov <- function(x,
   }
   colnames(m.inf) <- c('mean', 'min', 'max')
   mMSE   <- MSE/r           
-  dfr    <- df.residual(x)             # residual degrees of freedom 
+  dfr    <- df.residual(x) # residual degrees of freedom 
   g      <- nrow(m.inf)
   groups <- MaxValue(g,
                      m.inf[,1],

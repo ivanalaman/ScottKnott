@@ -23,7 +23,8 @@ sk2 <- with(CRD1,
             SK(x=dm,
                y=y,
                model='y ~ x',
-               which='x'))
+               which='x',
+               dispersion='se'))
 summary(sk2)
 plot(sk2,
      pch=15,
@@ -36,7 +37,8 @@ plot(sk2,
 sk3 <- with(CRD1,
             SK(x=dfm,
                model='y ~ x',
-               which='x'))
+               which='x',
+               dispersion='sem'))
 summary(sk3)
 plot(sk3,
      mm.lty=3,
@@ -113,4 +115,3 @@ plot(sk8,
      id.las=2,
      id.col=FALSE,
      title=NULL)
-

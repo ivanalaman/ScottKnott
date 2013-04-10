@@ -6,7 +6,8 @@ SK.aovlist <- function(x,
 		       which,
 		       id.trim=3,
 		       error,
-		       sig.level=.05, ...)
+		       sig.level=.05,
+                       dispersion=c('mm', 'se', 'sem'), ...)
 {
 	mt <- model.tables(x, "means")  # summary tables for model fits
 	if(is.null(mt$n))
@@ -16,11 +17,28 @@ SK.aovlist <- function(x,
 	m     <- as.vector(mt$tables[[which]])  
 	nms   <- names(mt$tables[[which]])
 	ord   <- order(m, decreasing=TRUE)
-	m.inf <- aggregate(model.frame.aovlist(x)[,1],
-			   by=list(model.frame.aovlist(x)[[which]]),
-			   function(x) c(mean=mean(x),
-					 min=min(x),
-					 max=max(x)))[,2]
+
+        switch(match.arg(dispersion),
+               mm = {
+                 m.inf <- aggregate(model.frame.aovlist(x)[,1],
+                                    by=list(model.frame.aovlist(x)[[which]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=min(x),
+                                                  max=max(x)))[,2]
+               }, se = {
+                 m.inf <- aggregate(model.frame.aovlist(x)[,1],
+                                    by=list(model.frame.aovlist(x)[[which]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - sd(x),
+                                                  max=mean(x) + sd(x)))[,2]
+               }, sem= {
+                 m.inf <- aggregate(model.frame.aovlist(x)[,1],
+                                    by=list(model.frame.aovlist(x)[[which]]),
+                                    function(x) c(mean=mean(x),
+                                                  min=mean(x) - (sd(x) / sqrt(length(x))),
+                                                  max=mean(x) + (sd(x) / sqrt(length(x)))))[,2]
+               })
+
         rownames(m.inf) <- nms
 	m.inf <- m.inf[order(m.inf[,1],
 			     decreasing=TRUE),]

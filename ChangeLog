@@ -1,5 +1,6 @@
-2013-03-24 vs. 1.2-2 - José Cláudio Faria  <joseclaudio.faria@gmail.com>
+2013-04-10 vs. 1.2-3 - José Cláudio Faria  <joseclaudio.faria@gmail.com>
   * The documentation has been deeply updated.
+  * New options related to the dispersion of the means.
 
 2012-12-10 vs. 1.2-1 - José Cláudio Faria  <joseclaudio.faria@gmail.com>
   * A small bug was fixed in the function SK.nest.aovlist.R.
