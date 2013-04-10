@@ -15,21 +15,28 @@ SK.nest.aovlist <- function(x,
                      "means")         # summary tables for model fits
   if(is.null(mt$n))
     stop("No factors in the fitted model!")
-  MSE  <- deviance(x[[error]])/df.residual(x[[error]])
+  MSE  <- deviance(x[[error]]) / df.residual(x[[error]])
   ta   <- model.frame.aovlist(x)
   nfa  <- names(mt$tables)[-1] #nomes dos fatores
-  nf1  <- unlist(strsplit(which,split=':'))[1] #nome do primeiro fator do which
-  nf2  <- unlist(strsplit(which,split=':'))[2] #nome do segundo fator do which
-  nf3  <- unlist(strsplit(which,split=':'))[3] #nome do terceiro fator do which  
+  nf1  <- unlist(strsplit(which,
+                          split=':'))[1] #nome do primeiro fator do which
+  nf2  <- unlist(strsplit(which,
+                          split=':'))[2] #nome do segundo fator do which
+  nf3  <- unlist(strsplit(which,
+                          split=':'))[3] #nome do terceiro fator do which  
   group <- NULL
   group2 <- NULL
 
   #################                 SPLIT-PLOT                   #################
   if (fl2 == 0){
     #$$$$$$$$$$           MODELO SOMENTE COM DOIS FATORES            $$$$$$$$$$$$#
-    if(length(nfa[grep('[[:punct:]]',nfa)]) == 1 && #condição necessária para certificar-se que no modelo há somente uma interação!
-       which != nfa[grep('[[:punct:]]',nfa)]){
-      whichn <- paste(nf2,nf1,sep=':') # necessário pois no modelo original estamos em uma ordem inversa!
+    if(length(nfa[grep('[[:punct:]]',
+                       nfa)]) == 1 && #condição necessária para certificar-se que no modelo há somente uma interação!
+       which != nfa[grep('[[:punct:]]',
+                         nfa)]){
+      whichn <- paste(nf2,
+                      nf1,
+                      sep=':') # necessário pois no modelo original estamos em uma ordem inversa!
       r      <- mt$n[names(mt$tables)][[whichn]] # groups and its number of replicates
       m      <- as.vector(mt$tables[whichn][[whichn]][,fl1]) # pegando as médias de interesse
       which1 <- names(dimnames(mt$tables[whichn][[whichn]]))[2] # corresponde ao primeiro fator do seu 'which'
@@ -66,13 +73,16 @@ SK.nest.aovlist <- function(x,
       rownames(m.inf) <- paste(f2,
                                f1,
                                sep='/') 
-      ord   <- order(m, decreasing=TRUE)
+      ord   <- order(m,
+                     decreasing=TRUE)
       m.inf <- cbind(m.inf[,1][ord],
                      m.inf[,2][ord],
                      m.inf[,3][ord]) 
       tab <- mt$tables[whichn][[whichn]] 
-    } else if(length(nfa[grep('[[:punct:]]',nfa)]) == 1 &&
-              which == nfa[grep('[[:punct:]]',nfa)]){
+    } else if(length(nfa[grep('[[:punct:]]',
+                              nfa)]) == 1 &&
+              which == nfa[grep('[[:punct:]]',
+                                nfa)]){
       r      <- mt$n[names(mt$tables)][[which]] # groups and its number of replicates
       m      <- as.vector(mt$tables[which][[which]][fl1,]) # pegando as médias de interesse
       which1 <- names(dimnames(mt$tables[which][[which]]))[1] # corresponde ao primeiro fator do seu 'which'
@@ -109,17 +119,22 @@ SK.nest.aovlist <- function(x,
       rownames(m.inf) <- paste(f2,
                                f1,
                                sep='/') 
-      ord   <- order(m, decreasing=TRUE)
+      ord   <- order(m,
+                     decreasing=TRUE)
       m.inf <- cbind(m.inf[,1][ord],
                      m.inf[,2][ord],
                      m.inf[,3][ord]) 
       tab <- mt$tables[which][[which]]   
     } else
-      #$$$$$$$$$$           MODELO COM TRES FATORES            $$$$$$$$$$$$#			
-      if(length(nfa[grep('[[:punct:]]',nfa)]) != 1 &&
-         which == nfa[grep('[[:punct:]]',nfa)][1] |
-         which == nfa[grep('[[:punct:]]',nfa)][2] |  
-         which == nfa[grep('[[:punct:]]',nfa)][3] ){
+      # MODELO COM TRES FATORES
+      if(length(nfa[grep('[[:punct:]]',
+                         nfa)]) != 1 &&
+         which == nfa[grep('[[:punct:]]',
+                           nfa)][1] |
+         which == nfa[grep('[[:punct:]]',
+                           nfa)][2] |  
+         which == nfa[grep('[[:punct:]]',
+                           nfa)][3] ){
         r    <- mt$n[names(mt$tables)][[which]]  # groups and its number of replicates
         m      <- as.vector(mt$tables[which][[which]][fl1,])
         which1 <- names(dimnames(mt$tables[which][[which]]))[1]
@@ -156,16 +171,23 @@ SK.nest.aovlist <- function(x,
         rownames(m.inf) <- paste(f2,
                                  f1,
                                  sep='/')
-        ord   <- order(m, decreasing=TRUE)
+        ord   <- order(m,
+                       decreasing=TRUE)
         m.inf <- cbind(m.inf[,1][ord],
                        m.inf[,2][ord],
                        m.inf[,3][ord]) 
         tab <- mt$tables[which][[which]]  
-      } else if(length(nfa[grep('[[:punct:]]',nfa)]) != 1 &&
-                which != nfa[grep('[[:punct:]]',nfa)][1]){
-        t1 <- unlist(strsplit(which,split=':'))[1] 
-        t2 <- unlist(strsplit(which,split=':'))[2]
-        whichn <- paste(t2,t1,sep=':')
+      } else if(length(nfa[grep('[[:punct:]]',
+                                nfa)]) != 1 &&
+                which != nfa[grep('[[:punct:]]',
+                                  nfa)][1]){
+        t1 <- unlist(strsplit(which,
+                              split=':'))[1] 
+        t2 <- unlist(strsplit(which,
+                              split=':'))[2]
+        whichn <- paste(t2,
+                        t1,
+                        sep=':')
         r   <- mt$n[names(mt$tables)][[whichn]] # groups and its number of replicates
         m      <- as.vector(mt$tables[whichn][[whichn]][,fl1])
         which1 <- names(dimnames(mt$tables[whichn][[whichn]]))[2] 
@@ -202,17 +224,22 @@ SK.nest.aovlist <- function(x,
         rownames(m.inf) <- paste(f2,
                                  f1,
                                  sep='/')
-        ord   <- order(m, decreasing=TRUE)
+        ord   <- order(m,
+                       decreasing=TRUE)
         m.inf <- cbind(m.inf[,1][ord],
                        m.inf[,2][ord],
                        m.inf[,3][ord]) 
         tab <- mt$tables[whichn][[whichn]]       
       }
   } else if(fl2 != 0) {
-    natri <- nfa[grep('[[:punct:]].{,100}[[:punct:]]',nfa)]
-    nt1 <- unlist(strsplit(natri,split=':'))[1]
-    nt2 <- unlist(strsplit(natri,split=':'))[2]
-    nt3 <- unlist(strsplit(natri,split=':'))[3]
+    natri <- nfa[grep('[[:punct:]].{,100}[[:punct:]]',
+                      nfa)]
+    nt1 <- unlist(strsplit(natri,
+                           split=':'))[1]
+    nt2 <- unlist(strsplit(natri,
+                           split=':'))[2]
+    nt3 <- unlist(strsplit(natri,
+                           split=':'))[3]
     if(which == natri){
       r      <- mt$n[names(mt$tables)][[which]] # groups and its number of replicates
       which1 <- names(dimnames(mt$tables[which][[which]]))[1]
@@ -515,7 +542,9 @@ SK.nest.aovlist <- function(x,
       }
     }
   }
-  colnames(m.inf) <- c('mean', 'min', 'max')
+  colnames(m.inf) <- c('mean',
+                       'min',
+                       'max')
   mMSE   <- MSE/r           
   dfr    <- x[[error]]$df.residual # residual degrees of freedom
   g      <- nrow(m.inf)
@@ -539,7 +568,9 @@ SK.nest.aovlist <- function(x,
                  tab=tab,
                  fl1=fl1,
                  fl2=fl2)
-  class(res) <- c('SK.nest', 'SK', 'list')
+  class(res) <- c('SK.nest',
+                  'SK',
+                  'list')
   return(res)                         
 }
 

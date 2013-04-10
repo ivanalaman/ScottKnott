@@ -10,7 +10,7 @@ SK.aov <- function(x,
 {
 	if(is.null(which))
 		which <- names(x$model)[2]
-	mt <- model.tables(x, "means")      # summary tables for model fits
+	mt <- model.tables(x, "means")  # summary tables for model fits
 	if(is.null(mt$n))
 		stop("No factors in the fitted model!")
 	r     <- mt$n[names(mt$tables)][[which]] # groups and its number of replicates
@@ -45,7 +45,7 @@ SK.aov <- function(x,
 	m.inf <- m.inf[order(m.inf[,1],
 			     decreasing=TRUE),]
       	mMSE   <- MSE / r
-	dfr    <- x$df.residual             # residual degrees of freedom
+	dfr    <- x$df.residual  # residual degrees of freedom
 	g      <- nrow(m.inf)
 	sig.level=0.05
 	groups <- MaxValue(g,

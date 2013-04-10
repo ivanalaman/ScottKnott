@@ -83,7 +83,7 @@ MaxValue <- function(g,
 
       # the group of just one mean group had already been formed, a further
       # jump to the right and another check whether there was just one mean
-      #left to the right
+      # left to the right
       k <- g + 1
       g <- markg[g]
     }

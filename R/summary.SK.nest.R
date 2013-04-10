@@ -4,7 +4,8 @@
 
 summary.SK.nest <- function(object, ...)
 {
-  if(!inherits(object, 'SK.nest'))
+  if(!inherits(object,
+               'SK.nest'))
     stop("Use only with \"SK.nest\" objects!")
   ngroups <- object$groups[length(object$groups)]
   if(ngroups > 26)

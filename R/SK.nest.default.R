@@ -25,7 +25,9 @@ SK.nest.default <- function(x,
   else
     dat <- x
 
-  av <- eval(substitute(aov(fo, x), list(fo=formula(model))))
+  av <- eval(substitute(aov(fo,
+                            x),
+                        list(fo=formula(model))))
   if(class(av)[1] == 'aov')
     res <- SK.nest.aov(x=av,
                        which=which,

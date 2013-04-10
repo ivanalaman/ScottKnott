@@ -4,7 +4,8 @@
 
 summary.SK <- function(object, ...)
 {
-  if(!inherits(object, 'SK'))
+  if(!inherits(object,
+               'SK'))
     stop("Use only with \"SK\" objects!")
   ngroups <- object$groups[length(object$groups)]
   if(ngroups > 26)
