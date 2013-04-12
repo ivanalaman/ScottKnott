@@ -18,7 +18,6 @@ SK.aov <- function(x,
 	m     <- as.vector(mt$tables[[which]])   # means
 	nms   <- names(mt$tables[[which]])
 	ord   <- order(m, decreasing=TRUE)
-	l     <- nlevels(x$model[, which])
 
         switch(match.arg(dispersion),
                mm = {

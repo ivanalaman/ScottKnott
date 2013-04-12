@@ -18,10 +18,12 @@ SK.default <- function(x,
   if (is.matrix(x) || is.atomic(x))
     x <- as.data.frame(x)
   if(!is.null(y))
-    dat <- as.data.frame(cbind(x, y))
+    dat <- as.data.frame(cbind(x,
+                               y))
   else
     dat <- x
-  av <- eval(substitute(aov(fo, dat),
+  av <- eval(substitute(aov(fo,
+                            dat),
                         list(fo=formula(model))))
   if(class(av)[1] == 'aov')
     res <- SK.aov(x=av,

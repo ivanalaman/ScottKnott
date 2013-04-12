@@ -27,11 +27,11 @@ SK.nest.aovlist <- function(x,
   group <- NULL
   group2 <- NULL
 
-  #################                 SPLIT-PLOT                   #################
+  # SPLIT-PLOT
   if (fl2 == 0){
-    #$$$$$$$$$$           MODELO SOMENTE COM DOIS FATORES            $$$$$$$$$$$$#
+    # MODELO SOMENTE COM DOIS FATORES
     if(length(nfa[grep('[[:punct:]]',
-                       nfa)]) == 1 && #condição necessária para certificar-se que no modelo há somente uma interação!
+                       nfa)]) == 1 && # condição necessária para certificar-se que no modelo há somente uma interação!
        which != nfa[grep('[[:punct:]]',
                          nfa)]){
       whichn <- paste(nf2,

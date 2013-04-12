@@ -3,14 +3,16 @@ Type: Package
 Title: The ScottKnott Clustering Algorithm
 Version: 1.2-3
 Date: 2013-04-10
-Author: Enio Jelihovschi <eniojelihovs@gmail.com>
-        José Cláudio Faria <joseclaudio.faria@gmail.com>
-        Ivan Bezerra Allaman <ivanalaman@gmail.com>
-Maintainer: Ivan Bezerra Allaman <ivanalaman@gmail.com>
-Depends: R (>= 2.6.0), stats, base
-Description: Division of an ANOVA experiment treatment means into
-        homogeneous distinct groups using the clustering method of
-        Scott & Knott
-License: GPL (>= 2)
-Encoding: latin1
-LazyLoad: yes
+Collate:
+    'MaxValue.R'
+    'SK.R'
+    'SK.aov.R'
+    'SK.aovlist.R'
+    'SK.default.R'
+    'SK.nest.R'
+    'SK.nest.aov.R'
+    'SK.nest.aovlist.R'
+    'SK.nest.default.R'
+    'plot.SK.R'
+    'summary.SK.R'
+    'summary.SK.nest.R'
