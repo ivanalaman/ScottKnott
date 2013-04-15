@@ -24,7 +24,7 @@ sk2 <- with(CRD1,
                y=y,
                model='y ~ x',
                which='x',
-               dispersion='se'))
+               dispersion='s'))
 summary(sk2)
 plot(sk2,
      pch=15,
@@ -38,7 +38,7 @@ sk3 <- with(CRD1,
             SK(x=dfm,
                model='y ~ x',
                which='x',
-               dispersion='sem'))
+               dispersion='se'))
 summary(sk3)
 plot(sk3,
      mm.lty=3,

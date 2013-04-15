@@ -7,7 +7,7 @@
 
 ## Note: The factors are in uppercase and its levels in lowercase!
 
-library(ScottKnott)
+# library(ScottKnott)
 data(SPE)
 
 ## From: design matrix (dm) and response variable (y)
@@ -28,7 +28,7 @@ sk2 <- with(SPE,
                model='y ~ blk + P*SP + Error(blk/P)',
                which='SP',
                error='Within',
-               dispersion='se'))
+               dispersion='s'))
 summary(sk2)
 plot(sk2,
      title='Main effect: SP')
@@ -42,7 +42,7 @@ skn1 <- with(SPE,
                      which='P:SP',
                      error='Within',
                      fl1=1,
-                     dispersion='sem'))
+                     dispersion='se'))
 summary(skn1)
 plot(skn1,
      title='Effect: p1/SP')

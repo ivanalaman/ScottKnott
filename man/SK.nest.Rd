@@ -25,14 +25,14 @@
         fl1,
         fl2=0,
         sig.level=.05,
-        dispersion=c('mm', 'se', 'sem'), \dots)
+        dispersion=c('mm', 's', 'se'), \dots)
   \method{SK.nest}{aov}(x,
         which,
         id.trim=3,
         fl1,
         fl2=0,
         sig.level=.05,
-        dispersion=c('mm', 'se', 'sem'), \dots)
+        dispersion=c('mm', 's', 'se'), \dots)
   \method{SK.nest}{aovlist}(x,
         which,
         id.trim=3,
@@ -40,7 +40,7 @@
         fl1,
         fl2=0,
         sig.level=.05,
-        dispersion=c('mm', 'se', 'sem'), \dots)
+        dispersion=c('mm', 's', 'se'), \dots)
 }
 
 \arguments{
@@ -57,10 +57,10 @@
   \item{error}{The error to be considered, only in case of split-plots experiments.}
   \item{sig.level}{Level of Significance used in the SK algorithm to create
     the groups of means. The default value is 0.05.}
-  \item{dispersion}{The dispersion to be considered to the means.
+  \item{dispersion}{The dispersion to be considered to the means. \cr
     The possible vaues are: \samp{'mm'} = \samp{minimum and maximum},
-    \samp{'se'} = \samp{standart deviation},
-    \samp{'sem'} = \samp{standart deviation of the mean}.}
+    \samp{'s'} = \samp{standart deviation},
+    \samp{'se'} = \samp{standart deviation of the mean}.}
   \item{\dots}{Potential further arguments (require by generic).}
 }
 
@@ -128,7 +128,7 @@
                  model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='SP',
                  error='blk:P:SP',
-                 dispersion='se'))
+                 dispersion='s'))
   summary(sk2)
   
   # Main factor: SSP
@@ -138,7 +138,7 @@
                  model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
                  which='SSP',
                  error='Within',
-                 dispersion='sem'))
+                 dispersion='se'))
   summary(sk3)
   
   ## Nested: p1/SP
