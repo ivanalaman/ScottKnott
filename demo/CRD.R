@@ -105,9 +105,8 @@ av2 <- with(CRD2,
                 data=dfm))
 summary(av2)
 
-sk8 <- with(CRD2,
-            SK(x=av2,
-               which='x'))
+sk8 <- SK(x=av2,
+          which='x')
 summary(sk8)
 plot(sk8,
      col=rainbow(max(sk8$groups)),
