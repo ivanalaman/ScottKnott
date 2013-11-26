@@ -1,6 +1,6 @@
 ### ScottKnott
 
-This is the development code of the R package __ScottKnott__.
+This is the development code of the R package **ScottKnott**.
 You should use it if you want to contribute to its development:
 testing unreleased versions, fixing bugs, writing code, etc.
 
