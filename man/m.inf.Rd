@@ -12,7 +12,7 @@
 }
 
 \description{
-  Calculates the means and dispersion for one, two and three factor(s) by \code{model} and \code{model.frame.aovlist} functions.
+  Calculates the means and dispersion for one, two and three factor(s) by \code{model} and \code{model.frame} functions.
 }
 
 \usage{

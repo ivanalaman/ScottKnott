@@ -1,11 +1,11 @@
 Functions:
 =========
 m.inf.1a                Calculates the means and dispersion for one factor by model
-m.inf.1b                Calculates the means and dispersion for one factor by model.frame.aovlist
+m.inf.1b                Calculates the means and dispersion for one factor by model.frame
 m.inf.2a                Calculates the means and dispersion for two factors by model 
-m.inf.2b                Calculates the means and dispersion for two factors by model.frame.aovlist
+m.inf.2b                Calculates the means and dispersion for two factors by model.frame
 m.inf.3a                Calculates the means and dispersion for three factors by model 
-m.inf.3b                Calculates the means and dispersion for three factors by model.frame.aovlist
+m.inf.3b                Calculates the means and dispersion for three factors by model.frame
 MaxValue                Builds groups of means, according to the method of Scott & Knott
 plot.SK                 Plot SK object
 SK                      Main function S3 based

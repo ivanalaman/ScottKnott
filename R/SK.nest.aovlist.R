@@ -59,9 +59,9 @@ SK.nest.aovlist <- function(x,
                         which2,
                         dispersion)
 
-      f1 <- levels(model.frame.aovlist(x)[,which2]) # correspondem aos fatores que se quer comparar!
+      f1 <- levels(model.frame(x)[,which2]) # correspondem aos fatores que se quer comparar!
 
-      f2 <- levels(model.frame.aovlist(x)[,which1])[fl1] # corresponde ao fator onde se está fazendo o desdobramento!
+      f2 <- levels(model.frame(x)[,which1])[fl1] # corresponde ao fator onde se está fazendo o desdobramento!
 
       m.inf <- subset(m.inf, 
                       group == f2)[,2]
@@ -96,9 +96,9 @@ SK.nest.aovlist <- function(x,
                         which2,
                         dispersion)
 
-      f1 <- levels(model.frame.aovlist(x)[,which2]) # correspondem aos fatores que se quer comparar!
+      f1 <- levels(model.frame(x)[,which2]) # correspondem aos fatores que se quer comparar!
 
-      f2 <- levels(model.frame.aovlist(x)[,which1])[fl1] # corresponde ao fator onde se está fazendo o desdobramento!
+      f2 <- levels(model.frame(x)[,which1])[fl1] # corresponde ao fator onde se está fazendo o desdobramento!
 
       m.inf <- subset(m.inf, 
                       group == f2)[,2]
@@ -141,9 +141,9 @@ SK.nest.aovlist <- function(x,
                           which2,
                           dispersion)
 
-        f1 <- levels(model.frame.aovlist(x)[,which2])
+        f1 <- levels(model.frame(x)[,which2])
 
-        f2 <- levels(model.frame.aovlist(x)[,which1])[fl1] 
+        f2 <- levels(model.frame(x)[,which1])[fl1] 
 
         m.inf <- subset(m.inf, 
                         group == f2)[,2]
@@ -189,9 +189,9 @@ SK.nest.aovlist <- function(x,
                           which2,
                           dispersion)
 
-        f1 <- levels(model.frame.aovlist(x)[,which2])
+        f1 <- levels(model.frame(x)[,which2])
 
-        f2 <- levels(model.frame.aovlist(x)[,which1])[fl1] 
+        f2 <- levels(model.frame(x)[,which1])[fl1] 
 
         m.inf <- subset(m.inf, 
                         group == f2)[,2]
@@ -237,11 +237,11 @@ SK.nest.aovlist <- function(x,
                         which3=which1,
                         dispersion)
 
-      f1 <- levels(model.frame.aovlist(x)[,which3])
+      f1 <- levels(model.frame(x)[,which3])
 
-      f2 <- levels(model.frame.aovlist(x)[,which2])[fl2] 
+      f2 <- levels(model.frame(x)[,which2])[fl2] 
 
-      f3 <- levels(model.frame.aovlist(x)[,which1])[fl1]
+      f3 <- levels(model.frame(x)[,which1])[fl1]
 
       m.inf <- subset(m.inf, 
                       group == f2 & group2 == f3)[,3]
@@ -277,11 +277,11 @@ SK.nest.aovlist <- function(x,
                           which3=which2,
                           dispersion)
 
-        f1 <- levels(model.frame.aovlist(x)[,which1])
+        f1 <- levels(model.frame(x)[,which1])
 
-        f2 <- levels(model.frame.aovlist(x)[,which3])[fl2] 
+        f2 <- levels(model.frame(x)[,which3])[fl2] 
 
-        f3 <- levels(model.frame.aovlist(x)[,which2])[fl1] 
+        f3 <- levels(model.frame(x)[,which2])[fl1] 
 
         m.inf <- subset(m.inf, 
                         group == f2 & group2 == f3)[,3]
@@ -314,11 +314,11 @@ SK.nest.aovlist <- function(x,
                           which3=which2,
                           dispersion)
 
-        f1 <- levels(model.frame.aovlist(x)[,which3])
+        f1 <- levels(model.frame(x)[,which3])
 
-        f2 <- levels(model.frame.aovlist(x)[,which1])[fl2] 
+        f2 <- levels(model.frame(x)[,which1])[fl2] 
 
-        f3 <- levels(model.frame.aovlist(x)[,which2])[fl1] 
+        f3 <- levels(model.frame(x)[,which2])[fl1] 
 
         m.inf <- subset(m.inf, 
                         group == f2 & group2 == f3)[,3]
@@ -353,11 +353,11 @@ SK.nest.aovlist <- function(x,
                           which3=which1,
                           dispersion)
 
-        f1 <- levels(model.frame.aovlist(x)[,which2])
+        f1 <- levels(model.frame(x)[,which2])
 
-        f2 <- levels(model.frame.aovlist(x)[,which3])[fl2] 
+        f2 <- levels(model.frame(x)[,which3])[fl2] 
 
-        f3 <- levels(model.frame.aovlist(x)[,which1])[fl1] 
+        f3 <- levels(model.frame(x)[,which1])[fl1] 
 
         m.inf <- subset(m.inf, 
                         group == f2 & group2 == f3)[,3]
@@ -392,11 +392,11 @@ SK.nest.aovlist <- function(x,
                           which3=which3,
                           dispersion)
 
-        f1 <- levels(model.frame.aovlist(x)[,which1])
+        f1 <- levels(model.frame(x)[,which1])
 
-        f2 <- levels(model.frame.aovlist(x)[,which2])[fl2] 
+        f2 <- levels(model.frame(x)[,which2])[fl2] 
 
-        f3 <- levels(model.frame.aovlist(x)[,which3])[fl1] 
+        f3 <- levels(model.frame(x)[,which3])[fl1] 
 
         m.inf <- subset(m.inf, 
                         group == f2 & group2 == f3)[,3]
@@ -431,11 +431,11 @@ SK.nest.aovlist <- function(x,
                           which3=which3,
                           dispersion)
 
-        f1 <- levels(model.frame.aovlist(x)[,which2])
+        f1 <- levels(model.frame(x)[,which2])
 
-        f2 <- levels(model.frame.aovlist(x)[,which1])[fl2] 
+        f2 <- levels(model.frame(x)[,which1])[fl2] 
 
-        f3 <- levels(model.frame.aovlist(x)[,which3])[fl1] 
+        f3 <- levels(model.frame(x)[,which3])[fl1] 
 
         m.inf <- subset(m.inf, 
                         group == f2 & group2 == f3)[,3]
