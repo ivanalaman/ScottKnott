@@ -8,7 +8,7 @@ To download, check and build it do the following in a terminal emulator:
 
 > git clone  git://github.com/jcfaria/ScottKnott.git
 
->   or
+> or
 
 > git clone https://jcfaria@github.com/jcfaria/ScottKnott.git
 
