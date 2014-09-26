@@ -1,3 +1,8 @@
+2014-09-26 vs. 1.2-5 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
+  * A small bug was fixed in the SK.aov.R function.
+   In line 44 there was an object "sig.level=0.05" that prevented the exchange
+  of probability.
+
 2013-04-15 vs. 1.2-4 - José Cláudio Faria  <joseclaudio.faria@gmail.com>
   * All calls to the old method model.frame.aovlist now call the generic
     to meet the requirements of CRAN.

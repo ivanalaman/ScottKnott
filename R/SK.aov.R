@@ -41,8 +41,6 @@ SK.aov <- function(x,
 
   g    <- nrow(m.inf)
 
-  sig.level=0.05
-
   groups <- MaxValue(g,
                      m.inf[, 1],
                      mMSE,
