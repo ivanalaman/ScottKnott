@@ -1,3 +1,8 @@
+2015-09-21 vs. 1.2-6 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
+  * A small bug was fixed in the SK.nest.aov.R function
+    The lines that were with "[:punct:]" (wrongly) were changed to "[[:punct:]]" (correctly).
+  * Corrected documentation in accordance with the premises of cran
+
 2014-09-29 vs. 1.2-5 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
   * A small bug was fixed in the SK.aov.R function.
    In line 44 there was an object "sig.level=0.05" that prevented the exchange

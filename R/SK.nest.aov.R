@@ -74,10 +74,10 @@ SK.nest.aov <- function(x,
                      m.inf[,3][ord])
 
       tab <- mt$tables[whichn][[whichn]]  
-    } else if(length(nfa[grep('[:punct:]',
+    } else if(length(nfa[grep('[[:punct:]]',
                               nfa)]) == 1 &&
 
-              which == nfa[grep('[:punct:]',
+              which == nfa[grep('[[:punct:]]',
                                 nfa)]) { 
       r <- mt$n[names(mt$tables)][[which]] # groups and its number of replicates
 

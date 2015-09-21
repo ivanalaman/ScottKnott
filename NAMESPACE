@@ -8,3 +8,15 @@ exportPattern(".")
 import(
   stats
 )
+
+# S3 methods
+S3method(plot,SK)
+S3method(SK,default)
+S3method(SK,aov)
+S3method(SK,aovlist)
+S3method(SK.nest,aov)
+S3method(SK.nest,aovlist)
+S3method(SK.nest,default)
+S3method(SK,nest)
+S3method(summary,SK.nest)
+S3method(summary,SK)
