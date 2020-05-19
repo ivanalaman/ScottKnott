@@ -1,3 +1,6 @@
+2018-06-07 vs. 1.2-7 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
+  * New corrections in the documentation of accordance with the premises of cran
+
 2015-09-21 vs. 1.2-6 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
   * A small bug was fixed in the SK.nest.aov.R function
     The lines that were with "[:punct:]" (wrongly) were changed to "[[:punct:]]" (correctly).
