@@ -14,3 +14,4 @@ License: GPL (>= 2)
 URL: https://github.com/jcfaria/ScottKnott, http://nbcgib.uesc.br/lec/software/pac-r/scottknott
 Encoding: latin1
 LazyLoad: yes
+LazyData: true
