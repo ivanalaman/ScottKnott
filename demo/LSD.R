@@ -2,30 +2,27 @@
 ## Example: Latin Squares Design (LSD)
 ##
 
-## The parameters can be: design matrix and the response variable,
-## data.frame or aov
+## The parameters can be: formula, aov, lm or lmer.
 
 library(ScottKnott)
 data(LSD)
 
-## From: design matrix (dm) and response variable (y)
+## From: formula
+## Testing tra
 sk1 <- with(LSD,
-            SK(x=dm,
-               y=y,
-               model='y ~ rows + cols + tra',
-               which='tra'))
+            SK(y ~ rows + cols + tra,
+                   dfm,
+                   which='tra',
+                   sig.level=.052))
 summary(sk1)
-plot(sk1)
 
-## From: data.frame
+## From: formula
+## Testing rows
 sk2 <- with(LSD,
-            SK(x=dfm,
-               model='y ~ rows + cols + tra',
-               which='tra',
-               dispersion='s'))
+            SK(y ~ rows + cols + tra,
+                   dfm,
+                   which='rows'))
 summary(sk2)
-plot(sk2,
-     title='Factor levels')
 
 ## From: aov
 av1 <- with(LSD,
@@ -33,10 +30,15 @@ av1 <- with(LSD,
                 data=dfm))
 summary(av1)
 
+## From: aov
+## Testing tra
 sk3 <- SK(av1,
-          which='tra',
-          dispersion='se')
+              which='tra',
+              sig.level=.052)
 summary(sk3)
-plot(sk3,
-     title='Factor levels')
 
+## From: aov
+## Testing cols
+sk4 <- SK(av1,
+              which='cols')
+summary(sk4)

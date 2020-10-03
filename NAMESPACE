@@ -1,23 +1,33 @@
 # Default NAMESPACE created by R
 # Remove the previous line if you edit this file
 
-# Export all names
-exportPattern(".")
+# Export
+export(SK)
+export(plot.SK)
+export(print.SK)
+export(summary.SK)
+export(boxplot.SK)
+export(xtable.SK)
 
 # Import all packages listed as Imports or Depends
+importFrom(doBy, LSmeans)
+importFrom(xtable, xtable)
 import(
-  stats,
-  graphics
+ utils,
+ stats,
+ graphics
 )
 
 # S3 methods
-S3method(plot,SK)
-S3method(SK,default)
-S3method(SK,aov)
-S3method(SK,aovlist)
-S3method(SK.nest,aov)
-S3method(SK.nest,aovlist)
-S3method(SK.nest,default)
-S3method(SK,nest)
-S3method(summary,SK.nest)
-S3method(summary,SK)
+S3method(SK, formula)
+S3method(SK, lm)
+S3method(SK, aovlist)
+S3method(SK, lmerMod)
+S3method(SK, nest.lm)
+S3method(SK, nest.aovlist)
+S3method(SK, nest.lmerMod)
+S3method(summary, SK)
+S3method(print, SK)
+S3method(xtable,SK)
+S3method(plot, SK)
+S3method(boxplot, SK)

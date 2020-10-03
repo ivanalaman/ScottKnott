@@ -1,12 +1,15 @@
 Package: ScottKnott
 Type: Package
 Title: The ScottKnott Clustering Algorithm
-Version: 1.2-7
-Date: 2018-06-07
+Version: 1.2-8
+Date: 2020-10-02
 Author: Enio Jelihovschi, José Cláudio Faria and Ivan Bezerra Allaman
 Maintainer: Ivan Bezerra Allaman <ivanalaman@gmail.com>
-Depends: R (>= 2.6.0), stats, base
-Description: Division of an ANOVA experiment treatment means into homogeneous distinct groups using the clustering method of Scott & Knott.
+Depends: R (>= 4.0.0), base
+Imports: doBy, xtable
+Suggests: lme4
+Description: Perform the conventional Scott & Knott algorithm from formula, 
+             lm, aov, aovlist and lmer objects.
 License: GPL (>= 2)
 URL: https://github.com/jcfaria/ScottKnott, http://nbcgib.uesc.br/lec/software/pac-r/scottknott
 Encoding: latin1

@@ -2,74 +2,47 @@
 ## Example: Randomized Complete Block Design (RCBD)
 ##
 
-## The parameters can be: design matrix and the response variable,
-## data.frame or aov
+## The parameters can be: formula, aov, lm or lmer.
 
 library(ScottKnott)
 data(RCBD)
 
-## Design matrix (dm) and response variable (y)
-sk1 <- with(RCBD,
-            SK(x=dm,
-               y=y,
-               model='y ~ blk + tra',
-               which='tra'))
-summary(sk1)
-plot(sk1)
-
 ## From: data.frame (dfm), which='tra'
+sk1 <- with(RCBD,
+            SK(y ~ blk + tra,
+                   dfm,
+                   which='tra'))
+summary(sk1)
+plot(sk1,
+     di='sd',
+     d.col='red',
+     d.lty=3)
+
+## From: formula, which='blk' implicit (due to be the first arg of the model)
 sk2 <- with(RCBD,
-            SK(x=dfm,
-               model='y ~ blk + tra',
-               which='tra',
-               dispersion='s'))
+            SK(y ~ blk + tra,
+                   dfm))
 summary(sk2)
-plot(sk2,
-     mm.lty=3,
-     title='Factor levels')
+plot(sk2,,
+     di='sd',
+     d.col='red',
+     d.lty=3)
 
-## From: data.frame (dfm), which='blk'
-sk3 <- with(RCBD,
-            SK(x=dfm,
-               model='y ~ blk + tra',
-               which='blk'))
-summary(sk3)
-plot(sk3,
-     id.lab=paste('Block',
-                  1:length(sk3$groups),
-                  sep='_'), 
-     title='Blocks')
-
-## From: aov
 av1 <- with(RCBD,
             aov(y ~ blk + tra,
                 data=dfm))
 summary(av1)
 
-## From: aov, which='blk' implicit
-sk4 <- SK(x=av1)
-summary(sk4)
-plot(sk4,
-     id.lab=paste('Block',
-                  1:length(sk4$groups),
-                  sep='_'),
-     title='Blocks')
+## From: aov, which='blk' implicit (due to be the first arg of the model)
+sk3 <- SK(av1)
+summary(sk3)
 
 ## From: aov, which='blk' explicit
-sk5 <- SK(x=av1,
-          which='blk')
-summary(sk5)
-plot(sk5,
-     id.lab=paste('Block',
-                  1:length(sk5$groups),
-                  sep='_'), 
-     title='Blocks')
+sk4 <- SK(x=av1,
+              which='blk')
+summary(sk4)
 
 ## From: aov, which='tra' explicit
-sk6 <- SK(x=av1,
-          which='tra')
-summary(sk6)
-plot(sk6,
-     xlab='',
-     title='Factor levels')
-
+sk5 <- SK(x=av1,
+              which='tra')
+summary(sk5)

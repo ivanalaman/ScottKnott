@@ -1,3 +1,8 @@
+2020-10-02 vs. 1.2.8 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
+  * New method to unbalanced data.
+  * Added methods to formula, lm and lmerMod class.
+  * All documentation was corrected.
+
 2018-06-07 vs. 1.2-7 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
   * New corrections in the documentation of accordance with the premises of cran
 

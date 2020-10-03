@@ -2,115 +2,106 @@
 ## Examples: Completely Randomized Design (CRD)
 ##
 
-## The parameters can be: vectors, design matrix and the response variable,
-## data.frame or aov
+## The parameters can be: formula, aov, lm or lmer.
 
-## Example 1
+## Example 1: an small experiment
 library(ScottKnott)
 data(CRD1)
 
-## From: vectors x and y
+## From: formula - balanced
 sk1 <- with(CRD1,
-            SK(x=x,
-               y=y,
-               model='y ~ x',
-               which='x'))
+            SK(y ~ x,
+                   dfm))
+sk1
 summary(sk1)
+
 plot(sk1)
 
-## From: design matrix (dm) and response variable (y)
-sk2 <- with(CRD1,
-            SK(x=dm,
-               y=y,
-               model='y ~ x',
-               which='x',
-               dispersion='s'))
-summary(sk2)
-plot(sk2,
-     pch=15,
-     col=c('blue', 'red'),
-     mm.lty=4,
-     ylab='Response',
-     title=NULL)
+plot(sk1,
+     di='mm',
+     d.lty=3)
 
-## From: data.frame (dfm)
-sk3 <- with(CRD1,
-            SK(x=dfm,
-               model='y ~ x',
-               which='x',
-               dispersion='se'))
-summary(sk3)
-plot(sk3,
-     mm.lty=3,
-     id.col=FALSE,
-     title=NULL)
+plot(sk1,
+     di='sd')
 
-## From: aov
+plot(sk1,
+     di='ci',
+     d.col='red')
+
+## From: formula - unbalanced
+u_sk1 <- with(CRD1,
+              SK(y ~ x,
+                     dfm[-1,]))
+u_sk1
+summary(u_sk1)
+
+## From: aov - balanced
 av1 <- with(CRD1,
             aov(y ~ x,
                 data=dfm))
 summary(av1)
 
-sk4 <- SK(x=av1,
-          which='x')
-summary(sk4)
-plot(sk4, title=NULL)
+sk2 <- SK(av1)
+sk2
+summary(sk2)
 
+## From: lm - unbalanced
+u_lm1 <- with(CRD1,
+              lm(y ~ x,
+                 data=dfm[-1,]))
+summary(u_lm1)
 
-## Example 2
-library(ScottKnott)
+u_sk2 <- SK(u_lm1)
+u_sk2
+summary(u_sk2)
+
+## Example 2: a lot of groups
 data(CRD2)
 
-## From: vectors x and y
-sk5 <- with(CRD2,
-            SK(x=x,
-               y=y,
-               model='y ~ x',
-               which='x'))
-summary(sk5)
-plot(sk5,
+## From: data.frame (dfm) - balanced
+sk3 <- with(CRD2,
+            SK(y ~ x,
+                   dfm))
+plot(sk3,
      id.las=2,
-     rl=FALSE)
+     yl=FALSE,
+     di='sd',
+     d.lty=3,
+     d.col='red')
 
-## From: design matrix (dm) and response variable (y)
-sk6 <- with(CRD2,
-            SK(x=dm,
-               y=y,
-               model='y ~ x',
-               which='x',
-               sig.level=0.005))
-summary(sk6)
-plot(sk6,
-     col=rainbow(max(sk6$groups)),
-     mm.lty=3,
+## From: data.frame (dfm) - unbalanced
+u_sk3 <- with(CRD2,
+              SK(y ~ x,
+                     dfm[-1,]))
+plot(u_sk3,
      id.las=2,
-     rl=FALSE,
-     title='sig.level=0.005', )
+     yl=FALSE,
+     di='sd',
+     d.lty=3,
+     d.col='red')
 
-## From: data.frame (dfm)
-sk7 <- with(CRD2,
-            SK(x=dfm,
-               model='y ~ x',
-               which='x'))
-summary(sk7)
-plot(sk7,
-     col=rainbow(max(sk7$groups)),
-     id.las=2,
-     id.col=FALSE,
-     rl=FALSE)
-
-## From: aov
+## From: aov - balanced
 av2 <- with(CRD2,
             aov(y ~ x,
                 data=dfm))
 summary(av2)
 
-sk8 <- SK(x=av2,
-          which='x')
-summary(sk8)
-plot(sk8,
-     col=rainbow(max(sk8$groups)),
-     rl=FALSE, 
+sk4 <- SK(av2)
+plot(sk4,
      id.las=2,
-     id.col=FALSE,
-     title=NULL)
+     yl=FALSE,
+     di='sd',
+     d.lty=4,
+     d.col='darkgreen')
+
+## From: lm - unbalanced
+u_lm2 <- with(CRD2,
+              lm(y ~ x,
+                 data=dfm[-1,]))
+summary(u_lm2)
+
+u_sk8 <- SK(u_lm2)
+
+plot(u_sk8,
+     id.las=2,
+     yl=FALSE)

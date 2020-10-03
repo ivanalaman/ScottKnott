@@ -2,67 +2,69 @@
 \alias{plot.SK}
 
 \title{
-  Plot SK and SK.nest Objects
+  Plot SK objects
 }
 
 \description{
-  S3 method to plot \code{SK} and \code{SK.nest} objects.
+  S3 method to plot \code{SK} objects.
 }
 
 \usage{
 \method{plot}{SK}(x,
-     pch=19, 
-     col=NULL,
-     xlab=NULL,
-     ylab=NULL,
-     xlim=NULL,
-     ylim=NULL,
-     id.lab=NULL,
-     id.las=1,
-     id.col=TRUE,
-     rl=TRUE,
-     rl.lty=3,
-     rl.col='gray',
-     mm=TRUE,
-     mm.lty=1, 
-     title="Means grouped by color(s)", \dots)
+     result         = TRUE,
+     replicates     = TRUE,
+     pch            = 19,
+     col            = NULL,
+     xlab           = NULL,
+     ylab           = NULL,
+     xlim           = NULL,
+     ylim           = NULL,
+     id.lab         = NULL,
+     id.las         = 1,
+     yl             = TRUE,
+     yl.lty         = 3,
+     yl.col         = 'gray',
+     dispersion     = c('none','mm','sd','ci','cip'),
+     d.lty          = 1,
+     d.col          = 'black',
+     title          = '', \dots)
 }
 
 \arguments{
   \item{x}{A \code{SK} object.}
+  \item{result}{The result of the test (letters) should be visible.}
+  \item{replicates}{The number of replicates should be visible.}
   \item{pch}{A vector of plotting symbols or characters.}
   \item{col}{A vector of colors for the means representation.}
   \item{xlab}{A label for the \samp{x} axis.}
   \item{ylab}{A label for the \samp{y} axis.}
   \item{xlim}{The \samp{x} limits of the plot.}
   \item{ylim}{The \samp{y} limits of the plot.}
-  \item{id.lab}{Factor level names at x-axis.}
+  \item{id.lab}{Factor level names at \samp{x} axis.}
   \item{id.las}{Factor level names written either horizontally or vertically.}
-  \item{id.col}{A logical value. If \code{TRUE} (the default), the \code{col} parameter will be used for the \samp{x} axis.}
-  \item{rl}{Horizontal line connecting the circle to the y-axis.}
-  \item{rl.lty}{Line type of \samp{rl}.}
-  \item{rl.col}{Line color of \samp{rl}.}
-  \item{mm}{Vertical line through the circle (mean value) linking the minimum to the maximum of the factor level values corresponding to that mean value.}
-  \item{mm.lty}{Line type of \samp{mm}.}
+  \item{yl}{Horizontal (reference) line connecting the circle to the \samp{y} axis.}
+  \item{yl.lty}{Line type of \samp{yl}.}
+  \item{yl.col}{Line color of \samp{yl}.}
+  \item{dispersion}{Vertical line through the circle (mean value) linking the minimum to the maximum of the factor level values corresponding to that mean value. Other options are: sd (standard deviation), ci (confidence interval), cip (pooled confidence interval) and none.}
+  \item{d.lty}{Line type of dispersion.}
+  \item{d.col}{A vector of colors for the line type of dispersion.}
   \item{title}{A title for the plot.}
   \item{\dots}{Optional plotting parameters.}
-} 
+}
 
 \details{
-  The \code{plot.SK} function is a S3 method to plot \code{SK} and
-  \code{SK.nest} objetcs. It generates a serie of points (the means) and a 
-  vertical line showing the minimum e maximum of the values corresponding to
-  each group mean. The groups are diferentiated by colors.
+  The \code{plot.SK} function is a S3 method to plot \samp{Scott and Knott} objetcs. It generates a serie of points (the means) and a 
+  vertical line showing the dispersion of the values corresponding to each group mean. The ci options is calculed utilizing each treatment variance as estimating of population variance. The cip options is calculed utilizing the means square error (MSE) as estimating of population variance.
 }
 
 \author{
-  Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
   José Cláudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr
+  Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
+  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})
 }
 
 \references{
-  Murrell, P. 2005. R Graphics. Chapman & Hall/CRC Press.
+  Murrell, P. (2005) \emph{R Graphics}. Chapman and Hall/CRC Press.
 }
 
 \seealso{
@@ -72,48 +74,26 @@
 \examples{
 ##
 ## Examples: Completely Randomized Design (CRD)
-## More details: demo(package='ScottKnott')
+## More details: demo(package='SK')
 ##
 
 library(ScottKnott)
 data(CRD2)
 
-## From: vectors x and y
+## From: formula
 sk1 <- with(CRD2,
-            SK(x=x,
-               y=y,
-               model='y ~ x',
-               which='x'))
+            SK(y ~ x,
+                   data=dfm,
+                   which='x'))
+
+old.par <- par(mar=c(6, 3, 6, 2))
+plot(sk1,
+     id.las=2)
 
 plot(sk1,
-     id.las=2,
-     rl=FALSE, 
-     title='Factor levels')
-
-## From: design matrix (dm) and response variable (y)
-sk2 <- with(CRD2,
-            SK(x=dm,
-               y=y,
-               model='y ~ x',
-               which='x'))
-plot(sk2,
-     col=rainbow(max(sk2$groups)),
-     mm.lty=3,
-     id.las=2,
-     rl=FALSE,
-     title='Factor levels')
-
-## From: data.frame (dfm)
-sk3 <- with(CRD2,
-            SK(x=dfm,
-               model='y ~ x',
-               which='x'))
-
-plot(sk3,
-     col=rainbow(max(sk3$groups)),
-     id.las=2,
-     id.col=FALSE,
-     rl=FALSE)
+     yl=FALSE,
+     disp='sd',
+     id.las=2)
 
 ## From: aov
 av <- with(CRD2,
@@ -121,21 +101,35 @@ av <- with(CRD2,
                data=dfm))
 summary(av)
 
-sk4 <- with(CRD2,
-            SK(x=av,
-               which='x'))
+sk2 <- SK(x=av,
+              which='x')
+plot(sk2,
+     disp='sd',
+     yl=FALSE,
+     id.las=2)
 
-plot(sk4,
-     col=rainbow(max(sk4$groups)),
-     rl=FALSE,
+# From: lm
+av_lm <- with(CRD2,
+           lm(y ~ x,
+              data=dfm))
+
+sk3 <- SK(x=av_lm,
+              which='x')
+
+par(mfrow=c(2, 1))
+plot(sk3,
+     disp='ci',
      id.las=2,
-     id.col=FALSE,
-     title=NULL)
+     yl=FALSE)
+
+plot(sk3,
+     disp='cip',
+     id.las=2,
+     yl=FALSE)
+
+par(mfrow=c(1, 1))
+par(old.par)
 }
 
 \keyword{package}
-\keyword{htest}
-\keyword{univar}
-\keyword{tree}
-\keyword{design}
 

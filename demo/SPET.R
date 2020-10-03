@@ -2,140 +2,127 @@
 ## Example: Split-plot Experiment in time (SPET)
 ##
 
-## The parameters can be: design matrix and the response variable,
-## data.frame or aov
+## The parameters can be: formula, aov, lm or lmer.
 
 ## Note: The factors are in uppercase and its levels in lowercase!
 
 library(ScottKnott)
 data(SPET)
 
-## From: design matrix (dm) and response variable (y)
-## Main factor: tra
+## From: formula
+## Main factor: year
 sk1 <- with(SPET,
-            SK(x=dm, 
-               y=y, 
-               model='y ~ blk + tra*year + Error(blk/tra)',
-               which='tra',
-               error='blk:tra'))
+            SK(y ~ blk + tra*year + Error(blk/tra),
+                   dfm,
+                   which='year'))
 summary(sk1)
 
-plot(sk1)
-
-## Main factor: year
+## Nested: crotjuncea/year
 sk2 <- with(SPET,
-            SK(x=dm,
-               y=y,
-               model='y ~ blk + tra*year + Error(blk/tra)',
-               which='year',
-               error='Within'))
+            SK(y ~ blk + tra*year + Error(blk/tra),
+                   dfm,
+                   which='tra:year',
+                   fl1=2))
 summary(sk2)
-plot(sk2,
-     title='Main effect: year')
-
-## Nested: crotjuncea/year
-skn1 <- with(SPET,
-             SK.nest(x=dm,
-                     y=y,
-                     model='y ~ blk + tra*year + Error(blk/tra)',
-                     which='tra:year',
-                     error='Within',
-                     fl1=2))
-summary(skn1)
-plot(skn1,
-     title='Effect: crotjuncea/year')
-
-
-## From: data.frame
-## Main factor: year
-sk3 <- with(SPET,
-            SK(dfm,
-               model='y ~ blk + tra*year + Error(blk/tra)',
-               which='year',
-               error='Within'))
-summary(sk3)
-plot(sk3, 
-     title='Main effect: year')
-
-## Nested: crotjuncea/year
-skn2 <- with(SPET,
-             SK.nest(dfm,
-                     model='y ~ blk + tra*year + Error(blk/tra)',
-                     which='tra:year',
-                     error ='Within',
-                     fl1=2))
-summary(skn2)
-plot(skn2,
-     title='Effect: crotjuncea/year')
 
 ## Nested: year_1/tra
-skn3 <- with(SPET,
-             SK.nest(dfm,
-                     model='y ~ blk + tra*year + Error(blk/tra)',
-                     which='year:tra',
-                     error ='Within',
-                     fl1=1))
-summary(skn3)
-plot(skn3,
-     title='Effect: year_1/tra')
+## It is necessary to inform how to combinate the errors
+sk3 <- with(SPET,
+            SK(y ~ blk + tra*year + Error(blk/tra),
+                   dfm,
+                   which='year:tra',
+                   error='Within/blk:tra',
+                   fl1=1))
+summary(sk3)
 
+## From: lm
+lm1 <- with(SPET,
+            lm(y ~ blk*tra + tra*year,
+               data=dfm))
 
+## Nested: tra1/year
+sk4 <- SK(lm1,
+              which='tra:year',
+              fl1=1)
 
-## From: aovlist
+summary(sk4)
+
+## Nested: year1/tra
+## It is necessary to inform how to combinate the errors
+sk5 <- SK(lm1,
+              which='year:tra',
+              error='Within/blk:tra',
+              fl1=1)
+summary(sk5,
+        complete=FALSE)
+
+## Nested: year2/tra
+## It is necessary to inform how to combinate the errors
+sk6 <- SK(lm1,
+              which='year:tra',
+              error='Within/blk:tra',
+              fl1=2)
+summary(sk6,
+        complete=FALSE)
+
+## From: aov
 av1 <- with(SPET,
             aov(y ~ blk + tra*year + Error(blk/tra),
                 data=dfm))
 summary(av1)
 
 ## Main factor: year
-sk4 <- SK(av1,
-          which='year',
-          error='Within')
-summary(sk4)
-plot(sk4, title='Main effect: year')
+sk7 <- SK(av1,
+              which='year')
+summary(sk7)
 
 ## Main factor: tra
-sk5 <- SK(av1,
-          which='tra',
-          error='blk:tra')
-summary(sk5)
-plot(sk5, 
-     title='Main effect: tra')
+## It is necessary to inform the appropriate error for the test
+sk8 <- SK(av1,
+              which='tra',
+              error='blk:tra')
+summary(sk8,
+        complete=FALSE)
 
 ## Nested: crotjuncea/year
-skn4 <- SK.nest(av1,
-                which='tra:year',
-                error='Within',
-                fl1=2)
-summary(skn4)
-plot(skn4,
-     title='Effect: crotjuncea/year')
+sk9 <- SK(av1,
+              which='tra:year',
+              fl1=2)
+summary(sk9)
 
 ## Nested: guandu/year
-skn5 <- SK.nest(av1,
-                which='tra:year',
-                error='Within',
-                fl1=4)
-summary(skn5)
-plot(skn5,
-     title='Effect: guandu/year')
+sk10 <- SK(av1,
+               which='tra:year',
+               fl1=4)
+summary(sk10)
 
+## Nested: year_1/tra - it is necessary to inform how to combinate the errors
+sk11 <- SK(av1,
+               which='year:tra',
+               error='Within/blk:tra',
+               fl1=1)
+summary(sk11,
+        complete=FALSE)
 
-## Nested: year_1/tra
-skn6 <- SK.nest(av1,
-                which='year:tra',
-                error='Within',
-                fl1=1)
-summary(skn6)
-plot(skn6,
-     title='Effect: year_1/tra')
+op <- par(mar=c(6, 3, 3, 2))
+plot(sk10,
+     id.las=2,
+     xlab='',
+     di='sd',
+     d.col='red',
+     d.lty=3)
 
-## Nested: year_2/tra
-skn7 <- SK.nest(av1,
-                which='year:tra',
-                error='Within',
-                fl1=2)
-summary(skn7)
-plot(skn7,
-     title='Effect: year_2/tra')
-
+## Nested: year_2/tra - it is necessary to inform how to combinate the errors
+sk12 <- SK(av1,
+               which='year:tra',
+               error='Within/blk:tra',
+               fl1=2)
+summary(sk12)
+op <- par(mar=c(7, 3, 3, 2))
+plot(sk12,
+     id.las=2,
+     xlab='',
+     di='sd',
+     d.col='red',
+     d.lty=3)
+par(op)

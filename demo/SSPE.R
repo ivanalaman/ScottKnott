@@ -2,174 +2,157 @@
 ## Example: Split-split-plot Experiment (SSPE)
 ##
 
-## Note: The factors are in uppercase and its levels in lowercase!
+## The parameters can be: formula, aov, lm or lmer.
+
+## Note: Upper case for factors and lowercase for levels
 
 library(ScottKnott)
 data(SSPE)
 
-## From: design matrix (dm) and response variable (y)
+## From: formula
 ## Main factor: P
+## It is necessary to inform the appropriate error for the test
 sk1 <- with(SSPE,
-            SK(dm,
-               y,
-               model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
-               which='P',
-               error='blk:P'))
+            SK(y ~ blk + P*SP*SSP + Error(blk/P/SP),
+                   dfm,
+                   which='P',
+                   error='blk:P'))
 summary(sk1)
-plot(sk1)
 
-# Main factor: SP
+## Nested: p2/SP
+## It is necessary to inform the appropriate error for the test
 sk2 <- with(SSPE,
-            SK(dm,
-               y,
-               model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
-               which='SP',
-               error='blk:P:SP',
-               dispersion='s'))
+            SK(y ~ blk + P*SP*SSP + Error(blk/P/SP),
+                   dfm,
+                   which='P:SP',
+                   error='blk:P:SP',
+                   fl1=2))
 summary(sk2)
-plot(sk2,
-     title='Main effect: SP')
 
-# Main factor: SSP
+## Nested: p2/SSP
 sk3 <- with(SSPE,
-            SK(dm,
-               y,
-               model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
-               which='SSP', 
-               error='Within',
-               dispersion='se'))
+            SK(y ~ blk + P*SP*SSP + Error(blk/P/SP),
+                   dfm,
+                   which='P:SSP',
+                   fl1=2))
 summary(sk3)
 plot(sk3,
-     col=heat.colors(max(sk3$groups)),
-     title='Main effect: SSP')
-
-## Nested: p1/SP
-skn1 <- with(SSPE,
-             SK.nest(dm,
-                     y,
-                     model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
-                     which='P:SP',
-                     error='blk:P:SP',
-                     fl1=1))
-summary(skn1)
-plot(skn1, 
-     col='darkgray',
-     title='Effect: p1/SP')
+     di='sd',
+     d.col='red',
+     d.lty=3)
 
 
-## From: data.frame
-## Main factor: P
-sk4 <- with(SSPE,
-            SK(dfm,
-               model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
-               which='P',
-               error='blk:P'))
-summary(sk4)
-plot(sk4,
-     title='Main effect: P')
-
-## Nested: p2/SP
-skn2 <- with(SSPE,
-             SK.nest(dfm,
-                     model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
-                     which='P:SP',
-                     error='blk:P:SP',
-                     fl1=2))
-summary(skn2)
-plot(skn2,
-     title='Effect: p2/SP')
-
-## Nested: p2/SP
-skn3 <- with(SSPE,
-             SK.nest(dfm,
-                     model='y ~ blk + P*SP*SSP + Error(blk/P/SP)',
-                     which='P:SP',
-                     error='Within',
-                     fl1=2))
-summary(skn3)
-plot(skn3,
-     title='Effect: p2/SP')
-
-
-## From: aovlist
-av <- with(SSPE,
-           aov(y ~  blk + P*SP*SSP + Error(blk/P/SP), 
+## From: lm
+lm1 <- with(SSPE,
+            lm(y ~ blk*P + blk*P*SP + P*SP*SSP,
                data=dfm))
-summary(av)
+summary(lm1)
 
-## Main factor: P 
-sk5 <- SK(av, 
-          which='P',
-          error='blk:P')
+## Main factor: P
+## It is necessary to inform the appropriate error for the test
+sk4 <- SK(lm1,
+              which='P',
+              error='blk:P')
+summary(sk4)
+
+## Main factor: SP
+sk5 <- SK(lm1,
+              which='SP',
+              error='blk:P:SP')
 summary(sk5)
-plot(sk5,
-     title='Main effect: P')
 
 ## Main factor: SSP
-sk6 <- SK(av,
-          which='SSP',
-          error='Within')
+sk6 <- SK(lm1,
+              which='SSP')
 summary(sk6)
-plot(sk6, 
-     col=c('black', 'darkgray', 'gray'),
-     title='Main effect = SSP')
 
 ## Nested: p1/SP
-skn4 <- SK.nest(av,
-                which='P:SP',
-                error='blk:P:SP',
-                fl1=1)
-summary(skn4)
-plot(skn4, 
-     title='Effect: p1/SP')
+## It is necessary to inform the appropriate error for the test
+sk7 <- SK(lm1,
+              which='P:SP',
+              error='blk:P:SP',
+              fl1=1)
+summary(sk7)
+
+## From: aov
+av1 <- with(SSPE,
+            aov(y ~  blk + P*SP*SSP + Error(blk/P/SP),
+                data=dfm))
+summary(av1)
+
+## Main factor: P 
+## It is necessary to inform the appropriate error for the test
+sk8 <- SK(av1,
+              which='P',
+              error='blk:P')
+summary(sk8)
+
+## Main factor: SSP
+sk9 <- SK(av1,
+              which='SSP')
+summary(sk9)
+
+## Nested: p1/SP
+## It is necessary to inform the appropriate error for the test
+sk10 <- SK(av1,
+               which='P:SP',
+               error='blk:P:SP',
+               fl1=1)
+summary(sk10)
 
 ## Nested: p2/SP
-skn5 <- SK.nest(av,
-                which='P:SP',
-                error='blk:P:SP',
-                fl1=2)
-summary(skn5)
-plot(skn5, title='Effect: p2/SP')
+sk11 <- SK(av1,
+               which='P:SP',
+               error='blk:P:SP',
+               fl1=2)
+summary(sk11)
 
-## Nested: P/SP/SSP (at various levels of SP and P)
-skn6 <- SK.nest(av,
-                which='P:SP:SSP',
-                error='Within',
-                fl1=1,
-                fl2=1)
-summary(skn6)
-plot(skn6, 
-     col=c('red', 'darkgreen'),
-     title='Effect: p1/sp1/SSP')
+## Nested: Pi/SPi/SSP (at various levels of P and SP)
+sk12 <- SK(av1,
+               which='P:SP:SSP',
+               fl1=1,
+               fl2=1)
+summary(sk12)
 
-skn7 <- SK.nest(av,
-                which='P:SP:SSP', 
-                error='Within',
-                fl1=1,
-                fl2=2)
-summary(skn7)
-plot(skn7, 
-     col='darkgreen', 
-     title='Effect: p1/sp2/SSP')
+sk13 <- SK(av1,
+               which='P:SP:SSP',
+               fl1=2,
+               fl2=1)
+summary(sk13)
 
-skn8 <- SK.nest(av,
-                which='P:SP:SSP', 
-                error='Within', 
-                fl1=3, 
-                fl2=3)
-summary(skn8)
-plot(skn8, 
-     col='darkgreen',
-     title='Effect: p3/sp3/SSP')
+sk14 <- SK(av1,
+               which='P:SP:SSP',
+               fl1=3,
+               fl2=3)
+summary(sk14)
 
-skn9 <- SK.nest(av,
-                which='P:SP:SSP',
-                error='Within',
-                fl1=3, 
-                fl2=2)
-summary(skn9)
-plot(skn9,
-     id.lab=paste('test', 
-                  1:length(skn9$groups),
-                  sep='_'),
-     title='Effect: p3/sp2/SSP')
+sk15 <- SK(av1,
+               which='P:SP:SSP',
+               fl1=2,
+               fl2=3)
+summary(sk15)
+
+## Nested: sp1/P
+## It is necessary to inform the appropriate error for the test
+sk16 <- SK(av1,
+               which='SP:P',
+               error='blk:P:SP/blk:P',
+               fl1=1)
+
+summary(sk16)
+
+## Nested: ssp1/SP
+sk17 <- SK(av1,
+               which='SSP:SP',
+               error='Within/blk:P:SP',
+               fl1=1)
+summary(sk17)
+
+## Nested: ssp1/sp1/P
+## It is necessary to inform the appropriate error for the test
+sk18 <- SK(av1,
+               which='SSP:SP:P',
+               error='Within/blk:P:SP/blk:P',
+               fl1=1,
+               fl2=1)
+summary(sk18)
