@@ -1,8 +1,8 @@
 Package: ScottKnott
 Type: Package
 Title: The ScottKnott Clustering Algorithm
-Version: 1.2-8
-Date: 2020-10-02
+Version: 1.2-9
+Date: 2020-10-05
 Author: Enio Jelihovschi, José Cláudio Faria and Ivan Bezerra Allaman
 Maintainer: Ivan Bezerra Allaman <ivanalaman@gmail.com>
 Depends: R (>= 4.0.0), base
