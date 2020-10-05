@@ -44,9 +44,9 @@
   ## From: formula
   sk1 <- with(CRD2,
               SK(y ~ x,
-                     data=dfm,
-                     which='x',
-                     id.trim=5))
+                 data=dfm,
+                 which='x',
+                 id.trim=5))
   summary(sk1)
 
 }

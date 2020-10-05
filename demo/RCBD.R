@@ -10,8 +10,8 @@ data(RCBD)
 ## From: data.frame (dfm), which='tra'
 sk1 <- with(RCBD,
             SK(y ~ blk + tra,
-                   dfm,
-                   which='tra'))
+               dfm,
+               which='tra'))
 summary(sk1)
 plot(sk1,
      di='sd',
@@ -21,7 +21,7 @@ plot(sk1,
 ## From: formula, which='blk' implicit (due to be the first arg of the model)
 sk2 <- with(RCBD,
             SK(y ~ blk + tra,
-                   dfm))
+               dfm))
 summary(sk2)
 plot(sk2,,
      di='sd',
@@ -39,10 +39,10 @@ summary(sk3)
 
 ## From: aov, which='blk' explicit
 sk4 <- SK(x=av1,
-              which='blk')
+          which='blk')
 summary(sk4)
 
 ## From: aov, which='tra' explicit
 sk5 <- SK(x=av1,
-              which='tra')
+          which='tra')
 summary(sk5)

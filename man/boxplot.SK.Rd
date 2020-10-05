@@ -11,13 +11,13 @@
 
 \usage{
 \method{boxplot}{SK}(x,
-          mean.type   = c('line', 'point', 'none'),
-          xlab        = NULL,
-          mean.col    = 'gray',
-          mean.pch    = 1,
-          mean.lwd    = 1,
-          mean.lty    = 1,
-          args.legend = NULL, \dots)
+         mean.type   = c('line', 'point', 'none'),
+         xlab        = NULL,
+         mean.col    = 'gray',
+         mean.pch    = 1,
+         mean.lwd    = 1,
+         mean.lty    = 1,
+         args.legend = NULL, \dots)
 }
 
 \arguments{
@@ -62,8 +62,8 @@ data(CRD1)
 ## From: formula
 # Simple!
 sk1 <- SK(y ~ x,
-              data=CRD1$dfm,
-              which='x')
+          data=CRD1$dfm,
+          which='x')
 boxplot(sk1)
 
 # A little more elaborate!

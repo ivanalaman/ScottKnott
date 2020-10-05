@@ -11,17 +11,17 @@ data(LSD)
 ## Testing tra
 sk1 <- with(LSD,
             SK(y ~ rows + cols + tra,
-                   dfm,
-                   which='tra',
-                   sig.level=.052))
+               dfm,
+               which='tra',
+               sig.level=.052))
 summary(sk1)
 
 ## From: formula
 ## Testing rows
 sk2 <- with(LSD,
             SK(y ~ rows + cols + tra,
-                   dfm,
-                   which='rows'))
+               dfm,
+               which='rows'))
 summary(sk2)
 
 ## From: aov
@@ -33,12 +33,12 @@ summary(av1)
 ## From: aov
 ## Testing tra
 sk3 <- SK(av1,
-              which='tra',
-              sig.level=.052)
+          which='tra',
+          sig.level=.052)
 summary(sk3)
 
 ## From: aov
 ## Testing cols
 sk4 <- SK(av1,
-              which='cols')
+          which='cols')
 summary(sk4)

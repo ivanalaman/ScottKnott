@@ -34,9 +34,9 @@
 data(RCBD) 
 
 sk <- with(RCBD,
-	   SK(y ~ blk + tra,
-		  data=dfm,
-		  which='tra'))
+       	   SK(y ~ blk + tra,
+          		  data=dfm,
+          		  which='tra'))
 sk
 
 }

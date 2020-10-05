@@ -11,7 +11,7 @@ data(CRD1)
 ## From: formula - balanced
 sk1 <- with(CRD1,
             SK(y ~ x,
-                   dfm))
+               dfm))
 sk1
 summary(sk1)
 
@@ -31,7 +31,7 @@ plot(sk1,
 ## From: formula - unbalanced
 u_sk1 <- with(CRD1,
               SK(y ~ x,
-                     dfm[-1,]))
+                 dfm[-1,]))
 u_sk1
 summary(u_sk1)
 
@@ -61,7 +61,7 @@ data(CRD2)
 ## From: data.frame (dfm) - balanced
 sk3 <- with(CRD2,
             SK(y ~ x,
-                   dfm))
+               dfm))
 plot(sk3,
      id.las=2,
      yl=FALSE,
@@ -72,7 +72,7 @@ plot(sk3,
 ## From: data.frame (dfm) - unbalanced
 u_sk3 <- with(CRD2,
               SK(y ~ x,
-                     dfm[-1,]))
+                 dfm[-1,]))
 plot(u_sk3,
      id.las=2,
      yl=FALSE,

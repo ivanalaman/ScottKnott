@@ -35,10 +35,10 @@ data(RCBD)
   if(require(xtable)){
     lm1 <- with(RCBD,
                   lm(y ~ blk + tra,
-                       data=dfm))
+                     data=dfm))
 
     sk1 <-  SK(lm1,
-                   which='tra')
+               which='tra')
     tb <- xtable(sk1)
     print(tb)
   }

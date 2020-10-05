@@ -13,16 +13,16 @@ data(SPE)
 ## Main factor: SP
 sk1 <- with(SPE,
             SK(y ~ blk + P*SP + Error(blk/P),
-                   data=dfm,
-                   which='SP'))
+               data=dfm,
+               which='SP'))
 summary(sk1)
 
 ## Nested: p1/SP
 sk2 <- with(SPE,
             SK(y ~ blk + P*SP + Error(blk/P),
-                   data=dfm,
-                   which='P:SP',
-                   fl1=1 ))
+               data=dfm,
+               which='P:SP',
+               fl1=1 ))
 summary(sk2)
 plot(sk2,
      di='sd',
@@ -32,10 +32,10 @@ plot(sk2,
 ## Nested: sp1/P - it is necessary to inform how to combinate the errors
 sk3 <- with(SPE,
             SK(y ~ blk + P*SP + Error(blk/P),
-                   data=dfm,
-                   which='SP:P',
-                   error='Within/blk:P',
-                   fl1=1))
+               data=dfm,
+               which='SP:P',
+               error='Within/blk:P',
+               fl1=1))
 summary(sk3)
 
 ## From: lm
@@ -44,15 +44,15 @@ lm1 <- with(SPE,
                dfm))
 
 sk4 <- SK(lm1,
-              which='P:SP',
-              fl1=1)
+          which='P:SP',
+          fl1=1)
 
 summary(sk4)
 
 sk5 <- SK(lm1,
-              which='SP:P',
-              error='Within/blk:P',
-              fl1=1)
+          which='SP:P',
+          error='Within/blk:P',
+          fl1=1)
 summary(sk5)
 
 
@@ -64,40 +64,40 @@ summary(av1)
 
 ## Main factor: SP
 sk6 <- SK(av1,
-              which='SP',
-              sig.level=0.1)
+          which='SP',
+          sig.level=0.1)
 summary(sk6)
 
 ## Main factor: P
 ## It is necessary to inform the appropriate error for the test
 sk7 <- SK(av1,
-              which='P',
-              error='blk:P')
+          which='P',
+          error='blk:P')
 
 summary(sk7)
 
 ## Nested: p1/SP
 ## Testing SP inside of level one of P
 sk8 <- SK(av1,
-              which='P:SP',
-              fl1=1)
+          which='P:SP',
+          fl1=1)
 summary(sk8)
 
 ## Nested: p2/SP
 sk9 <- SK(av1,
-              which='P:SP',
-              fl1=2)
+          which='P:SP',
+          fl1=2)
 summary(sk9)
 
 ## Nested: p3/SP
 sk10 <- SK(av1,
-               which='P:SP',
-               fl1=3)
+           which='P:SP',
+           fl1=3)
 summary(sk10)
 
 ## Nested: sp1/P - it is necessary to inform how to combinate the errors
 sk11 <- SK(av1,
-               which='SP:P',
-               error='Within/blk:P',
-               fl1=1)
+           which='SP:P',
+           error='Within/blk:P',
+           fl1=1)
 summary(sk11)

@@ -83,8 +83,8 @@ data(CRD2)
 ## From: formula
 sk1 <- with(CRD2,
             SK(y ~ x,
-                   data=dfm,
-                   which='x'))
+               data=dfm,
+               which='x'))
 
 old.par <- par(mar=c(6, 3, 6, 2))
 plot(sk1,
@@ -102,7 +102,7 @@ av <- with(CRD2,
 summary(av)
 
 sk2 <- SK(x=av,
-              which='x')
+          which='x')
 plot(sk2,
      disp='sd',
      yl=FALSE,
@@ -114,7 +114,7 @@ av_lm <- with(CRD2,
               data=dfm))
 
 sk3 <- SK(x=av_lm,
-              which='x')
+          which='x')
 
 par(mfrow=c(2, 1))
 plot(sk3,

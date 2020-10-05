@@ -118,8 +118,8 @@ data(RCBD)
 ## From: formula
 sk1 <- with(RCBD,
             SK(y ~ blk + tra,
-                   data=dfm,
-                   which='tra'))
+               data=dfm,
+               which='tra'))
 summary(sk1)
 
 ## From: merMod
@@ -131,7 +131,7 @@ summary(sk1)
                        data=dfm))
 
     sk2 <-  SK(lmer1,
-                   which='tra')
+               which='tra')
     summary(sk2)
   }
 }
@@ -145,8 +145,8 @@ data(LSD)
 ## From: formula
 sk3 <- with(LSD,
             SK(y ~ rows + cols + tra,
-                   data=dfm,
-                   which='tra'))
+               data=dfm,
+               which='tra'))
 summary(sk3)
 
 ## From: aov
@@ -164,7 +164,7 @@ lm1 <- with(LSD,
                data=dfm))
 
 sk5 <- SK(lm1,
-              which='tra')
+          which='tra')
 summary(sk5)
 
 ##
@@ -177,17 +177,17 @@ data(FE)
 ## Main factor: N
 sk6 <- with(FE,
             SK(y ~ blk + N*P*K,
-                   data=dfm,
-                   which='N'))
+               data=dfm,
+               which='N'))
 summary(sk6)
 
 ## Nested: p1/N
 # From: formula
 n_sk1 <- with(FE,
               SK(y ~ blk + N*P*K,
-                     data=dfm,
-                     which='P:N',
-                     fl1=1))
+                 data=dfm,
+                 which='P:N',
+                 fl1=1))
 summary(n_sk1) 
 
 ## Nested: p2/N
@@ -198,8 +198,8 @@ lm2 <- with(FE,
 
 n_sk2 <- with(FE,
               SK(lm2,
-                     which='P:N',
-                     fl1=2))
+                 which='P:N',
+                 fl1=2))
 summary(n_sk2) 
 
 ## Nested: n1/P
@@ -210,8 +210,8 @@ av2 <- with(FE,
 
 n_sk3 <- with(FE,
               SK(av2,
-                     which='N:P',
-                     fl1=1))
+                 which='N:P',
+                 fl1=1))
 summary(n_sk3) 
 
 # From: merMod
@@ -223,8 +223,8 @@ summary(n_sk3)
 
     n_sk4 <- with(FE,
                   SK(lmer2,
-                         which='N:P',
-                         fl1=1))
+                     which='N:P',
+                     fl1=1))
     summary(n_sk4)
   }
 }
@@ -242,17 +242,17 @@ lm3 <- with(SPET,
 
 # crotgrantiana/year
 sp_sk1 <- SK(lm3,
-                 which='tra:year',
-                 fl1=1)
+             which='tra:year',
+             fl1=1)
 summary(sp_sk1) 
 
 # year1/tra
 # It is necessary to set year error with trat error in the order of the "which" argument.
 # It is necessary to inform how to combinate the errors
 sp_sk2 <-  SK(lm3,
-                  which='year:tra',
-                  error='Residuals/blk:tra',
-                  fl1=1)
+              which='year:tra',
+              error='Residuals/blk:tra',
+              fl1=1)
 summary(sp_sk2)
 
 # From merMod
@@ -265,15 +265,15 @@ summary(sp_sk2)
 
     # comparison only tra
     sp_sk3 <- SK(lmer3,
-                     which = 'tra',
-                     error = 'blk:tra')
+                 which = 'tra',
+                 error = 'blk:tra')
     summary(sp_sk3)
 
     # year1/tra
     sp_sk4 <- SK(lmer3,
-                     which='year:tra',
-                     error='Residual/blk:tra',
-                     fl1=1)
+                 which='year:tra',
+                 error='Residual/blk:tra',
+                 fl1=1)
     summary(sp_sk4)
   }
 }
@@ -288,25 +288,25 @@ data(SSPE)
 ## It is necessary to inform the appropriate error for the test
 ssp_sk1 <- with(SSPE,
                 SK(y ~ blk + P*SP*SSP + Error(blk/P/SP),
-                       data=dfm,
-                       which='P',
-                       error='blk:P'))
+                   data=dfm,
+                   which='P',
+                   error='blk:P'))
 summary(ssp_sk1)
 
 ## Main factor: SP
 ## It is necessary to inform the appropriate error for the test
 ssp_sk2 <- with(SSPE,
                 SK(y ~ blk + P*SP*SSP + Error(blk/P/SP),
-                       data=dfm,
-                       which='SP',
-                       error='blk:P:SP'))
+                   data=dfm,
+                   which='SP',
+                   error='blk:P:SP'))
 summary(ssp_sk2)
 
 ## Main factor: SSP
 ssp_sk3 <- with(SSPE,
                 SK(y ~ blk + P*SP*SSP + Error(blk/P/SP),
-                       data=dfm,
-                       which='SSP'))
+                   data=dfm,
+                   which='SSP'))
 summary(ssp_sk3)
 
 ## From: aov
@@ -316,61 +316,61 @@ av3 <- with(SSPE,
                 data=dfm))
 
 ssp_sk4 <- SK(av3,
-                  which='SSP')
+              which='SSP')
 summary(ssp_sk4)
 
 ## Nested: p1/SP
 ## It is necessary to inform the appropriate error for the test
 ssp_sk5 <- SK(av3,
-                  which='P:SP',
-                  error='blk:P:SP',
-                  fl1=1)
+              which='P:SP',
+              error='blk:P:SP',
+              fl1=1)
 summary(ssp_sk5)
 
 ## Nested: p1/SSP
 ssp_sk6 <- SK(av3,
-                  which='P:SSP',
-                  fl1=1)
+              which='P:SSP',
+              fl1=1)
 summary(ssp_sk6)
 
 ## Nested: p1/sp1/SSP
 ## Testing SSP inside of level one of P and level one of SP
 ssp_sk7 <- SK(av3,
-                  which='P:SP:SSP',
-                  fl1=1,
-                  fl2=1)
+              which='P:SP:SSP',
+              fl1=1,
+              fl2=1)
 summary(ssp_sk7)
 
 ## Nested: p2/sp1/SSP
 ssp_sk8 <- SK(av3,
-                  which='P:SP:SSP',
-                  fl1=2,
-                  fl2=1)
+              which='P:SP:SSP',
+              fl1=2,
+              fl2=1)
 summary(ssp_sk8)
 
 ## Nested: sp1/P
 ## It is necessary to inform the appropriate error for the test
 ssp_sk9 <- SK(av3,
-                  which='SP:P',
-                  error='blk:P:SP/blk:P',
-                  fl1=1)
+              which='SP:P',
+              error='blk:P:SP/blk:P',
+              fl1=1)
 
 summary(ssp_sk9)
 
 ## Nested: ssp1/SP
 ssp_sk10 <- SK(av3,
-                   which='SSP:SP',
-                   error='Within/blk:P:SP',
-                   fl1=1)
+               which='SSP:SP',
+               error='Within/blk:P:SP',
+               fl1=1)
 summary(ssp_sk10)
 
 ## Nested: ssp1/sp1/P
 ## It is necessary to inform the appropriate error for the test
 ssp_sk11 <- SK(av3,
-                   which='SSP:SP:P',
-                   error='Within/blk:P:SP/blk:P',
-                   fl1=1,
-                   fl2=1)
+               which='SSP:SP:P',
+               error='Within/blk:P:SP/blk:P',
+               fl1=1,
+               fl2=1)
 summary(ssp_sk11)
 
 ## UNBALANCED DATA
@@ -382,8 +382,8 @@ uCRD2 <- CRD2$dfm
 uCRD2[c(3, 5, 10, 44, 45), 3] <- NA
 
 usk1 <-  SK(y ~ x,
-                data=uCRD2,
-                which='x')
+            data=uCRD2,
+            which='x')
 summary(usk1)
 
 ## From: lm
@@ -391,7 +391,7 @@ ulm1 <- lm(y ~ x,
            data=uCRD2)
 
 usk2 <- SK(ulm1,
-               which='x')
+           which='x')
 summary(usk2)
 
 ## Factorial Experiments
@@ -406,17 +406,17 @@ ulm2 <- lm(y ~ blk + N*P*K,
 
 ## Nested: p1/N
 usk3 <- SK(ulm2,
-               data=uFE,
-               which='P:N',
-               fl1=1)
+           data=uFE,
+           which='P:N',
+           fl1=1)
 summary(usk3) 
 
 ## Nested: p2/n2/K
 usk4 <- SK(ulm2,
-               data=uFE,
-               which='P:N:K',
-               fl1=2,
-               fl2=2)
+           data=uFE,
+           which='P:N:K',
+           fl1=2,
+           fl2=2)
 summary(usk4) 
 }
 

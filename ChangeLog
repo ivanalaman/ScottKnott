@@ -1,3 +1,6 @@
+2020-10-05 vs. 1.2.9 - José Cláudio Faria <ivanalaman@gmail.com>
+  * All documentation was corrected.
+
 2020-10-02 vs. 1.2.8 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
   * New method to unbalanced data.
   * Added methods to formula, lm and lmerMod class.
