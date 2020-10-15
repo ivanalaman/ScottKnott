@@ -6,11 +6,7 @@ testing unreleased versions, fixing bugs, writing code, etc.
 
 To download, check and build it do the following in a terminal emulator:
 
-> git clone  git://github.com/jcfaria/ScottKnott.git
-
-> or
-
-> git clone https://jcfaria@github.com/jcfaria/ScottKnott.git
+> git clone https://github.com/ivanalaman/ScottKnott.git
 
 After to clone it, to check, build and install do the following:
 > R CMD check ScottKnott
