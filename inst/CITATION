@@ -1,21 +1,19 @@
-citEntry(entry  = "Article",
+bibentry(bibtype  = "Article",
   title         = "ScottKnott: A Package for Performing the Scott-Knott Clustering Algorithm in R.",
-  author        = personList(as.person("Enio G. Jelihovschi"),
-   as.person("José Cláudio Faria"),
-   as.person("Ivan Bezerra Allaman")),
+  author        = c(person("Enio G. Jelihovschi"),
+   person("Jose Claudio Faria"),
+   person("Ivan Bezerra Allaman")),
   journal       = "Trends in Applied and Computational Mathematics",
   year          = "2014",
   volume        = "15",
   number        = "1",
   pages         = "3--17",
   url           = "https://tema.sbmac.org.br/tema/article/view/646/643",
-
   textVersion   =
-  paste("Enio G. Jelihovschi, José C. Faria, and Ivan Bezerra Allaman (2014).",
+  paste("Enio G. Jelihovschi, Jose C. Faria, and Ivan Bezerra Allaman (2014).",
    "ScottKnott: A Package for Performing the Scott-Knott Clustering Algorithm in R.", 
    "Trends in Applied and Computational Mathematics 15(1), 3-17.",
    "URL https://tema.sbmac.org.br/tema/article/view/646/643"),
-
   header       = "If you use ScottKnott package please cite:" 
   )
 

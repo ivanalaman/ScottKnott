@@ -10,6 +10,8 @@ plot.SK <- function(x,
                         ylab       = NULL,
                         xlim       = NULL,
                         ylim       = NULL,
+                        axisx      = TRUE,
+                        axisy      = TRUE,
                         id.lab     = NULL,
                         id.las     = 1,
                         yl         = TRUE,
@@ -155,21 +157,25 @@ plot.SK <- function(x,
          },
          none = NULL)
 
-  axis(2,
+  if(axisy){
+    axis(2,
        at = round(seq(ylim[1],
                       ylim[2],
                       length.out = 5),
                   1))
+  }
 
   if(is.null(id.lab))
     #id.lab <- names(x$out$Result[,1])
     id.lab <- row.names(x$out$Result)
 
+  if(axisx){
   axis(1,
        at       = 1:length(means),
        labels   = id.lab,
        las      = id.las,
-       col.axis = FALSE, ...)    
+       col.axis = FALSE, ...)
+  }   
 
   if(result) 
     axis(3,

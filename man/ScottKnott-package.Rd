@@ -54,7 +54,7 @@
 
 \author{
  Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
- José Cláudio Faria (\email{joseclaudio.faria@gmail.com})\cr
+ Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr
 }
 
@@ -92,13 +92,13 @@
  PraeclaraOrchidaceae.
  \emph{American Midland Naturalist}, \bold{1491}, 104-120.
 
- Ramalho M.A.P., Ferreira DF, Oliveira AC 2000. \emph{Experimentação em Genética
+ Ramalho M.A.P., Ferreira DF, Oliveira AC 2000. \emph{Experimentacao em Genetica
   e Melhoramento de Plantas}. Editora UFLA.
 
  Scott R.J., Knott M. 1974. A cluster analysis method for grouping mans in the
  analysis of variance. \emph{Biometrics}, \bold{30}, 507-512.
 
- Conrado T.V. 2017. Adjusting the Scott-Knott cluster analyses for unbalanced designs. \emph{Crop Breeding and Applied Biotechnology}, \bold{17}, 1-9.
+ Conrado, T. V., Ferreira, D. F., Scapim, C. A., and Maluf, W. R. "Adjusting the Scott-Knott cluster analyses for unbalanced designs." \emph{Crop Breeding and Applied Biotechnology} \bold{17}.1 (2017): 1-9.
 }
 
 \keyword{package}

@@ -19,6 +19,7 @@ import(
 )
 
 # S3 methods
+S3method(SK,default)
 S3method(SK, formula)
 S3method(SK, lm)
 S3method(SK, aovlist)
