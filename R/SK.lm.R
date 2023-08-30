@@ -134,7 +134,7 @@ SK.lm <- function(x,
 
 	}
 
-	# Aqui não ha interesse em interacoes!!!!
+	# Aqui nao ha interesse em interacoes!!!!
 	if(is.null(fl1) & !is.null(error)){#Um erro de interesse do usuario
 
 		anov <- anova(x)
@@ -197,7 +197,7 @@ SK.lm <- function(x,
 	rownames(out_means_groups) <- rownames(mt)
 	colnames(out_means_groups) <- c('Means','G1')
 
-	#Colancando letrinhas no lugar de números
+	#Colancando letrinhas no lugar de numeros
 	numericgroup <- as.numeric(out_means_groups[,2])
 	group <- numericgroup
 	ngroups <- as.numeric(group[length(group)])
