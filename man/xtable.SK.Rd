@@ -26,7 +26,8 @@
   Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr
 }
 
-\seealso{\code{\link{xtable}}
+\seealso{
+ \code{\link[xtable:xtable]{xtable}}
 }
 
 \examples{

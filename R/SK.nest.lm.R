@@ -23,7 +23,7 @@ SK.nest.lm <- function(x,
   aux_mt <- suppressWarnings(doBy::LSmeans(x,
                                            effect = m2))
 
-  aux_mt1 <- aux_mt$coef[,1]
+  aux_mt1 <- with(aux_mt,estimate)
 
   aux_mt2 <- data.frame(aux_r[1:length(names(aux_r))-1],
                         means = aux_mt1,

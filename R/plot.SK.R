@@ -165,9 +165,10 @@ plot.SK <- function(x,
                   1))
   }
 
-  if(is.null(id.lab))
+  if(is.null(id.lab)){
     #id.lab <- names(x$out$Result[,1])
     id.lab <- row.names(x$out$Result)
+  }  
 
   if(axisx){
   axis(1,
@@ -175,24 +176,26 @@ plot.SK <- function(x,
        labels   = id.lab,
        las      = id.las,
        col.axis = FALSE, ...)
-  }   
-
-  if(result) 
-    axis(3,
-         at     = 1:length(means),
-         labels = id.groups, ...)
-
-  if(replicates)
-    text(x      = 1:length(means),
-         y      = min(ylim),
-         labels = r,
-         pos    = 3, ...)
-
+  
   mtext(text = id.lab,
         side = 1,
         line = 1,
         at   = 1:length(means),
-        las  = id.las, ...)
+        las  = id.las, ...)     
+  }   
+
+  if(result){ 
+    axis(3,
+         at     = 1:length(means),
+         labels = id.groups, ...)
+  }
+
+  if(replicates){
+    text(x      = 1:length(means),
+         y      = min(ylim),
+         labels = r,
+         pos    = 3, ...)
+  }       
 
   title(title, ...)
 

@@ -182,7 +182,7 @@ SK.lmerMod <- function(x,
 						 effect = which,
 						 level = 1 - sig.level))
 
-	aux_mt1 <- aux_mt$coef[,1]
+	aux_mt1 <- with(aux_mt,estimate)
 
 	aux_mt2 <- data.frame(means = aux_mt1,
 			      reps = reps)

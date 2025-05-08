@@ -15,14 +15,14 @@ m.infos.lm <- function(x,
                                        se  = sd(x)/length(x)))
 
   aux_m.inf1 <- data.frame(groups    = aux_m.inf[names(aux_m.inf)!=my],
-                           means     = aux_mt$coef[,1],
+                           means     = with(aux_mt,estimate),
                            aux_m.inf[[my]][,1:2],
-                           'linf_sd' = aux_mt$coef[,1] - aux_m.inf[[my]][,3],
-                           'lsup_sd' = aux_mt$coef[,1] + aux_m.inf[[my]][,3],
-                           'linf_se' = aux_mt$coef[,1] - abs(qt(sig.level,aux_mt$coef[,3]))*aux_m.inf[[my]][,4],
-                           'lsup_se' = aux_mt$coef[,1] + abs(qt(sig.level,aux_mt$coef[,3]))*aux_m.inf[[my]][,4], 
-                           'linf_sepool' = aux_mt$coef[,1] - abs(qt(sig.level,aux_mt$coef[,3]))*aux_mt$coef[,2],
-                           'lsup_sepool' = aux_mt$coef[,1] + abs(qt(sig.level,aux_mt$coef[,3]))*aux_mt$coef[,2])
+                           'linf_sd' = with(aux_mt,estimate) - aux_m.inf[[my]][,3],
+                           'lsup_sd' = with(aux_mt,estimate) + aux_m.inf[[my]][,3],
+                           'linf_se' = with(aux_mt,estimate) - abs(qt(sig.level,with(aux_mt,statistic)))*aux_m.inf[[my]][,4],
+                           'lsup_se' = with(aux_mt,estimate) + abs(qt(sig.level,with(aux_mt,statistic)))*aux_m.inf[[my]][,4], 
+                           'linf_sepool' = with(aux_mt,estimate) - abs(qt(sig.level,with(aux_mt,statistic)))*with(aux_mt,std.error),
+                           'lsup_sepool' = with(aux_mt,estimate) + abs(qt(sig.level,with(aux_mt,statistic)))*with(aux_mt,std.error))
 
   aux_m.inf2 <- aux_m.inf1[order(aux_m.inf1[['means']],
                                  decreasing = TRUE),]

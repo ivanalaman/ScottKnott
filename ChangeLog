@@ -1,3 +1,8 @@
+2025-03-14 vs. 1.3.2 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
+  * Fixed the "mtext" command line that was out of context of the axis1 argument. (2023-11-15)
+  * Fixed target missing package anchors in xtable.SK.Rd
+  * Adjust in all functions that has LSmeans as object. Change aux_mt$coef[,1] by with(aux_mt,estimate).
+
 2023-08-30 vs. 1.3.2 - Ivan Bezerra Allaman <ivanalaman@gmail.com>
   * Adjustment of files as required by the cran
 
