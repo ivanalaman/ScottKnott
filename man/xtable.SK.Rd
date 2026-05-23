@@ -6,7 +6,7 @@
 }
 
 \description{
-  Convert an \code{SK} object to an \code{xtable.SK} object, which can then be printed as a LaTeX or HTML table. This function is an additional method to xtable function of \pkg{xtable} package.
+  Convert an \code{SK} object to an \code{xtable.SK} object, which can then be printed as a LaTeX or HTML table. This function provides an additional method for the \code{xtable} function from the \pkg{xtable} package.
 }
 
 \usage{
@@ -17,13 +17,13 @@
 
 \arguments{
   \item{x}{A given object of the class \code{SK}.}
-  \item{\dots}{Further arguments (require by xtable::xtable).}
+  \item{\dots}{Further arguments (required by \code{xtable::xtable}).}
 }
 
 \author{
-  Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr  
-  Enio G. Jelihovschi (\email{eniojelihovs@gmail.com})\cr
-  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr
+  Faria, J. C. (\email{joseclaudio.faria@gmail.com})\cr
+  Jelihovschi, E. G. (\email{eniojelihovs@gmail.com})\cr
+  Allaman, I. B. (\email{ivanalaman@gmail.com})\cr
 }
 
 \seealso{
@@ -31,20 +31,19 @@
 }
 
 \examples{
-data(RCBD) 
-\dontrun{
-  if(require(xtable)){
-    lm1 <- with(RCBD,
-                  lm(y ~ blk + tra,
-                     data=dfm))
+data(RCBD)
 
-    sk1 <-  SK(lm1,
-               which='tra')
-    tb <- xtable(sk1)
-    print(tb)
-  }
- } 
+lm1 <- with(RCBD,
+            lm(y ~ blk + tra,
+               data=dfm))
+
+sk1 <- SK(lm1,
+          which='tra')
+
+tb <- xtable(sk1)
+\dontrun{
+  print(tb)
+}
 }
 
 \keyword{package}
-\keyword{SK}

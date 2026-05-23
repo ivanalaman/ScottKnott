@@ -14,168 +14,167 @@
 ## the former group.
 ## In the end, each node without children represents a group of means.
 MaxValue <- function(g,
-		     meansrep,
-		     mMSE,
-		     dfr,
-		     sig.level,
-		     k,
-		     group,
-		     ngroup,
-		     markg,
-		     g1=g,
-		     sqsum=rep(0, g1),
-		     groupsclus=rep(0,g1),
-		     chooseclus=NULL,
-		     statistics=NULL,
-                     i=0)
+                     meansrep,
+                     mMSE,
+                     dfr,
+                     sig.level,
+                     k,
+                     group,
+                     ngroup,
+                     markg,
+                     g1         = g,
+                     sqsum      = rep(0, g1),
+                     groupsclus = rep(0, g1),
+                     chooseclus = NULL,
+                     statistics = NULL,
+                     i          = 0)
 {
-	means <- meansrep[['means']]
-	names(means) <- rownames(meansrep)
-	reps <- meansrep[['reps']]
-	standerror <- sqrt(mMSE/reps)#here will be a vector with se of each treatment.
+  means <- meansrep[['means']]
+  names(means) <- rownames(meansrep)
+  reps <- meansrep[['reps']]
+  standerror <- sqrt(mMSE/reps) # here will be a vector with se of each treatment.
 
-	for(k1 in k:(g-1)) {
-		t1 <- sum(means[k:k1])
-		names(t1) <- paste(names(means[k:k1]),collapse=' ')
+  for(k1 in k:(g-1)) {
+    t1 <- sum(means[k:k1])
+    names(t1) <- paste(names(means[k:k1]), collapse = ' ')
 
-		k2 <- g-k1
+    k2 <- g-k1
 
-		t2 <- sum(means[(k1+1):g])
-		names(t2) <- paste(names(means[(k1+1):g]),collapse=' ')
+    t2 <- sum(means[(k1+1):g])
+    names(t2) <- paste(names(means[(k1+1):g]), collapse = ' ')
 
-		# SK between groups sum of squares
-		sqsum[k1] <- t1^2/(k1-k+1) + t2^2/k2 - (t1+t2)^2/(g-k+1)
-		groupsclus[k1] <- paste(names(t1),
-					names(t2),
-					sep=',')
+    # SK between groups sum of squares
+    sqsum[k1] <- t1^2/(k1-k+1) + t2^2/k2 - (t1+t2)^2/(g-k+1)
+    groupsclus[k1] <- paste(names(t1),
+                            names(t2),
+                            sep = ',')
+  }
+  names(sqsum) <- groupsclus
+  # variance of error of each cluster
+  nclus <- g - k + 1 #size of the cluster now!
+  s2c <- 1/nclus * sum((standerror[k:g])^2)
 
-		}
- 	names(sqsum) <- groupsclus
-	# variance of error of each cluster
-        nclus <- g - k + 1 #size of the cluster now!
-	s2c <- 1/nclus * sum((standerror[k:g])^2)
+  # the first element of this vector is the value of k1 which maximizes sqsum (SKBSQS)
+  ord1 <- order(sqsum, decreasing = TRUE)[1]
 
-	# the first element of this vector is the value of k1 which maximizes sqsum (SKBSQS)
-	ord1 <- order(sqsum, decreasing=TRUE)[1]
+  # the maximum value of the between groups sum of squares
+  b0 <- max(sqsum)
 
-	# the maximum value of the between groups sum of squares
-	b0   <- max(sqsum)
+  si02 <- (1 / (nclus + dfr)) * (sum((means[k:g] - mean(means[k:g]))^2) + dfr * s2c)
 
-	si02 <- (1 / (nclus + dfr)) * (sum((means[k:g] - mean(means[k:g]))^2) + dfr * s2c)
+  lam <- (pi / (2 * (pi - 2))) * b0 / si02
 
-	lam  <- (pi / (2 * (pi - 2))) * b0 / si02
-        
-	dfchisq <- nclus/(pi - 2)
-	valchisq <- qchisq((sig.level),
-			   lower.tail=FALSE,
-			   df=dfchisq)
-	i <- i+1
-	
-	statis <- c(lambda=lam,
-		    chisq=valchisq,
-		    dfchisq=dfchisq,
-		    pvalue=pchisq(lam,dfchisq,lower.tail=FALSE),
-		    evmean=s2c,
-		    dferror=dfr)
-	chclus <- names(sqsum)[which.max(sqsum)]
+  dfchisq <- nclus/(pi - 2)
+  valchisq <- qchisq((sig.level),
+                     lower.tail = FALSE,
+                     df = dfchisq)
+  i <- i + 1
 
-	ifelse(i==1,{
-	       statistics <- statis
-	       chooseclus <- chclus
-		    },
-		    { 
-	       statistics <- c(statistics,statis)
-	       chooseclus <- c(chooseclus,chclus)
-		    })
+  statis <- c(lambda  = lam,
+              chisq   = valchisq,
+              dfchisq = dfchisq,
+              pvalue  = pchisq(lam, dfchisq, lower.tail = FALSE),
+              evmean  = s2c,
+              dferror = dfr)
+  chclus <- names(sqsum)[which.max(sqsum)]
 
-	# if true it returns one node to the right if false it goes forward one node to the left
-	if((lam < valchisq) | (ord1 == k)) {
-		# In the case of a single average left (maximum)
-		if(lam > valchisq) {
-			# it marks the group to the left consisting of a single mean
-			ngroup <- ngroup + 1
+  ifelse(i == 1,{
+         statistics <- statis
+         chooseclus <- chclus
+         },
+         {
+         statistics <- c(statistics, statis)
+         chooseclus <- c(chooseclus, chclus)
+         })
 
-			# it forms a group of just one mean (the maximum of the group)
-			group[k] <- ngroup
+  # if true it returns one node to the right if false it goes forward one node to the left
+  if((lam < valchisq) | (ord1 == k)) {
+    # In the case of a single average left (maximum)
+    if(lam > valchisq) {
+      # it marks the group to the left consisting of a single mean
+      ngroup <- ngroup + 1
 
-			# lower limit on returning to the right
-			k <- ord1 + 1
-		}
-		if(lam < valchisq) {
-			# it marks the groups
-			ngroup <- ngroup + 1
+      # it forms a group of just one mean (the maximum of the group)
+      group[k] <- ngroup
 
-			# it forms a group of means
-			group[k:g] <- ngroup
+      # lower limit on returning to the right
+      k <- ord1 + 1
+    }
+    if(lam < valchisq) {
+      # it marks the groups
+      ngroup <- ngroup + 1
 
-			# if this group is the last one
-			if (prod(group) > 0){
-				# If the upper limit of the latter group formed is equal to the total
-				# number of treatments than  the grouping algorithm is ended
-				resstatis <- matrix(statistics,ncol=6,byrow=TRUE)
-				colnames(resstatis) <- names(statis)
-				rownames(resstatis) <- paste('Clus',1:nrow(resstatis))
-				clusters <- as.list(chooseclus)
-				names(clusters) <- rownames(resstatis)
-				res <- list(group,
-					    resstatis,
-				            clusters)
-				return(res)
-			}
+      # it forms a group of means
+      group[k:g] <- ngroup
 
-			# it marks the lower limit of the group of means to be used in the
-			# calculation of the maximum sqsum on returning one node to the right
-			k <- g + 1
+      # if this group is the last one
+      if(prod(group) > 0){
+        # If the upper limit of the latter group formed is equal to the total
+        # number of treatments than  the grouping algorithm is ended
+        resstatis <- matrix(statistics, ncol = 6, byrow = TRUE)
+        colnames(resstatis) <- names(statis)
+        rownames(resstatis) <- paste('Clus', 1:nrow(resstatis))
+        clusters <- as.list(chooseclus)
+        names(clusters) <- rownames(resstatis)
+        res <- list(group,
+                    resstatis,
+                    clusters)
+        return(res)
+      }
 
-			# it marks the upper limit of the group of means to be used in the
-			# calculation of the maximum sqsum on returning one node to the right
-			g <- markg[g]
-		}
-		while(k == g) {
-			# there was just one mean left to the right, so it becomes a group
-			ngroup   <- ngroup + 1
+      # it marks the lower limit of the group of means to be used in the
+      # calculation of the maximum sqsum on returning one node to the right
+      k <- g + 1
 
-			group[g] <- ngroup
+      # it marks the upper limit of the group of means to be used in the
+      # calculation of the maximum sqsum on returning one node to the right
+      g <- markg[g]
+    }
+    while(k == g) {
+      # there was just one mean left to the right, so it becomes a group
+      ngroup <- ngroup + 1
 
-			if(prod(group) > 0){
-				# If the upper limit of the latter group formed is equal to the total
-				# number of treatments than  the grouping algorithm is ended
-				resstatis <- matrix(statistics,ncol=6,byrow=TRUE)
-				colnames(resstatis) <- names(statis)
-				rownames(resstatis) <- paste('Clus',1:nrow(resstatis))
-				clusters <- as.list(chooseclus)
-				names(clusters) <- rownames(resstatis)
-				res <- list(group,
-					    resstatis,
-				            clusters)
-				return(res)
-			}
+      group[g] <- ngroup
 
-			# the group of just one mean group had already been formed, a further
-			# jump to the right and another check whether there was just one mean
-			# left to the right
-			k <- g + 1
+      if(prod(group) > 0){
+        # If the upper limit of the latter group formed is equal to the total
+        # number of treatments than  the grouping algorithm is ended
+        resstatis <- matrix(statistics, ncol = 6, byrow = TRUE)
+        colnames(resstatis) <- names(statis)
+        rownames(resstatis) <- paste('Clus', 1:nrow(resstatis))
+        clusters <- as.list(chooseclus)
+        names(clusters) <- rownames(resstatis)
+        res <- list(group,
+                    resstatis,
+                    clusters)
+        return(res)
+      }
 
-			g <- markg[g]
-		}
-	} else {
-		# it marks the upper limit of the group split into two to be used on
-		# returning to the right later
-		markg[ord1] <- g
+      # the group of just one mean group had already been formed, a further
+      # jump to the right and another check whether there was just one mean
+      # left to the right
+      k <- g + 1
 
-		g <- ord1
-	}
+      g <- markg[g]
+    }
+  } else {
+    # it marks the upper limit of the group split into two to be used on
+    # returning to the right later
+    markg[ord1] <- g
 
-	MaxValue(g,
-		 meansrep,
-		 mMSE,
-		 dfr,
-		 sig.level,
-		 k,
-		 group,
-		 ngroup,
-		 markg,
-		 chooseclus=chooseclus,
-		 statistics=statistics,
-	         i=i)
+    g <- ord1
+  }
+
+  MaxValue(g,
+           meansrep,
+           mMSE,
+           dfr,
+           sig.level,
+           k,
+           group,
+           ngroup,
+           markg,
+           chooseclus = chooseclus,
+           statistics = statistics,
+           i          = i)
 }

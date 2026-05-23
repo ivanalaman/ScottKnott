@@ -1,256 +1,251 @@
 SK.lm <- function(x,
-		  which           = NULL,
-		  fl1             = NULL, 
-		  fl2             = NULL, 
-		  error           = NULL,
-		  sig.level       = .05,
-		  round           = 2,
-		  ...)   
+                  which     = NULL,
+                  fl1       = NULL,
+                  fl2       = NULL,
+                  error     = NULL,
+                  sig.level = .05,
+                  round     = 2,
+                  ...)
 {
+  if(is.null(which)){
+    which <- names(x$model)[2]
+  }
 
-	if(is.null(which)){
+  # Interacoes com erro experimental
+  if(!is.null(fl1) & is.null(error)){
 
-		which <- names(x$model)[2]
+    SSE <- deviance(x) # sum square error
+    dfr <- df.residual(x)  # residual degrees of freedom
+    MSE <- SSE/dfr
 
-	}
+    cl <- match.call()
+    class(x) <- c('nest.lm', class(x))
 
-	# Interacoes com erro experimental
-	if(!is.null(fl1) & is.null(error)){
+    res <- SK(x         = x,
+              which     = which,
+              fl1       = fl1,
+              fl2       = fl2,
+              MSE       = MSE,
+              dfr       = dfr,
+              sig.level = sig.level,
+              round     = round,
+              ...)
 
-		SSE <- deviance(x) # sum square error
-		dfr <- df.residual(x)  # residual degrees of freedom                   
-		MSE <- SSE/dfr  
+    res$call <- cl
+    class(res) <- c('SK.lm',
+                    'SK',
+                    'list')
 
-		cl <- match.call()
-		class(x) <- c('nest.lm',class(x))
+    return(res)
+  }
 
-		res <- SK(x               = x,
-			  which           = which,
-			  fl1             = fl1,
-			  fl2             = fl2,
-			  MSE             = MSE,
-			  dfr             = dfr,
-			  sig.level       = sig.level,
-			  round           = round,
-			  ...)
+  # Interacoes com outros erros
+  if(!is.null(fl1) & !is.null(error)){
 
-		res$call <- cl
-		class(res) <- c('SK.lm',
-				'SK',
-				'list')
+    many_errors <- unlist(strsplit(error,
+                                   '\\/'))
 
-		return(res)                          
-	}
+    ifelse(any(many_errors == 'Within'),
+           many_errors <- gsub('Within',
+                               'Residuals',
+                               many_errors),
+           many_errors <- many_errors)
 
-	# Interacoes com outros erros
-	if(!is.null(fl1) & !is.null(error)){ 
+    n_errors <- length(many_errors)
 
-		many_errors <- unlist(strsplit(error,
-					       '\\/'))
+    if(n_errors > 1) { # combinacoes de erros!!!
 
-		ifelse(any(many_errors == 'Within'),
-		       many_errors <- gsub('Within',
-					   'Residuals',
-					   many_errors),
-		       many_errors <- many_errors)
+      aux_MSE <- NULL
+      aux_dfr <- NULL
+      anov <- anova(x)
 
-		n_errors <- length(many_errors)
+      for(i in 1:n_errors){
+        aux_MSE[i] <- anov[rownames(anov) == many_errors[i],][1,3]
+        aux_dfr[i] <- anov[rownames(anov) == many_errors[i],][1,1]
+      }
 
-		if(n_errors > 1){# combinacoes de erros!!!
+      factors <- unlist(strsplit(which,
+                                 '[[:punct:]]'))
 
-			aux_MSE <- NULL
-			aux_dfr <- NULL
-			anov <- anova(x) 
+      aux_levels <- x$xlevel
 
-			for(i in 1:n_errors){
+      aux_levels1 <- lapply(aux_levels,
+                            length)
 
-				aux_MSE[i] <- anov[rownames(anov) == many_errors[i],][1,3]
-				aux_dfr[i] <- anov[rownames(anov) == many_errors[i],][1,1] 
-			}
+      levelss <- unlist(aux_levels1[factors])
 
-			factors <- unlist(strsplit(which,
-						   '[[:punct:]]'))
+      if(length(aux_MSE) == 2){
 
-			aux_levels <- x$xlevel
+        cp <- c(levelss[1]-1,
+                1)
 
-			aux_levels1 <- lapply(aux_levels,
-					      length)
+        MSE <- c((cp%*%aux_MSE)/levelss[1])
 
-			levelss <- unlist(aux_levels1[factors])
+        numer <- (cp%*%aux_MSE)^2
+        denom <- (cp[1]*aux_MSE[1])^2/aux_dfr[1] + aux_MSE[2]^2/aux_dfr[2]
+        dfr <- numer/denom
 
-			if(length(aux_MSE) == 2){
+      } else {
 
-				cp <- c(levelss[1]-1,
-					1) 
+        cp <- c(levelss[2]*(levelss[1]-1),
+                levelss[2]-1,
+                1)
 
-				MSE <- c((cp%*%aux_MSE)/levelss[1])
+        MSE <- c((cp%*%aux_MSE)/prod(levelss[1:2]))
 
-				numer <- (cp%*%aux_MSE)^2
-				denom <- (cp[1]*aux_MSE[1])^2/aux_dfr[1] + aux_MSE[2]^2/aux_dfr[2]
-				dfr <- numer/denom 
+        numer <- (cp%*%aux_MSE)^2
+        denom <- (cp[1]*aux_MSE[1])^2/aux_dfr[1] + (cp[2]*aux_MSE[2])^2/aux_dfr[2] + aux_MSE[3]^2/aux_dfr[3]
+        dfr <- numer/denom
 
-			} else {
+      }
 
-				cp <- c(levelss[2]*(levelss[1]-1),
-					levelss[2]-1,
-					1) 
+    } else { # nao ha combinacao de erros!!!
 
-				MSE <- c((cp%*%aux_MSE)/prod(levelss[1:2]))
+      anov <- anova(x)
+      SSE <- anov[rownames(anov) == error,][1,2] # sum square error
+      dfr <- anov[rownames(anov) == error,][1,1] # residual degrees of freedom
+      MSE <- SSE/dfr
 
-				numer <- (cp%*%aux_MSE)^2
-				denom <- (cp[1]*aux_MSE[1])^2/aux_dfr[1] + (cp[2]*aux_MSE[2])^2/aux_dfr[2] + aux_MSE[3]^2/aux_dfr[3]
-				dfr <- numer/denom       
+    }
 
-			}
+    cl <- match.call()
+    class(x) <- c('nest.lm', class(x))
 
-		} else {# nao ha combinacao de erros!!!
+    res <- SK(x         = x,
+              which     = which,
+              fl1       = fl1,
+              fl2       = fl2,
+              MSE       = MSE,
+              dfr       = dfr,
+              sig.level = sig.level,
+              round     = round,
+              ...)
 
-			anov <- anova(x)
-			SSE <- anov[rownames(anov) == error,][1,2] # sum square error
-			dfr <- anov[rownames(anov) == error,][1,1] # residual degrees of freedom                     
-			MSE <- SSE/dfr   
+    res$call <- cl
+    class(res) <- c('SK.lm',
+                    'SK',
+                    'list')
 
-		}
+    return(res)
+  }
 
-		cl <- match.call()
-		class(x) <- c('nest.lm',class(x)) 
+  # Aqui nao ha interesse em interacoes!!!!
+  if(is.null(fl1) & !is.null(error)) { # Um erro de interesse do usuario
 
-		res <- SK(x               = x,
-			  which           = which,
-			  fl1             = fl1,
-			  fl2             = fl2,
-			  MSE             = MSE,
-			  dfr             = dfr,
-			  sig.level       = sig.level,
-			  round           = round,
-			  ...)
+    anov <- anova(x)
+    SSE <- anov[rownames(anov) == error,][1,2] # sum square error
+    dfr <- anov[rownames(anov) == error,][1,1] # residual degrees of freedom
+    MSE <- SSE/dfr
 
-		res$call <- cl
-		class(res) <- c('SK.lm',
-				'SK',
-				'list')
+  } else { #Erro experimental
 
-		return(res)                         
+    SSE <- deviance(x) # sum square error
+    dfr <- df.residual(x)  # residual degrees of freedom
+    MSE <- SSE/dfr
 
-	}
+  }
 
-	# Aqui nao ha interesse em interacoes!!!!
-	if(is.null(fl1) & !is.null(error)){#Um erro de interesse do usuario
+  my <- as.character(formula(x)[[2]])
 
-		anov <- anova(x)
-		SSE <- anov[rownames(anov) == error,][1,2] # sum square error
-		dfr <- anov[rownames(anov) == error,][1,1] # residual degrees of freedom                     
-		MSE <- SSE/dfr   
+  forminter <- as.formula(paste(my,
+                                '~',
+                                which))
 
-	} else { #Erro experimental
+  aux_r <- aggregate(forminter,
+                     data = x$model,
+                     function(x) r = length(x))
+  reps <- aux_r[[my]]
 
-		SSE <- deviance(x) # sum square error
-		dfr <- df.residual(x)  # residual degrees of freedom                   
-		MSE <- SSE/dfr  
+  aux_mt <- suppressMessages(emmeans::emmeans(x,
+                                              specs = which,
+                                              level = 1 - sig.level))
 
-	}
+  #aux_mt1 <- with(aux_mt,estimate)
 
-	my <- as.character(formula(x)[[2]])
-
-	forminter <- as.formula(paste(my, 
-				      '~', 
-				      which)) 
-
-	aux_r <- aggregate(forminter, 
-			   data = x$model,
-			   function(x) r = length(x))
-	reps <- aux_r[[my]]
-
-	aux_mt <- suppressMessages(emmeans::emmeans(x, 
-                             specs = which, 
-                             level = 1 - sig.level))
-
-	#aux_mt1 <- with(aux_mt,estimate)
- 
   aux_mt_df <- as.data.frame(aux_mt)
-  
-  aux_mt1 <- with(aux_mt_df,emmean)
 
-	aux_mt2 <- data.frame(means = aux_mt1,
-			      reps = reps)
+  aux_mt1 <- with(aux_mt_df, emmean)
 
-	row.names(aux_mt2) <- aux_r[,1]
+  aux_mt2 <- data.frame(means = aux_mt1,
+                        reps  = reps)
 
-	mt <- aux_mt2[order(aux_mt2[,1],
-			    decreasing = TRUE),]
+  row.names(aux_mt2) <- aux_r[,1]
 
-	cl <- match.call()  
+  mt <- aux_mt2[order(aux_mt2[,1],
+                      decreasing = TRUE),]
 
-	g    <- nrow(mt)
+  cl <- match.call()
 
-	out_groups <- MaxValue(g,
-			       mt,#means and repetitions
-			       mMSE = MSE,#Mean Square Error
-			       dfr,
-			       sig.level=sig.level,
-			       1,
-			       rep(0, g),
-			       0,
-			       rep(0, g))
+  g <- nrow(mt)
 
-	out_means_groups  <- cbind(format(round(mt[['means']],
-						round),
-					  nsmall = 2),
-				   out_groups[[1]])
+  out_groups <- MaxValue(g,
+                         mt,#means and repetitions
+                         mMSE      = MSE,#Mean Square Error
+                         dfr,
+                         sig.level = sig.level,
+                         1,
+                         rep(0, g),
+                         0,
+                         rep(0, g))
 
-	rownames(out_means_groups) <- rownames(mt)
-	colnames(out_means_groups) <- c('Means','G1')
+  out_means_groups <- cbind(format(round(mt[['means']],
+                                         round),
+                                   nsmall = 2),
+                            out_groups[[1]])
 
-	#Colancando letrinhas no lugar de numeros
-	numericgroup <- as.numeric(out_means_groups[,2])
-	group <- numericgroup
-	ngroups <- as.numeric(group[length(group)])
+  rownames(out_means_groups) <- rownames(mt)
+  colnames(out_means_groups) <- c('Means', 'G1')
 
-	if(ngroups > 26){
-		groupletter <- as.vector(t(outer(letters,
-						 letters,
-						 paste,
-						 sep="")))
-	}else{
-		groupletter <- letters
-	}
+  #Colancando letrinhas no lugar de numeros
+  numericgroup <- as.numeric(out_means_groups[,2])
+  group <- numericgroup
+  ngroups <- as.numeric(group[length(group)])
 
-	xgroups <- seq(ngroups)
+  if(ngroups > 26){
+    groupletter <- as.vector(t(outer(letters,
+                                     letters,
+                                     paste,
+                                     sep = "")))
+  } else {
+    groupletter <- letters
+  }
 
-	for(i in 1:ngroups){
-		group[group == xgroups[i]] <- groupletter[i]
-	}
+  xgroups <- seq(ngroups)
 
-	newgroups <- matrix("",nrow=length(group),ncol=ngroups)
-	aux <- cbind(1:nrow(newgroups),numericgroup)
-	newgroups[aux] <- group
+  for(i in 1:ngroups){
+    group[group == xgroups[i]] <- groupletter[i]
+  }
 
-	out_means_groups <- data.frame(Means=out_means_groups[,1],
-				       newgroups)
-	colnames(out_means_groups) <- c('Means',paste('G',1:ngroups,sep=''))
+  newgroups <- matrix("", nrow = length(group), ncol = ngroups)
+  aux <- cbind(1:nrow(newgroups), numericgroup)
+  newgroups[aux] <- group
 
-	#Temina aqui!
+  out_means_groups <- data.frame(Means = out_means_groups[,1],
+                                 newgroups)
+  colnames(out_means_groups) <- c('Means', paste('G', 1:ngroups, sep = ''))
 
-	out <- list(Result     = out_means_groups,
-		    Sig.level  = sig.level,
-		    Replicates = mt[['reps']])
+  #Temina aqui!
 
-	m.inf <- m.infos.lm(x         = x,
-			    my        = my,
-			    forminter = forminter,
-			    which     = which,
-			    sig.level = sig.level,
-			    aux_mt    = aux_mt_df)
+  out <- list(Result     = out_means_groups,
+              Sig.level  = sig.level,
+              Replicates = mt[['reps']])
 
-	res <- list(out  = out,
-		    info = m.inf,
-	            stat = out_groups[[2]],
-	            clus = out_groups[[3]])
+  m.inf <- m.infos.lm(x         = x,
+                      my        = my,
+                      forminter = forminter,
+                      which     = which,
+                      sig.level = sig.level,
+                      aux_mt    = aux_mt_df)
 
-	res$call  <- cl
+  res <- list(out  = out,
+              info = m.inf,
+              stat = out_groups[[2]],
+              clus = out_groups[[3]])
 
-	class(res) <- c('SK.lm',
-			'SK',
-			'list')
-	return(res)                        
+  res$call <- cl
+
+  class(res) <- c('SK.lm',
+                  'SK',
+                  'list')
+  return(res)
 }

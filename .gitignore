@@ -1,2 +1,9 @@
 # Example code in package build process
 *-Ex.R
+
+# knitr figure output
+figure/
+
+# R CMD build / check artefacts
+*.Rcheck/
+*.tar.gz

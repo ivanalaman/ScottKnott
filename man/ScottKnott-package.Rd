@@ -8,65 +8,54 @@
 }
 
 \description{
- The Scott & Knott clustering algorithm is a very useful clustering algorithm
- widely used as a multiple comparison method in the Analysis of Variance
- context, as for example Gates and Bilbro (1978), Bony et al. (2001),
- Dilson et al. (2002) and Jyotsna et al. (2003).
+ The Scott & Knott clustering algorithm is a widely used multiple comparison
+ method in the Analysis of Variance context (Gates and Bilbro, 1978; Bony
+ et al., 2001; Dilson et al., 2002; Jyotsna et al., 2003).
 
- It was developed by Scott, A.J. and Knott, M. (Scott and Knott, 1974).
- All methods used up to that date as, for example, the t-test, Tukey, Duncan,
- Newman-Keuls procedures, have overlapping problems. By overlapping we mean
- the possibility of one or more treatments to be classified in more than one
- group, in fact, as the number of treatments reach a number of twenty or more,
- the number of overlappings could increse as reaching 5 or greater what makes
- almost impossible to the experimenter to really distinguish the real groups
- to which the means should belong. The Scott & Knott method does not
- have this problem, what is often cited as a very good quality of this
- procedure.
+ Proposed by Scott and Knott (1974), the method overcomes the overlapping
+ problem common to other procedures such as the t-test, Tukey, Duncan, and
+ Newman-Keuls tests. Overlapping occurs when one or more treatments are
+ simultaneously assigned to more than one group; as the number of treatments
+ grows to twenty or more, this ambiguity can make it virtually impossible for
+ the experimenter to distinguish the true group structure. The Scott & Knott
+ method does not have this problem, which is widely regarded as one of its
+ main advantages.
 
- The Scott & Knott method make use of a clever algorithm of cluster analysis,
- where, starting from the the whole group of observed mean effects, it divides,
- and keep dividing the sub-groups in such a way that the intersection of any
- two groups formed in that manner is empty.
+ The method uses a cluster analysis algorithm that, starting from the complete
+ set of observed treatment means, recursively partitions them so that any two
+ resulting groups are disjoint.
 
- Using their own words `we study the consequences of using a well-known method
- of cluster analysis to partition the sample treatment means in a balanced
- design and show how a corresponding likelihood ratio test gives a method of
- judging the significance of difference among groups abtained'.
+ In their own words: \dQuote{we study the consequences of using a well-known
+ method of cluster analysis to partition the sample treatment means in a
+ balanced design and show how a corresponding likelihood ratio test gives a
+ method of judging the significance of difference among groups obtained}.
 
- Many studies, using the method of Monte Carlo, suggest that the Scott Knott
- method performs very well compared to other methods due to fact that it has
- high power and type I error rate almost always in accordance with the nominal
- levels. The \pkg{ScottKnott} package performs this algorithm starting either from
- \code{vectors}, \code{matrices} or \code{data.frames} joined as
- \code{default}, a \code{aov}, \code{aovlist}, \code{lm} and \code{lmer} resulting object of previous
- analysis of variance. The results are given in the usual way as well as in
- graphical way using thermometers with diferent group colors.
+ Monte Carlo studies suggest that the Scott & Knott method has high power and
+ type I error rates that closely follow the nominal levels. The
+ \pkg{ScottKnott} package applies this algorithm to objects of class
+ \code{formula}, \code{aov}, \code{aovlist}, \code{lm}, and \code{lmerMod}
+ from a prior analysis of variance, and presents results both numerically
+ and graphically.
 
- In a few words, the test of Scott & Knott is a clustering algorithm used as an
- one of the alternatives where multiple comparizon procedures are applied with
- a very important and almost unique characteristic: it does not present
- overlapping in the results.
-
- As of version 1.2-8, the ScottKnott package is able to analyze unbalanced data based on the article `Adjusting the Scott-Knott cluster analyzes for unbalanced designs' by Conrado et al. 
-
+ As of version 1.2-8, the package handles unbalanced designs using adjusted
+ means, as described in Conrado et al. (2017).
 }
 
 \author{
- Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
- Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
- Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr
+ Faria, J. C. (\email{joseclaudio.faria@gmail.com})\cr
+ Jelihovschi, E. G. (\email{eniojelihovs@gmail.com})\cr
+ Allaman, I. B. (\email{ivanalaman@gmail.com})\cr
 }
 
 \references{
  Bony S., Pichon N., Ravel C., Durix A., Balfourier F., Guillaumin J.J. 2001. The
- Relationship be-tween Mycotoxin Synthesis and Isolate Morphology in Fungal
+ Relationship between Mycotoxin Synthesis and Isolate Morphology in Fungal
  Endophytes of Lolium perenne. \emph{New Phytologist}, \bold{1521}, 125-137.
 
  Borges L.C., FERREIRA D.F. 2003. Poder e taxas de erro tipo I dos testes
  Scott-Knott, Tukey e Student-Newman-Keuls sob distribuicoes normal e nao
  normais dos residuos. Power and type I errors rate of Scott-Knott, Tukey and
- Student-Newman-Keuls tests under normal and no-normal distributions of the
+ Student-Newman-Keuls tests under normal and non-normal distributions of the
  residues. \emph{Rev. Mat. Estat.}, Sao Paulo, \bold{211}: 67-83.
 
  Calinski T., Corsten L.C.A. 1985. Clustering Means in ANOVA by Simultaneous
@@ -95,7 +84,7 @@
  Ramalho M.A.P., Ferreira DF, Oliveira AC 2000. \emph{Experimentacao em Genetica
   e Melhoramento de Plantas}. Editora UFLA.
 
- Scott R.J., Knott M. 1974. A cluster analysis method for grouping mans in the
+ Scott R.J., Knott M. 1974. A cluster analysis method for grouping means in the
  analysis of variance. \emph{Biometrics}, \bold{30}, 507-512.
 
  Conrado, T. V., Ferreira, D. F., Scapim, C. A., and Maluf, W. R. "Adjusting the Scott-Knott cluster analyses for unbalanced designs." \emph{Crop Breeding and Applied Biotechnology} \bold{17}.1 (2017): 1-9.
@@ -106,4 +95,3 @@
 \keyword{univar}
 \keyword{tree}
 \keyword{design}
-

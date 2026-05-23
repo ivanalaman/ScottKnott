@@ -18,28 +18,26 @@
 \arguments{
 	\item{x}{A given object of the class \code{SK}.}
 	\item{digits}{Minimal number of _significant_ digits. The default is 2.}
-	\item{\dots }{Further arguments (require by generic).}
+	\item{\dots}{Further arguments (required by generic).}
 }
 
 \author{
-	Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-	Enio G. Jelihovschi (\email{eniojelihovs@gmail.com})\cr
-	Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})\cr
+	Faria, J. C. (\email{joseclaudio.faria@gmail.com})\cr
+	Jelihovschi, E. G. (\email{eniojelihovs@gmail.com})\cr
+	Allaman, I. B. (\email{ivanalaman@gmail.com})\cr
 }
 
 \seealso{\code{\link{SK}}
 }
 
 \examples{
-data(RCBD) 
+data(RCBD)
 
 sk <- with(RCBD,
        	   SK(y ~ blk + tra,
           		  data=dfm,
           		  which='tra'))
 sk
-
 }
 
 \keyword{package}
-\keyword{SK}

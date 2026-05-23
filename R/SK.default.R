@@ -3,9 +3,9 @@
 ##
 
 SK.default <- function(x,
-                           ...)
+                       ...)
 {
-  stop(paste("class", 
-             class(x), 
-             "objects are not valid for SK" ))
+  stop(paste("class",
+             class(x),
+             "objects are not valid for SK"))
 }

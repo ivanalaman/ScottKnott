@@ -3,14 +3,13 @@
 ##
 summary.SK <- function(object, ...)
 {
-	if(!inherits(object,
-		     'SK'))
-		stop("Use only with \"SK\" objects!")
+  if(!inherits(object,
+               'SK'))
+    stop("Use only with \"SK\" objects!")
 
-	cat('Goups of means at sig.level =',
-	    object$out$Sig.level,
-	    '\n')
+  cat('Goups of means at sig.level =',
+      object$out$Sig.level,
+      '\n')
 
-	print(object$out$Result)	
-
+  print(object$out$Result)
 }

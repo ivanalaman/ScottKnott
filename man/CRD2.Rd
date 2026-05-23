@@ -16,8 +16,8 @@
 }
 
 \details{
-  A simulated data to model a Completely Randomized Design (\samp{CRD}) of 45 
-  factor levels and 4 repetitions.
+  Simulated data for a Completely Randomized Design (\samp{CRD}) with 45
+  treatment levels and 4 replicates per treatment.
 }
 
 \keyword{datasets}

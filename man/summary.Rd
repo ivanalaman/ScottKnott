@@ -20,9 +20,9 @@
 }
 
 \author{
-  Jose Claudio Faria (\email{joseclaudio.faria@gmail.com})\cr
-  Enio Jelihovschi (\email{eniojelihovs@gmail.com})\cr
-  Ivan Bezerra Allaman (\email{ivanalaman@gmail.com})
+  Faria, J. C. (\email{joseclaudio.faria@gmail.com})\cr
+  Jelihovschi, E. G. (\email{eniojelihovs@gmail.com})\cr
+  Allaman, I. B. (\email{ivanalaman@gmail.com})
 }
 
 \references{
@@ -37,9 +37,9 @@
 \examples{
   ##
   ## Examples: Completely Randomized Design (CRD)
-  ## More details: demo(package='SK')
+  ## More details: demo(package='ScottKnott')
   ##
-  
+
   data(CRD2)
   ## From: formula
   sk1 <- with(CRD2,
@@ -52,4 +52,3 @@
 }
 
 \keyword{package}
-

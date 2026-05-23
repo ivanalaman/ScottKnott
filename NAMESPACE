@@ -1,6 +1,3 @@
-# Default NAMESPACE created by R
-# Remove the previous line if you edit this file
-
 # Export
 export(SK)
 export(plot.SK)
@@ -8,6 +5,7 @@ export(print.SK)
 export(summary.SK)
 export(boxplot.SK)
 export(xtable.SK)
+export(xtable)
 
 # Import all packages listed as Imports or Depends
 importFrom(emmeans, emmeans)
@@ -30,5 +28,6 @@ S3method(SK, nest.lmerMod)
 S3method(summary, SK)
 S3method(print, SK)
 S3method(xtable,SK)
+S3method(print,xtable.SK)
 S3method(plot, SK)
 S3method(boxplot, SK)

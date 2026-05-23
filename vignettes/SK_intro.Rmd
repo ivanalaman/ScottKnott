@@ -1,0 +1,360 @@
+---
+title: "Introduction to the ScottKnott Package"
+author: "Faria, J. C., Jelihovschi, E. G., Allaman, I. B."
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the ScottKnott Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = '#>',
+  fig.width = 6,
+  fig.height = 4,
+  fig.align = 'center'
+)
+```
+
+## Overview
+
+The **ScottKnott** package implements the Scott & Knott (1974) clustering
+algorithm as a multiple comparison method in the context of Analysis of Variance
+(ANOVA). Unlike classic procedures such as Tukey, Duncan, and Newman-Keuls, the
+Scott & Knott method forms **non-overlapping groups** of treatment means: each
+mean belongs to exactly one group, eliminating the ambiguity that arises when
+groups share members.
+
+The algorithm proceeds by sorting the observed treatment means in decreasing
+order and then recursively partitioning them into two sub-groups, applying a
+likelihood-ratio test at each split. The process stops when no further
+significant partition is found. The result is a complete, disjoint labelling of
+the treatment means that is easy to interpret regardless of the number of
+treatments.
+
+```{r library}
+library(ScottKnott)
+```
+
+---
+
+## 1. Quick Start - Completely Randomized Design (CRD)
+
+`CRD1` contains simulated data for a balanced CRD with **4 treatment levels**
+and **6 replicates** per treatment. The main function `SK()` accepts a model
+formula, an `aov` object, or an `lm` object. The `which` argument names the
+factor to be compared.
+
+```{r crd-quick}
+data(CRD1)
+
+sk1 <- with(CRD1,
+            SK(y ~ x,
+               data = dfm,
+               which = 'x'))
+summary(sk1)
+```
+
+The summary shows, for each level, the mean and the group letter assigned by the
+algorithm. Levels sharing the same letter do not differ significantly at the
+default 5 % level.
+
+A single call to `plot()` produces the canonical dot plot with group letters
+displayed above each point:
+
+```{r crd-plot, fig.cap="CRD1: treatment means with min-max dispersion bars and SK groups."}
+plot(sk1,
+     dispersion = 'mm',
+     d.col = 'steelblue')
+```
+
+---
+
+## 2. Accepted Input Classes
+
+`SK()` dispatches on the class of its first argument. The same grouping can be
+obtained from a `formula`, an `aov` object, or an `lm` object.
+
+```{r input-classes}
+## From: aov
+av1 <- with(CRD1, aov(y ~ x, data = dfm))
+sk2 <- SK(av1, which = 'x')
+summary(sk2)
+
+## From: lm
+lm1 <- with(CRD1, lm(y ~ x, data = dfm))
+sk3 <- SK(lm1, which = 'x')
+summary(sk3)
+```
+
+---
+
+## 3. Unbalanced Data
+
+When observations are missing, `SK()` automatically adjusts the means using the
+Least-Squares Means methodology (via the **emmeans** package). The analysis
+proceeds identically to the balanced case.
+
+```{r crd-unbalanced}
+## Remove the first observation to create an unbalanced dataset
+u_sk1 <- with(CRD1,
+              SK(y ~ x,
+                 data = dfm[-1, ],
+                 which = 'x'))
+summary(u_sk1)
+```
+
+The number of replicates shown at the bottom of the plot reflects the actual
+(unequal) sample sizes:
+
+```{r plot-unbal, fig.cap="CRD1 (unbalanced): adjusted means with SD bars."}
+plot(u_sk1, dispersion = 'sd', d.col = 'tomato')
+```
+
+---
+
+## 4. Randomized Complete Block Design (RCBD)
+
+`RCBD` contains simulated data for a design with **5 treatment levels** and **4
+blocks**. The blocking factor `blk` is included in the formula; `which` selects
+the factor of interest for the comparison.
+
+```{r rcbd}
+data(RCBD)
+
+sk4 <- with(RCBD,
+            SK(y ~ blk + tra,
+               data = dfm,
+               which = 'tra'))
+summary(sk4)
+```
+
+```{r rcbd-plot, fig.cap="RCBD: treatment means with CI bars."}
+plot(sk4,
+     dispersion = 'ci',
+     d.col = 'darkgreen',
+     d.lty = 2)
+```
+
+---
+
+## 5. Significance Level
+
+The default significance level is `sig.level = 0.05`. Stricter or looser levels
+lead to fewer or more groups, respectively.
+
+```{r sig-level}
+## alpha = 0.01 (stricter)
+sk_01 <- with(RCBD,
+              SK(y ~ blk + tra,
+                 data = dfm,
+                 which = 'tra',
+                 sig.level = 0.01))
+
+## alpha = 0.10 (looser)
+sk_10 <- with(RCBD,
+              SK(y ~ blk + tra,
+                 data = dfm,
+                 which = 'tra',
+                 sig.level = 0.10))
+
+cat('--- sig.level = 0.01 ---\n')
+summary(sk_01)
+
+cat('--- sig.level = 0.10 ---\n')
+summary(sk_10)
+```
+
+---
+
+## 6. Factorial Experiment (FE)
+
+`FE` contains simulated data for a **3-factor factorial** design (N, P, K),
+each at 2 levels, in 4 blocks. `SK()` supports both main-effect and nested
+comparisons using colon notation in `which` and the `fl1` / `fl2` arguments to
+select the level of the nesting factor.
+
+```{r fe-main}
+data(FE)
+
+## Main effect: factor N
+sk5 <- with(FE,
+            SK(y ~ blk + N*P*K,
+               data = dfm,
+               which = 'N'))
+summary(sk5)
+```
+
+```{r fe-nested}
+## Nested: levels of N within level 1 of P
+sk6 <- with(FE,
+            SK(y ~ blk + N*P*K,
+               data = dfm,
+               which = 'P:N',
+               fl1 = 1))
+summary(sk6)
+
+## Nested: levels of N within level 2 of P
+sk7 <- with(FE,
+            SK(y ~ blk + N*P*K,
+               data = dfm,
+               which = 'P:N',
+               fl1 = 2))
+summary(sk7)
+```
+
+---
+
+## 7. Split-Plot Experiment (SPE)
+
+`SPE` contains simulated data for a design with **3 whole plots** (factor P) and
+**4 sub-plot treatments** (factor SP). When testing the whole-plot factor, the
+appropriate error term must be specified via the `error` argument.
+
+```{r spe}
+data(SPE)
+
+## Sub-plot factor SP (residual error, default)
+sk8 <- with(SPE,
+            SK(y ~ blk + P*SP + Error(blk/P),
+               data = dfm,
+               which = 'SP'))
+summary(sk8)
+
+## Whole-plot factor P (must specify the blk:P error term)
+sk9 <- with(SPE,
+            SK(y ~ blk + P*SP + Error(blk/P),
+               data = dfm,
+               which = 'P',
+               error = 'blk:P'))
+summary(sk9)
+```
+
+---
+
+## 8. Visualisation Options
+
+### 8.1 Dispersion bars
+
+Four dispersion options are available for `plot.SK()`:
+
+| Option  | Description                                |
+|---------|--------------------------------------------|
+| `'mm'`  | Min-max range (default)                    |
+| `'sd'`  | ± 1 standard deviation                    |
+| `'ci'`  | Individual 95 % confidence interval        |
+| `'cip'` | Pooled 95 % confidence interval (uses MSE) |
+
+`CRD2` provides a more visually rich example with **45 treatment levels**:
+
+```{r plot-crd2, fig.width=8, fig.height=5, fig.cap="CRD2: 45 treatment means with pooled CI bars."}
+data(CRD2)
+
+sk10 <- with(CRD2,
+             SK(y ~ x,
+                data = dfm,
+                which = 'x'))
+
+plot(sk10,
+     id.las = 2,
+     yl = FALSE,
+     dispersion = 'cip',
+     d.col = 'steelblue')
+```
+
+### 8.2 Comparing all four options
+
+```{r plot-four, fig.width=8, fig.height=7, fig.cap="The four dispersion options applied to CRD1. (A) mm: min-max range; (B) sd: standard deviation; (C) ci: individual confidence interval; (D) cip: pooled confidence interval."}
+op <- par(mfrow = c(2, 2), mar = c(4, 3, 4, 1))
+
+plot(sk1, dispersion = 'mm',  d.col = 'steelblue')
+mtext('(A)', side = 3, adj = 0, line = 2, font = 2)
+
+plot(sk1, dispersion = 'sd',  d.col = 'tomato')
+mtext('(B)', side = 3, adj = 0, line = 2, font = 2)
+
+plot(sk1, dispersion = 'ci',  d.col = 'darkgreen')
+mtext('(C)', side = 3, adj = 0, line = 2, font = 2)
+
+plot(sk1, dispersion = 'cip', d.col = 'purple')
+mtext('(D)', side = 3, adj = 0, line = 2, font = 2)
+
+par(op)
+```
+
+### 8.3 Boxplot
+
+`boxplot.SK()` extends the standard boxplot by overlaying the SK group letters
+above the frame and drawing the treatment mean inside each box.
+
+```{r boxplot, fig.cap="CRD1: boxplot with SK group labels and means (red line)."}
+## boxplot.SK re-evaluates the data argument from the original call;
+## pass CRD1$dfm directly so it is findable in any environment.
+sk1_bp <- SK(y ~ x,
+             data = CRD1$dfm,
+             which = 'x')
+
+boxplot(sk1_bp,
+        mean.col = 'red',
+        mean.lwd = 2,
+        args.legend = list(x = 'topright'))
+```
+
+---
+
+## 9. Tabular Output
+
+`xtable()` converts an `SK` result to an `xtable` object for inclusion in LaTeX
+or HTML documents.
+
+```{r xtable, results='asis'}
+library(xtable)
+
+tb <- xtable(sk4,
+             caption = 'RCBD: Scott & Knott grouping of treatment means.',
+             digits = 3)
+print(tb,
+      type = 'html',
+      html.table.attributes = 'border="1" style="border-collapse:collapse; padding:4px;"',
+      caption.placement = 'top',
+      include.rownames = FALSE)
+```
+
+---
+
+## 10. Mixed Models with lme4
+
+`SK()` also accepts `lmerMod` objects from the **lme4** package, useful when
+random effects need to be modelled explicitly.
+
+```{r lmer, eval=requireNamespace('lme4', quietly=TRUE)}
+library(lme4)
+
+data(RCBD)
+
+lmer1 <- with(RCBD,
+              lmer(y ~ (1|blk) + tra,
+                   data = dfm))
+
+sk11 <- SK(lmer1, which = 'tra')
+summary(sk11)
+```
+
+---
+
+## References
+
+Scott, R. J. and Knott, M. (1974). A cluster analysis method for grouping means
+in the analysis of variance. *Biometrics*, **30**, 507-512.
+
+Jelihovschi, E. G., Faria, J. C., and Allaman, I. B. (2014). ScottKnott: A
+package for performing the Scott-Knott clustering algorithm in R. *Trends in
+Applied and Computational Mathematics*, **15**(1), 3-17.
+
+Conrado, T. V., Ferreira, D. F., Scapim, C. A., and Maluf, W. R. (2017).
+Adjusting the Scott-Knott cluster analyses for unbalanced designs. *Crop
+Breeding and Applied Biotechnology*, **17**(1), 1-9.
+doi:10.1590/1984-70332017v17n1a1

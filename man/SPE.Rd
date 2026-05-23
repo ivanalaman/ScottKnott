@@ -2,12 +2,12 @@
 \alias{SPE}
 
 \title{
-  Split-plot Experiment (SPE)
+  Split-Plot Experiment (SPE)
 }
 
 \description{
-  A \code{list} to ilustrate the resources of \pkg{ScottKnott} package
-  related to Split-plot Experiment (\samp{SPE}).
+  A \code{list} illustrating the resources of \pkg{ScottKnott} package
+  related to Split-Plot Experiment (\samp{SPE}).
 }
 
 \usage{
@@ -16,8 +16,8 @@
 }
 
 \details{
-  A simulated data to model a Split-plot Experiment (\samp{SPE}) with 3 plots, each
-  one split 4 times and 6 repetitions per split.
+  Simulated data for a Split-Plot Experiment (\samp{SPE}) with 3 whole plots,
+  4 sub-plot treatments, and 6 replicates per sub-plot.
 }
 
 \keyword{datasets}

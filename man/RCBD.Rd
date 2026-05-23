@@ -6,7 +6,7 @@
 }
 
 \description{
-  A \code{list} illustrating  the resources of \pkg{ScottKnott} package
+  A \code{list} illustrating the resources of \pkg{ScottKnott} package
   related to Randomized Complete Block Design (\samp{RCBD}).
 }
 
@@ -16,8 +16,8 @@
 }
 
 \details{
-  A simulated data to model a Randomized Complete Block Design (\samp{RCBD}) of 5 
-  factor levels, 4 blocks and 4 factor levels repetitions one in each block.
+  Simulated data for a Randomized Complete Block Design (\samp{RCBD}) with
+  5 treatment levels and 4 blocks (one replicate per block).
 }
 
 \keyword{datasets}

@@ -2,37 +2,46 @@
 ## Example: Factorial Experiment (FE)
 ##
 
-## The parameters can be: formula, aov, lm or lmer.
+## Input classes accepted: formula, aov, lm, and lmerMod.
 
-## Note: Upper case for factors and lowercase for levels
+## Note: uppercase letters denote factors; lowercase letters denote their levels.
 
 library(ScottKnott)
 data(FE)
 
 ## From: formula
 ## Nested: k1/p2/N
-## The indices (1, 2, ...) are used to set the level of the factor
-sk1 <- with(FE,
-            SK(y ~ blk + N*P*K,
-               dfm,
-               which='K:P:N',
-               fl1=1,
-               fl2=2))
+## The indices (1, 2, ...) select the level of the nesting factor.
+sk1 <- with(
+  FE,
+  SK(y ~ blk + N*P*K,
+    data=dfm,
+    which='K:P:N',
+    fl1=1,
+    fl2=2
+  )
+)
 summary(sk1)
 
 ## Nested: k2/p1/N
-sk2 <- with(FE,
-            SK(y ~ blk + N*P*K,
-               dfm,
-               which='K:P:N',
-               fl1=2,
-               fl2=1))
+sk2 <- with(
+  FE,
+  SK(y ~ blk + N*P*K,
+    data=dfm,
+    which='K:P:N',
+    fl1=2,
+    fl2=1
+  )
+)
 summary(sk2)
 
-## From aov
-av1 <- with(FE,
-            aov(y ~ blk + N*P*K ,
-                data=dfm))
+## From: aov
+av1 <- with(
+  FE,
+  aov(y ~ blk + N*P*K,
+    data=dfm
+  )
+)
 summary(av1)
 
 ## Main factor: N
@@ -47,21 +56,24 @@ sk4 <- SK(av1,
 summary(sk4)
 
 ## Nested: k1/p2/N
-sk4 <- SK(av1,
+sk5 <- SK(av1,
           which='K:P:N',
           fl1=1,
           fl2=2)
-summary(sk4)
+summary(sk5)
 
-# Changing the order of factors (for test only)
-av2 <- with(FE,
-            aov(y ~ blk + K*N*P,
-                data=dfm))
+## Changing the order of factors (for testing purposes only)
+av2 <- with(
+  FE,
+  aov(y ~ blk + K*N*P,
+    data=dfm
+  )
+)
 summary(av2)
 
 ## Nested: p1/n1/K
-sk5 <- SK(av2,
+sk6 <- SK(av2,
           which='P:N:K',
           fl1=1,
           fl2=1)
-summary(sk5)
+summary(sk6)

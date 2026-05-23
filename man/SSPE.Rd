@@ -2,12 +2,12 @@
 \alias{SSPE}
 
 \title{
-  Split-split-plot Experiment (SSPE)
+  Split-Split-Plot Experiment (SSPE)
 }
 
 \description{
-  A \code{list} to ilustrate the resources of \pkg{ScottKnott} package
-  related to Split-split-plot Experiment (\samp{SSPE}).
+  A \code{list} illustrating the resources of \pkg{ScottKnott} package
+  related to Split-Split-Plot Experiment (\samp{SSPE}).
 }
 
 \usage{
@@ -16,9 +16,9 @@
 }
 
 \details{
-  A simulated data to model a Split-split-plot Experiment (\samp{SSPE}) with 3 plots,
-  each one split 3 times, each split, split again 5 times and 
-  4 repetitions per split-split.
+  Simulated data for a Split-Split-Plot Experiment (\samp{SSPE}) with 3 whole
+  plots, 3 sub-plot treatments, 5 sub-sub-plot treatments, and 4 replicates
+  per sub-sub-plot.
 }
 
 \keyword{datasets}
