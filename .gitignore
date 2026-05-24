@@ -7,3 +7,6 @@ figure/
 # R CMD build / check artefacts
 *.Rcheck/
 *.tar.gz
+
+CRAN
+.Rbuildignore

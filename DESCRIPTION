@@ -1,6 +1,6 @@
 Package: ScottKnott
 Version: 1.4-0
-Date: 2026-05-14
+Date: 2026-05-24
 Title: The ScottKnott Clustering Algorithm
 Authors@R: c(person("J. C.", "Faria",
                role = "aut",
@@ -11,10 +11,6 @@ Authors@R: c(person("J. C.", "Faria",
              person("I. B.", "Allaman",
                role = c("aut", "cre"),
                email = "ivanalaman@gmail.com"))
-Author: Faria, J. C. [aut],
-  Jelihovschi, E. G. [aut],
-  Allaman, I. B. [aut, cre]
-Maintainer: Allaman, I. B. <ivanalaman@gmail.com>
 Depends: R (>= 4.0.0)
 Imports: emmeans, xtable
 Suggests: lme4, knitr, rmarkdown, testthat (>= 3.0.0)
@@ -23,7 +19,7 @@ VignetteBuilder: knitr
 Description: Performs the Scott & Knott (1974) clustering algorithm as a
     multiple comparison method in the Analysis of Variance context, for
     both balanced and unbalanced <doi:10.1590/1984-70332017v17n1a1>
-    designs. Accepts input from formula, aov, lm, aovlist, and lmerMod
+    designs. Accepts input from 'formula', 'aov', 'lm', 'aovlist', and 'lmerMod'
     objects.
 License: GPL (>= 2)
 URL: https://github.com/ivanalaman/ScottKnott,
